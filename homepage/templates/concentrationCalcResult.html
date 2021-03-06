@@ -47,20 +47,23 @@
                 </li>
             </ul>
             <hr style="height:3pt; visibility:hidden;" />
-            <form action="" method="post">
-                {% csrf_token %}
-                <table>
-                {{ form.as_table }}
-                </table>
-                <input type="submit" value="Submit" />
-            </form>
+            <!-- <form action="" method="post">
+                <tr><th><label for="id_INPUTVOL">Inputvol:</label></th><td><input type="number" name="INPUTVOL" value="10" step="0.00001" id="id_INPUTVOL"></td></tr>
+                <tr><th><label for="id_INPUTCONC">Inputconc:</label></th><td><input type="number" name="INPUTCONC" value="0.4" step="0.00001" id="id_INPUTCONC"></td></tr>
+                <tr><th><label for="id_INPUTSOLUTE">Inputsolute:</label></th><td><input type="number" name="INPUTSOLUTE" step="0.00001" id="id_INPUTSOLUTE"></td></tr>
+<tr><th><label for="id_FINALVOL">Finalvol:</label></th><td><input type="number" name="FINALVOL" step="0.00001" id="id_FINALVOL"></td></tr>
+<tr><th><label for="id_FINALCONC">Finalconc:</label></th><td><input type="number" name="FINALCONC" value="0.3" step="0.00001" id="id_FINALCONC"></td></tr>
+<tr><th><label for="id_ADDEDSOLUTE">Addedsolute:</label></th><td><input type="number" name="ADDEDSOLUTE" step="0.00001" id="id_ADDEDSOLUTE"></td></tr>
+<tr><th><label for="id_ADDEDWATER">Addedwater:</label></th><td><input type="number" name="ADDEDWATER" step="0.00001" id="id_ADDEDWATER"></td></tr>
+                <a class="active" href="http://127.0.0.1:8000/dilutionCalculator/">refresh</a>
+            </form> -->
             <!-- <form action="/your-name/" method="post">
                 <label for="your_name">Your name: </label>
                 <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
                 <input type="submit" value="OK">
             </form> -->
 
-            <!-- <table border = "1">
+            <table border = "1">
                 <hr style="height:15pt; visibility:hidden;" />
                 <tbody>
                     <tr>
@@ -92,7 +95,10 @@
                         <td> </td>
                     </tr>
                 </tbody>
-            </table> -->
+            </table>
+            <ul>
+            <li><a href="http://127.0.0.1:8000/dilutionCalculator/">REFRESH</a></li>
+            </ul>
             <!-- <hr style="height:20pt; visibility:hidden;" />
             <h1></h1>
                 Contact Welcome to the Biocalculator, we can put all sorts of

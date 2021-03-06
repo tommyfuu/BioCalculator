@@ -45,9 +45,14 @@ def dilution_input_view(request):
             # print(inputVol, inputConc, inputSolute, finalVol,
             #       finalConc, addedSoluteVol, addedWater)
             # redirect to a new URL:
-            return HttpResponseRedirect('')
+            return HttpResponseRedirect('http://127.0.0.1:8000/dilutionCalculatorResult')
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = DilutionForm()
     return render(request, "concentrationCalc.html", {'form': form})
+
+
+def dilution_result_view(request):
+    # return HttpResponse("Contact page!")
+    return render(request, 'concentrationCalcResult.html', {})
