@@ -4,7 +4,7 @@
         <title>Bio Calculator Contact Page</title>
     </head>
 
-    <body style="background-color:rgb(216, 204, 36); font-size: 18; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+    <body style="background-color:rgb(255, 255, 255); font-size: 18; font-family: Verdana, Geneva, Tahoma, sans-serif;">
         <style>
             table { 
                 width: 50%; 
@@ -62,37 +62,40 @@
                 <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
                 <input type="submit" value="OK">
             </form> -->
+            <!-- {% for result in results %}
+                {{ result }}
+            {% endfor %} -->
 
             <table border = "1">
                 <hr style="height:15pt; visibility:hidden;" />
                 <tbody>
                     <tr>
                         <td> Input Volume </td>
-                        <td> </td>
+                        <td> {{ inputVol }}</td>
                     </tr>
                     <tr>
                         <td> Input Concentration</td>
-                        <td> </td>
+                        <td> {{inputConc}}</td>
                     </tr>
                     <tr>
                         <td> Input Solute </td>
-                        <td> </td>
+                        <td> {{inputSolute}}</td>
                     </tr>
                     <tr>
                         <td> Final Volume </td>
-                        <td> </td>
+                        <td> {{finalVol}}</td>
                     </tr>
                     <tr>
                         <td> Final Concentration </td>
-                        <td> </td>
+                        <td> {{finalConc}}</td>
                     </tr>
                     <tr>
                         <td> Added Solute </td>
-                        <td> </td>
+                        <td> {{addedSolute}}</td>
                     </tr>
                     <tr>
                         <td> Added Water </td>
-                        <td> </td>
+                        <td> {{addedWater}}</td>
                     </tr>
                 </tbody>
             </table>
