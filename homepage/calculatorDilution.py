@@ -1,7 +1,31 @@
-import HTML
+# import HTML
 from django import forms
+
 # given a VOLUME of liquid,CONCENTRATION of this liquid, and TARGET concentration
 # calculate the VOLUME of water needed to add
+
+# finalVol
+# finalConcentration
+# addedSolute
+# addedWater
+# class NameForm(forms.Form):
+
+
+class DilutionForm(forms.Form):
+    INPUTVOL = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    INPUTCONC = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    INPUTSOLUTE = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    FINALVOL = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    FINALCONC = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    ADDEDSOLUTE = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    ADDEDWATER = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
 
 
 def dilutionHelper(inputConc, finalVol, finalConc):
@@ -13,7 +37,7 @@ def dilutionHelper(inputConc, finalVol, finalConc):
 
 
 def dilutionTable(inputVol, inputConc, finalVol, finalConc):
-    '''Assumptions 
+    '''Assumptions
     1: the given input solute dissolves in the input
     liquid 100%
     2: diluting, not increasing concentration'''
@@ -45,7 +69,7 @@ def upConcentrationHelper(inputVol, inputConc, finalVol, finalConc):
 
 
 def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVol):
-    '''Assumptions 
+    '''Assumptions
     1: the given output solute concentration allows the solute to dissolve
      in the input liquid 100%
     2: diluting, not increasing concentration
@@ -79,12 +103,12 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
     # check cases
     if inputConc == finalConc:
         return inputVol, inputConc, finalVol, finalConc, "Concentration Unchanged"
-    elif inputConc < finalConc:
+    elif inputConc > finalConc:
         addedSoluteVol = "/"
         inputVol, inputConc, finalVol, finalConc, waterVol = dilutionTable(
             inputVol, inputConc, finalVol, finalConc)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol
-    elif inputConc > finalConc:
+    elif inputConc < finalConc:
         waterVol = "/"
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol = upConcentrationTable(
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol)
