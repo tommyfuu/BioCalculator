@@ -1,9 +1,10 @@
 # BioCalculator
-Creating a calculator for common molecular biology lab experiments.
+Creating a calculator for common biology lab experiments.
 
 So far:
 - Implemented a simple concentration change calculator!
 - Able to do simple dilution/concentration increase; with rendering in Django
+- General website aesthetics (homepage, navigation bar, templates)
 
 
 ## Acknowledgement
