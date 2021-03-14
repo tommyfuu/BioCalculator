@@ -94,38 +94,46 @@ def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVo
 
 
 def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
-    # if inputted inputSolute instead of inputConc, convert
+    # check inputConc and relevant errors
     if inputSolute != None and inputConc != None:
+        # 1 if solute contradicts
         if inputConc != inputSolute/inputVol:
             return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "Solute"
+    # 2 if inputted inputSolute instead of inputConc, convert
     elif inputSolute != None and inputConc == None:
         inputConc = inputSolute/inputVol
+    # 3 Calculate inputSolute if necessary
     elif inputConc != None and inputSolute == None:
         inputSolute = inputVol * inputConc
-    # if no inputConc measure, assume input Conc = 0
+    # 4 if no inputConc measure, assume input Conc = 0
     elif inputConc == None and inputSolute == None:
         inputConc = 0
         inputSolute = 0
 
-    # check cases
+    # check calculation cases
+    # 1 no finalConc, no point of doing calculations
     if finalConc == None:
-        print("AXSACXS")
+        print("finalConc == None")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+    # 2 Concentration unchanged
     if inputConc == finalConc:
         print("Conc unchanged")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
-    # if input Vol = 0, automatically go to upConc:
-    if inputVol == None and finalVol != None:
+    # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
+    if (inputVol == None or inputVol == 0) and finalVol != None:
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             0, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
-    elif inputVol == None and finalVol == None:
+    # 4 if input Vol = 0 and there is no final volume, return not enough input error
+    elif (inputVol == None or inputVol == 0) and finalVol == None:
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+    # 5 upConc calculation
     elif inputConc > finalConc:
         addedSoluteVol = "/"
         inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
             inputVol, inputConc, finalVol, finalConc)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+    # 6 Dilution calculation
     elif inputConc < finalConc:
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
