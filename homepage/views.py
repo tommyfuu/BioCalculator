@@ -19,9 +19,10 @@ def about(request):
     # return HttpResponse("Contact page!")
     return render(request, 'about.html', {})
 
+
 # CALCULATORS
 # DILUTION CALCULATOR
-### GLOBAL VARIABLES
+# GLOBAL VARIABLES
 INPUTVOL = None
 INPUTCONC = None
 INPUTSOLUTE = None
@@ -29,6 +30,7 @@ FINALVOL = None
 FINALCONC = None
 ADDEDSOLUTE = None
 ADDEDWATER = None
+
 
 def dilution_input_view(request):
     # if this is a POST request we need to process the form data
@@ -42,8 +44,10 @@ def dilution_input_view(request):
             inputSolute = form.cleaned_data['INPUTSOLUTE']
             finalVol = form.cleaned_data['FINALVOL']
             finalConc = form.cleaned_data['FINALCONC']
-            addedSoluteVol = form.cleaned_data['ADDEDSOLUTE']
-            waterVol = form.cleaned_data['ADDEDWATER']
+            # addedSoluteVol = form.cleaned_data['ADDEDSOLUTE']
+            # waterVol = form.cleaned_data['ADDEDWATER']
+            addedSoluteVol = None
+            waterVol = None
             # inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWater = changeConcentrationTable(
             #     inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol)
             # INPUTVOL = inputVol
@@ -51,15 +55,20 @@ def dilution_input_view(request):
             # INPUTSOLUTE = inputSolute
             # FINALCONC = finalConc
 
-            INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER = changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol)
+            INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
+                inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
             print("Here are the calculated input values for your desired output:")
             # print(c)
             # print(inputVol, inputConc, inputSolute, finalVol,
             #       finalConc, addedSoluteVol, addedWater)
             # redirect to a new URL:
             # return HttpResponseRedirect('http://127.0.0.1:8000/dilutionCalculatorResult')
-            return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
-
+            if ERROR == False:
+                return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+            elif ERROR == True:
+                return render(request, 'concentrationCalcError.html', {})
+            elif ERROR == "Solute":
+                return render(request, 'concentrationCalcSolute.html', {})
     # if a GET (or any other method) we'll create a blank form
     else:
         form = DilutionForm()
