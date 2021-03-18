@@ -6,5 +6,6 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('dilutionCalculator/', views.dilution_input_view, name='dilution'),
-    path('dilutionCalculatorResult/', views.dilution_result_view, name='dilution')
+    path('dilutionCalculatorResult/', views.dilution_result_view, name='dilution'),
+    path('PCRCalc/', views.pcr_result_view, name='PCR'),
 ]

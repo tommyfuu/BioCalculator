@@ -1,4 +1,3 @@
-# import HTML
 from django import forms
 
 # given a VOLUME of liquid,CONCENTRATION of this liquid, and TARGET concentration
@@ -7,15 +6,15 @@ from django import forms
 
 class DilutionForm(forms.Form):
     INPUTVOL = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label='Input Liquid Volume')
     INPUTCONC = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label='Input Liquid Concentration')
     INPUTSOLUTE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label='Input Solute Mass/Volume')
     FINALVOL = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label='Final Liquid Volume')
     FINALCONC = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label='Final Liquid Concentration')
     # ADDEDSOLUTE = forms.DecimalField(
     #     decimal_places=5, max_digits=10000, required=False)
     # ADDEDWATER = forms.DecimalField(
