@@ -126,13 +126,18 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
     # 4 if input Vol = 0 and there is no final volume, return not enough input error
     elif (inputVol == None or inputVol == 0) and finalVol == None:
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
-    # 5 upConc calculation
+    # 5 if input Vol and Conc are fine, and input only final concentration:
+    elif inputVol > 0 and inputConc >= 0 and finalVol == None:
+        inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
+            inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+    # 6 dilution calculation
     elif inputConc > finalConc:
         addedSoluteVol = "/"
         inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
             inputVol, inputConc, finalVol, finalConc)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
-    # 6 Dilution calculation
+    # 7 upConc calculation
     elif inputConc < finalConc:
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
