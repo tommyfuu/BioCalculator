@@ -112,33 +112,46 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
     # check calculation cases
     # 1 no finalConc, no point of doing calculations
     if finalConc == None:
+        print(1)
         print("finalConc == None")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
     # 2 Concentration unchanged
     if inputConc == finalConc:
+        print(2)
         print("Conc unchanged")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
     # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
     if (inputVol == None or inputVol == 0) and finalVol != None:
+        print(3)
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             0, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
     # 4 if input Vol = 0 and there is no final volume, return not enough input error
     elif (inputVol == None or inputVol == 0) and finalVol == None:
+        print(4)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
     # 5 if input Vol and Conc are fine, and input only final concentration:
     elif inputVol > 0 and inputConc >= 0 and finalVol == None:
-        inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
-            inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+        if inputConc > finalConc:
+            print("5.1")
+            inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
+                inputVol, inputConc, inputVol, finalConc)
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+        elif inputConc < finalConc:
+            print("5.2")
+            inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
+                inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
     # 6 dilution calculation
     elif inputConc > finalConc:
+        print(6)
         addedSoluteVol = "/"
         inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
             inputVol, inputConc, finalVol, finalConc)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
     # 7 upConc calculation
     elif inputConc < finalConc:
+        print(7)
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error

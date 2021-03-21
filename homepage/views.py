@@ -84,7 +84,6 @@ def pcr_result_view(request):
         # create a form instance and populate it with data from the request:
         form = PCRForm(request.POST)
         # check whether it's valid:
-        print(formset.errors)
         if form.is_valid():
             return render(request, 'calcPCR.html', {})
     # if request.method == 'POST':
