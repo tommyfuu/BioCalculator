@@ -46,7 +46,9 @@
             <h6> finalConc</h6>
             <form method="post">
                 {% csrf_token %}
-                {{ form }}
+                <table>
+                    {{ pcrform }}
+                </table>
                 <button type="submit">Sign in</button>
             </form>
         </center>

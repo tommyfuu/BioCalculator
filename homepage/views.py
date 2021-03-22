@@ -83,25 +83,18 @@ def dilution_result_view(request):
     return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
 
-def pcr_result_view(request):
+def pcr_input_view(request):
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = PCRForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            return render(request, 'calcPCR.html', {})
     # if request.method == 'POST':
-    # print("POSTSTEP")
-    # # create a form instance and populate it with data from the request:
-    # form = PCRForm(request.POST)
-    # # check whether it's valid:
-    # # if form.is_valid():
-    # print("VALIDSTEP")
-    # print(form)
-    # Primer = form.cleaned_data['PRIMER']
-    # Templatedna = form.cleaned_data['TEMPLATEDNA']
-    # PRIMER, TEMPLATEDNA = Primer, Templatedna
-    # else:
-    #     form = PCRForm()
-    # return render(request, 'calcPCR.html', {'Primer': PRIMER, "TemplateDNA": TEMPLATEDNA})
+    # create a form instance and populate it with data from the request:
+    pcrform = PCRForm(request.POST)
+    print(pcrform)
+    # check whether it's valid:
+    # if form.is_valid():
+    TOTALVOL = pcrform.cleaned_data['TOTALVOL']
+    WATER = pcrform.cleaned_data['WATER']
+
+    PCRBUFFER = pcrform.cleaned_data['PCRBUFFER']
+    TEMPLATEDNA = pcrform.cleaned_data['TEMPLATEDNA']
+    FINALCONC = pcrform.cleaned_data['FINALCONC']
+    return render(request, 'calcPCR.html', {'pcrform': pcrform})
