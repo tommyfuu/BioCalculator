@@ -110,16 +110,28 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
         inputSolute = 0
 
     # check calculation cases
-    # 1 no finalConc, no point of doing calculations
+    # 0 no finalConc, no point of doing calculations
     if finalConc == None:
-        print(1)
+        print(0)
         print("finalConc == None")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+    # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
+    if inputSolute > finalVol*finalConc:
+        print(1)
+        print("unachievable computation")
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
     # 2 Concentration unchanged
     if inputConc == finalConc:
-        print(2)
-        print("Conc unchanged")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
+        if inputVol == finalVol:
+            print(2.1)
+            print("Conc unchanged and nothing else need to be changed")
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
+        elif inputVol < finalVol:
+            print(2.2)
+            print("Conc unchanged and increase vol")
+            addedSoluteVol = (finalVol-inputVol)*inputConc
+            addedWaterVol = finalVol-inputVol
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, False
     # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
     if (inputVol == None or inputVol == 0) and finalVol != None:
         print(3)

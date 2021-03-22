@@ -65,8 +65,13 @@ def dilution_input_view(request):
                 return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
             elif ERROR == True:
                 return render(request, 'concentrationCalcError.html', {})
-            elif ERROR == "Solute":
-                return render(request, 'concentrationCalcSolute.html', {})
+            else:
+                if ERROR == "solute":
+                    info = "Error: Input solution concentration not the same as the concentration value calculated with inputSolute and inputVol."
+                if ERROR == "unachievable":
+                    info = "Error: Computation unachievable. The amount of solute in the final solution is smaller than the amount of solute in the input solution."
+                return render(request, 'concentrationCalcSolute.html', {"error": info})
+
     # if a GET (or any other method) we'll create a blank form
     else:
         form = DilutionForm()
