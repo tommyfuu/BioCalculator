@@ -93,6 +93,8 @@ def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVo
 
 
 def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
+    if inputVol == None:
+        inputVol = 0
     # check inputConc and relevant errors
     if inputSolute != None and inputConc != None:
         # 1 if solute contradicts
@@ -115,11 +117,6 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
         print(0)
         print("finalConc == None")
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
-    # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
-    if inputSolute > finalVol*finalConc:
-        print(1)
-        print("unachievable computation")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
     # 2 Concentration unchanged
     if inputConc == finalConc:
         if inputVol == finalVol:
@@ -142,6 +139,8 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
     elif (inputVol == None or inputVol == 0) and finalVol == None:
         print(4)
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+    # if inputVol != None and finalVol == None:
+    #     finalVol = inputVol
     # 5 if input Vol and Conc are fine, and input only final concentration:
     elif inputVol > 0 and inputConc >= 0 and finalVol == None:
         if inputConc > finalConc:
@@ -154,6 +153,11 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
                 inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
             return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+    # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
+    if inputSolute > finalVol*finalConc:
+        print(1)
+        print("unachievable computation")
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
     # 6 dilution calculation
     elif inputConc > finalConc:
         print(6)
