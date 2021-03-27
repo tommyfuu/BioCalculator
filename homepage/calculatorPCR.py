@@ -1,41 +1,44 @@
 from django import forms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
 
 
 class PCRForm(forms.Form):
     # reference: https://www.genscript.com/pcr-protocol-pcr-steps.html
-    TOTALVOL = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False,)
-    WATER = forms.DecimalField(
+
+    totalVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    PCRBUFFERVOL = forms.DecimalField(
+    waterVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    PCRBUFFERINITCONC = forms.DecimalField(
+    PCRBufferVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    PCRBUFFERFINALCONC = forms.DecimalField(
+    PCRBufferInitConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    POLYMERASEVOL = forms.DecimalField(
+    PCRBufferFinalConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    POLYMERASECONC = forms.DecimalField(
+    polymeraseVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    dNTPVOL = forms.DecimalField(
+    polymeraseConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    dNTPCONC = forms.DecimalField(
+    dNTPVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    MgCl2VOL = forms.DecimalField(
+    dNTPConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    MgCl2CONC = forms.DecimalField(
+    MgCl2Vol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    FORWARDPRIMERVOL = forms.DecimalField(
+    MgCl2Conc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    FORWARDPRIMERCONC = forms.DecimalField(
+    forwardPrimerVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    BACKWARDPRIMERVOL = forms.DecimalField(
+    forwardPrimerConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    BACKWARDPRIMERCONC = forms.DecimalField(
+    backwardPrimerVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    TEMPLATEDNAVOL = forms.DecimalField(
+    backwardPrimerConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    TEMPLATEDNACONC = forms.DecimalField(
+    templateDNAVol = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False)
+    templateDNAConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
     DMSOOptionalVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
@@ -44,7 +47,8 @@ class PCRForm(forms.Form):
 
 # 10 X PCR Buffer -> 1X PCR Buffer in the final concentration
 # final solution has total volume 100 microL
-# we can just put in 10 microL of PCR 
+# we can just put in 10 microL of PCR
+
 
 def getVolumesPCRHelper(inputConc, inputVol, totalVol):
     if inputConc != None and inputVol != None:
@@ -56,7 +60,11 @@ def getVolumesPCRHelper(inputConc, inputVol, totalVol):
     elif inputConc != None:
         inputVol = totalVol*inputConc
     elif inputVol != None:
-        inputonc = inputVol/totalVol
+        inputConc = inputVol/totalVol
+    elif inputConc == None and inputVol == None:
+        inputVol = 0
+        inputConc = 0
+        # TODO: BUG FIX HERE!
     return inputVol, inputConc
 
 
@@ -70,22 +78,36 @@ def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBuffer
         tempPCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
         if tempPCRBufferVol != PCRBufferVol:
             return "CALCULATION CONFLICT ERROR"
-        else: 
+        else:
             return "IT's FINE"
     elif PCRBufferInitConc != None and PCRBufferFinalConc != None:
         PCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
     elif PCRBufferVol != None and PCRBufferInitConc != None:
-        PCRBufferFinalConc= PCRBufferVol/totalVol
+        PCRBufferFinalConc = PCRBufferVol/totalVol
     elif PCRBufferVol != None and PCRBufferFinalConc != None:
         PCRBufferInitConc = (totalVol/PCRBufferVol)*PCRBufferFinalConc
+    print(PCRBufferVol)
     # the rest of calculations
-    polymeraseVol, polymeraseConc = getVolumesPCRHelper(polymeraseConc, polymeraseVol, totalVol)
+    polymeraseVol, polymeraseConc = getVolumesPCRHelper(
+        polymeraseConc, polymeraseVol, totalVol)
+    print(polymeraseVol, polymeraseConc)
     dNTPVol, dNTPConc = getVolumesPCRHelper(dNTPConc, dNTPVol, totalVol)
+    print(dNTPVol, dNTPConc)
     MgCl2Vol, MgCl2Conc = getVolumesPCRHelper(MgCl2Conc, MgCl2Vol, totalVol)
-    forwardPrimerVol, forwardPrimerConc = getVolumesPCRHelper(forwardPrimerConc, forwardPrimerVol, totalVol)
-    backwardPrimerVol, backwardPrimerConc = backwardPrimerConcgetVolumesPCRHelper(backwardPrimerConc, backwardPrimerVol, totalVol)
-    templateDNAVol, templateDNAConc = getVolumesPCRHelper(templateDNAConc, templateDNAVol, totalVol)
-    DMSOptionalVol, DMSOptionalConc = getVolumesPCRHelper(DMSOptionalConc, DMSOptionalVol, totalVol)
+    print(MgCl2Vol, MgCl2Conc)
+    forwardPrimerVol, forwardPrimerConc = getVolumesPCRHelper(
+        forwardPrimerConc, forwardPrimerVol, totalVol)
+    print(forwardPrimerVol, forwardPrimerConc)
+    backwardPrimerVol, backwardPrimerConc = getVolumesPCRHelper(
+        backwardPrimerConc, backwardPrimerVol, totalVol)
+    print(backwardPrimerVol)
+    templateDNAVol, templateDNAConc = getVolumesPCRHelper(
+        templateDNAConc, templateDNAVol, totalVol)
+    print(templateDNAVol)
+    DMSOOptionalVol, DMSOOptionalConc = getVolumesPCRHelper(
+        DMSOOptionalVol, DMSOOptionalVol, totalVol)
+    print(DMSOOptionalVol)
     # water volume
-    waterVol = totalVol - PCRBufferVol - polymeraseVol -dNTPVol -MgCl2Vol - forwardPrimerVol - backwardPrimerVol - templateDNAVol - DMSOptionalVol
+    waterVol = totalVol - PCRBufferVol - polymeraseVol - dNTPVol - MgCl2Vol - \
+        forwardPrimerVol - backwardPrimerVol - templateDNAVol - DMSOOptionalVol
     return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc

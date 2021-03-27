@@ -40,21 +40,69 @@ nc{% extends 'base.html' %}
                 </li>
             </ul>
             <hr style="height:3pt; visibility:hidden;" />
-            <h6> finalConc</h6>
+            {%load crispy_forms_tags %} 
+            
             <form method="post">
                 {% csrf_token %}
-                {%load crispy_forms_tags %} 
-                <!-- <table> -->
-                    <!-- {{ pcrform|crispy }} -->
-                <div class="form-row">
-                    <div class="form-group col-md-6 mb-0">
-                        {{ pcrform.POLYMERASEVOL|as_crispy_field }}
+                <table class="tableContainer" cellspacing="10px">
+                    <tbody>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.totalVol|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.PCRBufferVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.PCRBufferInitConc|as_crispy_field }}</td>
+                            <td> {{ pcrform.PCRBufferFinalConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.polymeraseVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.polymeraseConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.dNTPVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.dNTPConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.MgCl2Vol|as_crispy_field }} </td>
+                            <td> {{ pcrform.MgCl2Conc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.forwardPrimerVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.forwardPrimerConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.backwardPrimerVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.backwardPrimerConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.templateDNAVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.templateDNAConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.DMSOOptionalVol|as_crispy_field }} </td>
+                            <td> {{ pcrform.DMSOOptionalConc|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ pcrform.waterVol|as_crispy_field }}</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+
+
+                <!-- <table>
+                    {{ pcrform|crispy }}
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        {{ pcrform.polymeraseVol|as_crispy_field }}
                     </div>
-                    <div class="form-group col-md-6 mb-0">
-                        {{ form.POLYMERASECONC|as_crispy_field }}
+                    <div class="col-md-6">
+                        {{ pcrform.polymeraseConc|as_crispy_field }}
                     </div>
                 <div>
-                <!-- </table> -->
+                {{ pcrform.totalVol|as_crispy_field }}
+                {{ pcrform.waterVol|as_crispy_field }} -->
+                </table> -->
                 <button type="submit">Submit</button>
             </form>
         </center>

@@ -34,8 +34,6 @@ ADDEDSOLUTE = None
 ADDEDWATER = None
 
 
-
-
 def dilution_input_view(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -106,44 +104,66 @@ def pcr_input_view(request):
     print(pcrform)
     # check whether it's valid:
     # if form.is_valid():
-    totalVol = pcrform.cleaned_data['TOTALVOL']
+    # totalVol = pcrform.cleaned_data['TOTALVOL']
 
-    waterVol = pcrform.cleaned_data['WATER']
+    # waterVol = pcrform.cleaned_data['WATER']
 
-    PCRBufferVol = pcrform.cleaned_data['PCRBUFFERVOL']
+    # PCRBufferVol = pcrform.cleaned_data['PCRBUFFERVOL']
 
-    PCRBufferInitConc= pcrform.cleaned_data['PCRBUFFERINITCONC']
-    
-    PCRBufferFinalConc = pcrform.cleaned_data['PCRBUFFERFINALCONC']
+    # PCRBufferInitConc= pcrform.cleaned_data['PCRBUFFERINITCONC']
 
-    polymeraseVol = pcrform.cleaned_data['POLYMERASEVOL']
+    # PCRBufferFinalConc = pcrform.cleaned_data['PCRBUFFERFINALCONC']
 
-    polymeraseConc = pcrform.cleaned_data['POLYMERASECONC']
+    # polymeraseVol = pcrform.cleaned_data['POLYMERASEVOL']
 
-    dNTPVol = pcrform.cleaned_data['dNTPVOL']
+    # polymeraseConc = pcrform.cleaned_data['POLYMERASECONC']
 
-    dNTPConc = pcrform.cleaned_data['dNTPCONC']
+    # dNTPVol = pcrform.cleaned_data['dNTPVOL']
 
-    MgCl2Vol = pcrform.cleaned_data['MgCl2VOL']
+    # dNTPConc = pcrform.cleaned_data['dNTPCONC']
 
-    MgCl2Conc = pcrform.cleaned_data['MgCl2CONC']
+    # MgCl2Vol = pcrform.cleaned_data['MgCl2VOL']
 
-    forwardPrimerVol = pcrform.cleaned_data['FORWARDPRIMERVOL']
+    # MgCl2Conc = pcrform.cleaned_data['MgCl2CONC']
 
-    forwardPrimerConc = pcrform.cleaned_data['FORWARDPRIMERCONC']
+    # forwardPrimerVol = pcrform.cleaned_data['FORWARDPRIMERVOL']
 
-    backwardPrimerVol = pcrform.cleaned_data['BACKWARDPRIMERVOL']
+    # forwardPrimerConc = pcrform.cleaned_data['FORWARDPRIMERCONC']
 
-    backwardPrimerConc = pcrform.cleaned_data['BACKWARDPRIMERCONC']
+    # backwardPrimerVol = pcrform.cleaned_data['BACKWARDPRIMERVOL']
 
-    templateDNAVol = pcrform.cleaned_data['TEMPLATEDNAVOL']
+    # backwardPrimerConc = pcrform.cleaned_data['BACKWARDPRIMERCONC']
 
-    templateDNAConc = pcrform.cleaned_data['TEMPLATEDNACONC']
+    # templateDNAVol = pcrform.cleaned_data['TEMPLATEDNAVOL']
 
+    # templateDNAConc = pcrform.cleaned_data['TEMPLATEDNACONC']
+
+    # DMSOOptionalVol = pcrform.cleaned_data['DMSOOptionalVol']
+
+    # DMSOOptionalConc = pcrform.cleaned_data['DMSOOptionalConc']
+
+    totalVol = pcrform.cleaned_data['totalVol']
+    waterVol = pcrform.cleaned_data['waterVol']
+    PCRBufferVol = pcrform.cleaned_data['PCRBufferVol']
+    PCRBufferInitConc = pcrform.cleaned_data['PCRBufferInitConc']
+    PCRBufferFinalConc = pcrform.cleaned_data['PCRBufferFinalConc']
+    polymeraseVol = pcrform.cleaned_data['polymeraseVol']
+    polymeraseConc = pcrform.cleaned_data['polymeraseConc']
+    dNTPVol = pcrform.cleaned_data['dNTPVol']
+    dNTPConc = pcrform.cleaned_data['dNTPConc']
+    MgCl2Vol = pcrform.cleaned_data['MgCl2Vol']
+    MgCl2Conc = pcrform.cleaned_data['MgCl2Conc']
+    forwardPrimerVol = pcrform.cleaned_data['forwardPrimerVol']
+    forwardPrimerConc = pcrform.cleaned_data['forwardPrimerConc']
+    backwardPrimerVol = pcrform.cleaned_data['backwardPrimerVol']
+    backwardPrimerConc = pcrform.cleaned_data['backwardPrimerConc']
+    templateDNAVol = pcrform.cleaned_data['templateDNAVol']
+    templateDNAConc = pcrform.cleaned_data['templateDNAConc']
     DMSOOptionalVol = pcrform.cleaned_data['DMSOOptionalVol']
-
     DMSOOptionalConc = pcrform.cleaned_data['DMSOOptionalConc']
-    results = getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc)
+
+    results = getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol,
+                            MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc)
     # totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc = results
     print(results)
     print(len(results))
