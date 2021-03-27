@@ -15,10 +15,6 @@ class DilutionForm(forms.Form):
         decimal_places=5, max_digits=10000, required=False, label='Final Liquid Volume')
     FINALCONC = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Final Liquid Concentration')
-    # ADDEDSOLUTE = forms.DecimalField(
-    #     decimal_places=5, max_digits=10000, required=False)
-    # ADDEDWATER = forms.DecimalField(
-    #     decimal_places=5, max_digits=10000, required=False)
 
 
 def dilutionHelper(inputConc, finalVol, finalConc):
@@ -93,6 +89,8 @@ def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVo
 
 
 def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
+    if finalConc == None:
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
     if inputVol == None:
         inputVol = 0
     # check inputConc and relevant errors

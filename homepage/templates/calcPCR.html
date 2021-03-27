@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+nc{% extends 'base.html' %}
 {% block content%}
     <head>
         <title>Bio Calculator Contact Page</title>
@@ -20,25 +20,22 @@
         </style>
         <center>
             <hr style="height:15pt; visibility:hidden;" />
-            <h4>Concentration Change Calculator</h4>
-            <h5>Make sure to fill out the final concentration!</h5>
-            <h5>While inputVol/inputSol/inputConc are optional, if left blank, they will be considered as 0.</h5>
+            <h4>PCR Calculator</h4>
+            <h5>Either fill out the volume of concentration of each input!</h5>
+            <h5>If concentration is left blank, will be considered default concentration.</h5>
             <h5>In addition, check out the instructions below!</h5>
             <ul>
                 <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Dilution</h5>
+                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for PCR (Concentrations)</h5>
                     <div class="dropdown-content">
-                    <h6> Mandatory inputs:</h6>
-                    <h6> finalConc</h6>
-                    <h6> FinalVol (only if inputVol is 0) </h6> 
+                    <h6> Mandatory inputs: Final Volume and either concentration or volume for all inputs</h6>
                     </div>
                 </li>
                 <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Increasing Concentration</h5>
+                    <h5 href="javascript:void(0)" class="dropbtn">Additional instructions</h5>
                     <div class="dropdown-content">
-                    <h6> Mandatory inputs: </h6>
-                    <h6> finalConc</h6>
-                    <h6> finalVol (only if inputVol is 0) </h6>
+                    <h6> Insert additional instructions here </h6>
+                    <h6> And have fun!</h6>
                     </div>
                 </li>
             </ul>
@@ -46,10 +43,19 @@
             <h6> finalConc</h6>
             <form method="post">
                 {% csrf_token %}
-                <table>
-                    {{ pcrform }}
-                </table>
-                <button type="submit">Sign in</button>
+                {%load crispy_forms_tags %} 
+                <!-- <table> -->
+                    <!-- {{ pcrform|crispy }} -->
+                <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                        {{ pcrform.POLYMERASEVOL|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                        {{ form.POLYMERASECONC|as_crispy_field }}
+                    </div>
+                <div>
+                <!-- </table> -->
+                <button type="submit">Submit</button>
             </form>
         </center>
     </body>
