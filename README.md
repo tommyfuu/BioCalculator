@@ -1,13 +1,17 @@
 # BioCalculator
+
 Creating a calculator for common biology lab experiments.
 
 So far:
+
 - Implemented a simple concentration change calculator!
 - Able to do simple dilution/concentration increase; with rendering in Django
 - General website aesthetics (homepage, navigation bar, templates)
-
+- Implementing PCR calculator and unit conversion calculator.
+- Please note that [the development notes](https://github.com/tommyfuu/BioCalculator/blob/main/development/DEVNOTES.md) can be helpful!
 
 ## Acknowledgement
+
 Developers:\
 Tom Fu (@tommyfuu)\
 Lucy Paddock (@lucinda-paddock)\
