@@ -97,7 +97,7 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
     if inputSolute != None and inputConc != None:
         # 1 if solute contradicts
         if inputConc != inputSolute/inputVol:
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "Solute"
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "solute"
     # 2 if inputted inputSolute instead of inputConc, convert
     elif inputSolute != None and inputConc == None:
         inputConc = inputSolute/inputVol
