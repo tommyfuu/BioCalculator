@@ -23,3 +23,5 @@ urlpatterns = [
     path('about/', include('homepage.urls')),
     path('admin/', admin.site.urls),
 ]
+
+# Tristan made this comment
