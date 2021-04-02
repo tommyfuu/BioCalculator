@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content%}
+    <head>
+        <title>Bio Calculator Contact Page</title>
+    </head>
+
+    <body style="background-color:rgb(255, 255, 255); font-size: 18; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+        <style>
+            table { 
+                width: 50%; 
+                height: 30%;
+            } 
+            body {
+              background-image: url("http://cdn.sci-news.com/images/enlarge4/image_5354e-Escherichia-coli.jpg");
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              background-size: cover;
+              color:white;
+            }
+        </style>
+        <center>
+            <hr style="height:15pt; visibility:hidden;" />
+            <h4>PCR Calculator</h4>
+            <h5>Here are the results!</h5>
+            <hr style="height:3pt; visibility:hidden;" />
+            
+            <table border = "1">
+                <hr style="height:15pt; visibility:hidden;" />
+                <tbody>
+                    <tr>
+                        <td> Total Volume {{RESULTtotalVol}} </td>
+                    </tr>
+                    <tr>
+                        <td> PCR Buffer Volume {{RESULTPCRBufferVol}} </td>
+                        <td> PCR Buffer Initial Conc {{RESULTPCRBufferInitConc}} </td>
+                        <td> PCR Buffer Final Conc {{RESULTPCRBufferFinalConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Polymerase Volume {{RESULTpolymeraseVol}} </td>
+                        <td> Polymerase Conc {{RESULTpolymeraseConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> dNTP Volume {{RESULTdNTPVol}} </td>
+                        <td> dNTP Conc {{RESULTdNTPConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> MgCl2 Volume {{RESULTMgCl2Vol}} </td>
+                        <td> MgCl2 Conc {{RESULTMgCl2Conc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Forward Primer Volume {{RESULTforwardPrimerVol}} </td>
+                        <td> Forward Primer Conc {{RESULTforwardPrimerConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Backward Primer Volume {{RESULTbackwardPrimerVol}} </td>
+                        <td> Backward Primer Concentration {{RESULTbackwardPrimerConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> DMSO Volume {{RESULTDMSOOptionalVol}} </td>
+                        <td> DMSO Concentration {{RESULTDMSOOptionalConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Added Water Volume {{RESULTwaterVol}} </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul>
+            <li><a href="http://127.0.0.1:8000/PCRCalc/">REFRESH</a></li>
+            </ul>
+        </center>
+    </body>
+
+
+{% endblock %}

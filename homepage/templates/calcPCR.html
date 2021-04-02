@@ -1,4 +1,4 @@
-nc{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block content%}
     <head>
         <title>Bio Calculator Contact Page</title>
@@ -28,13 +28,13 @@ nc{% extends 'base.html' %}
                 <li class="dropdown">
                     <h5 href="javascript:void(0)" class="dropbtn">Instructions for PCR (Concentrations)</h5>
                     <div class="dropdown-content">
-                    <h6> Mandatory inputs: Final Volume and either concentration or volume for all inputs</h6>
+                    <h6> Mandatory inputs: Each row except the DMSO and waterVol rows requires at least one input</h6>
                     </div>
                 </li>
                 <li class="dropdown">
                     <h5 href="javascript:void(0)" class="dropbtn">Additional instructions</h5>
                     <div class="dropdown-content">
-                    <h6> Insert additional instructions here </h6>
+                    <h6> For the PCR Buffer row, initial concentrtaion and final concentration are both required</h6>
                     <h6> And have fun!</h6>
                     </div>
                 </li>

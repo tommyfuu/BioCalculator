@@ -70,9 +70,11 @@ def getVolumesPCRHelper(inputConc, inputVol, totalVol):
 
 def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc):
     """Given all the concentrations and the total volume of the PCR reaction, calculate the volumes for the PCR reactions"""
+    error = False
     # make sure totalVol is always inputted
     if totalVol == None:
-        return "TOTALVOL MISSING ERROR"
+        error = True
+        return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
     # 1. PCR Buffer calculation
     if PCRBufferInitConc != None and PCRBufferFinalConc != None and PCRBufferVol != None:
         tempPCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
@@ -110,4 +112,9 @@ def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBuffer
     # water volume
     waterVol = totalVol - PCRBufferVol - polymeraseVol - dNTPVol - MgCl2Vol - \
         forwardPrimerVol - backwardPrimerVol - templateDNAVol - DMSOOptionalVol
-    return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc
+    return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc, error
+
+# Things to work on: UNIT CONVERSION AAAAAAH!
+# Edge cases ideas
+# 1. when the pcr buffer row's volume is inputted, we don't need to calculate the initial and final conc of pcr buffer
+# 2. edge case for negative water volume

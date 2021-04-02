@@ -81,19 +81,25 @@ def dilution_result_view(request):
     return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
 
-TOTALVOL = None
-WATERVOL = None
-PCRBUFFERVOL = None
-PCRBUFFERINITCONC = None
-PCRBUFFERFINALCONC = None
-POLYMERASEVOL = None
-POLYMERASECONC = None
-DNTPVOL = None
-DNTPCONC = None
-MGCL2VOL = None
-MGCL2CONC = None
-FORWARDPRIMERVOL = None
-FORWARDPRIMERCONC = None
+RESULTtotalVol = None
+RESULTwaterVol = None
+RESULTPCRBufferVol = None
+RESULTPCRBufferInitConc = None
+RESULTPCRBufferFinalConc = None
+RESULTpolymeraseVol = None
+RESULTpolymeraseConc = None
+RESULTdNTPVol = None
+RESULTdNTPConc = None
+RESULTMgCl2Vol = None
+RESULTMgCl2Conc = None
+RESULTforwardPrimerVol = None
+RESULTforwardPrimerConc = None
+RESULTbackwardPrimerVol = None
+RESULTbackwardPrimerConc = None
+RESULTtemplateDNAVol = None
+RESULTtemplateDNAConc = None
+RESULTDMSOOptionalVol = None
+RESULTDMSOOptionalConc = None
 
 
 def pcr_input_view(request):
@@ -101,46 +107,6 @@ def pcr_input_view(request):
     # if request.method == 'POST':
     # create a form instance and populate it with data from the request:
     pcrform = PCRForm(request.POST)
-    print(pcrform)
-    # check whether it's valid:
-    # if form.is_valid():
-    # totalVol = pcrform.cleaned_data['TOTALVOL']
-
-    # waterVol = pcrform.cleaned_data['WATER']
-
-    # PCRBufferVol = pcrform.cleaned_data['PCRBUFFERVOL']
-
-    # PCRBufferInitConc= pcrform.cleaned_data['PCRBUFFERINITCONC']
-
-    # PCRBufferFinalConc = pcrform.cleaned_data['PCRBUFFERFINALCONC']
-
-    # polymeraseVol = pcrform.cleaned_data['POLYMERASEVOL']
-
-    # polymeraseConc = pcrform.cleaned_data['POLYMERASECONC']
-
-    # dNTPVol = pcrform.cleaned_data['dNTPVOL']
-
-    # dNTPConc = pcrform.cleaned_data['dNTPCONC']
-
-    # MgCl2Vol = pcrform.cleaned_data['MgCl2VOL']
-
-    # MgCl2Conc = pcrform.cleaned_data['MgCl2CONC']
-
-    # forwardPrimerVol = pcrform.cleaned_data['FORWARDPRIMERVOL']
-
-    # forwardPrimerConc = pcrform.cleaned_data['FORWARDPRIMERCONC']
-
-    # backwardPrimerVol = pcrform.cleaned_data['BACKWARDPRIMERVOL']
-
-    # backwardPrimerConc = pcrform.cleaned_data['BACKWARDPRIMERCONC']
-
-    # templateDNAVol = pcrform.cleaned_data['TEMPLATEDNAVOL']
-
-    # templateDNAConc = pcrform.cleaned_data['TEMPLATEDNACONC']
-
-    # DMSOOptionalVol = pcrform.cleaned_data['DMSOOptionalVol']
-
-    # DMSOOptionalConc = pcrform.cleaned_data['DMSOOptionalConc']
 
     totalVol = pcrform.cleaned_data['totalVol']
     waterVol = pcrform.cleaned_data['waterVol']
@@ -161,10 +127,16 @@ def pcr_input_view(request):
     templateDNAConc = pcrform.cleaned_data['templateDNAConc']
     DMSOOptionalVol = pcrform.cleaned_data['DMSOOptionalVol']
     DMSOOptionalConc = pcrform.cleaned_data['DMSOOptionalConc']
-
     results = getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol,
                             MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc)
-    # totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc = results
-    print(results)
-    print(len(results))
+
+    RESULTtotalVol, RESULTwaterVol, RESULTPCRBufferVol, RESULTPCRBufferInitConc, RESULTPCRBufferFinalConc, RESULTpolymeraseVol, RESULTpolymeraseConc, RESULTdNTPVol, RESULTdNTPConc, RESULTMgCl2Vol, RESULTMgCl2Conc, RESULTforwardPrimerVol, RESULTforwardPrimerConc, RESULTbackwardPrimerVol, RESULTbackwardPrimerConc, RESULTtemplateDNAVol, RESULTtemplateDNAConc, RESULTDMSOOptionalVol, RESULTDMSOOptionalConc, ERROR = results
+    if ERROR == False:
+        return render(request, 'calcPCRResult.html', {"RESULTtotalVol": RESULTtotalVol, "RESULTwaterVol": RESULTwaterVol, "RESULTPCRBufferVol": RESULTPCRBufferVol, "RESULTPCRBufferInitConc": RESULTPCRBufferInitConc, "RESULTPCRBufferFinalConc": RESULTPCRBufferFinalConc, "RESULTpolymeraseVol": RESULTpolymeraseVol, "RESULTpolymeraseConc": RESULTpolymeraseConc, "RESULTdNTPVol": RESULTdNTPVol, "RESULTdNTPConc": RESULTdNTPConc, "RESULTMgCl2Vol": RESULTMgCl2Vol, "RESULTMgCl2Conc": RESULTMgCl2Conc, "RESULTforwardPrimerVol": RESULTforwardPrimerVol, "RESULTforwardPrimerConc": RESULTforwardPrimerConc, "RESULTbackwardPrimerVol": RESULTbackwardPrimerVol, "RESULTbackwardPrimerConc": RESULTbackwardPrimerConc, "RESULTtemplateDNAVol": RESULTtemplateDNAVol, "RESULTtemplateDNAConc": RESULTtemplateDNAConc, "RESULTDMSOOptionalVol": RESULTDMSOOptionalVol, "RESULTDMSOOptionalConc": RESULTDMSOOptionalConc})
+
     return render(request, 'calcPCR.html', {'pcrform': pcrform})
+
+
+def pcr_result_view(request):
+    # return HttpResponse("Contact page!")
+    return render(request, 'calcPCRResult.html', {"RESULTtotalVol": RESULTtotalVol, "RESULTwaterVol": RESULTwaterVol, "RESULTPCRBufferVol": RESULTPCRBufferVol, "RESULTPCRBufferInitConc": RESULTPCRBufferInitConc, "RESULTPCRBufferFinalConc": RESULTPCRBufferFinalConc, "RESULTpolymeraseVol": RESULTpolymeraseVol, "RESULTpolymeraseConc": RESULTpolymeraseConc, "RESULTdNTPVol": RESULTdNTPVol, "RESULTdNTPConc": RESULTdNTPConc, "RESULTMgCl2Vol": RESULTMgCl2Vol, "RESULTMgCl2Conc": RESULTMgCl2Conc, "RESULTforwardPrimerVol": RESULTforwardPrimerVol, "RESULTforwardPrimerConc": RESULTforwardPrimerConc, "RESULTbackwardPrimerVol": RESULTbackwardPrimerVol, "RESULTbackwardPrimerConc": RESULTbackwardPrimerConc, "RESULTtemplateDNAVol": RESULTtemplateDNAVol, "RESULTtemplateDNAConc": RESULTtemplateDNAConc, "RESULTDMSOOptionalVol": RESULTDMSOOptionalVol, "RESULTDMSOOptionalConc": RESULTDMSOOptionalConc})
