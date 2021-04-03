@@ -72,7 +72,7 @@ def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBuffer
     """Given all the concentrations and the total volume of the PCR reaction, calculate the volumes for the PCR reactions"""
     # make sure totalVol is always inputted
     if totalVol == None:
-        return "TOTALVOL MISSING ERROR"
+        return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
     # 1. PCR Buffer calculation
     if PCRBufferInitConc != None and PCRBufferFinalConc != None and PCRBufferVol != None:
         tempPCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
@@ -86,28 +86,25 @@ def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBuffer
         PCRBufferFinalConc = PCRBufferVol/totalVol
     elif PCRBufferVol != None and PCRBufferFinalConc != None:
         PCRBufferInitConc = (totalVol/PCRBufferVol)*PCRBufferFinalConc
-    print(PCRBufferVol)
     # the rest of calculations
     polymeraseVol, polymeraseConc = getVolumesPCRHelper(
         polymeraseConc, polymeraseVol, totalVol)
-    print(polymeraseVol, polymeraseConc)
     dNTPVol, dNTPConc = getVolumesPCRHelper(dNTPConc, dNTPVol, totalVol)
-    print(dNTPVol, dNTPConc)
     MgCl2Vol, MgCl2Conc = getVolumesPCRHelper(MgCl2Conc, MgCl2Vol, totalVol)
-    print(MgCl2Vol, MgCl2Conc)
     forwardPrimerVol, forwardPrimerConc = getVolumesPCRHelper(
         forwardPrimerConc, forwardPrimerVol, totalVol)
-    print(forwardPrimerVol, forwardPrimerConc)
     backwardPrimerVol, backwardPrimerConc = getVolumesPCRHelper(
         backwardPrimerConc, backwardPrimerVol, totalVol)
-    print(backwardPrimerVol)
     templateDNAVol, templateDNAConc = getVolumesPCRHelper(
         templateDNAConc, templateDNAVol, totalVol)
-    print(templateDNAVol)
     DMSOOptionalVol, DMSOOptionalConc = getVolumesPCRHelper(
         DMSOOptionalVol, DMSOOptionalVol, totalVol)
-    print(DMSOOptionalVol)
     # water volume
     waterVol = totalVol - PCRBufferVol - polymeraseVol - dNTPVol - MgCl2Vol - \
         forwardPrimerVol - backwardPrimerVol - templateDNAVol - DMSOOptionalVol
-    return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc
+    return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc, error
+
+# Things to work on: UNIT CONVERSION AAAAAAH!
+# Edge cases ideas
+# 1. when the pcr buffer row's volume is inputted, we don't need to calculate the initial and final conc of pcr buffer
+# 2. edge case for negative water volume
