@@ -73,7 +73,6 @@ def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBuffer
     error = False
     # make sure totalVol is always inputted
     if totalVol == None:
-        error = True
         return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
     # 1. PCR Buffer calculation
     if PCRBufferInitConc != None and PCRBufferFinalConc != None and PCRBufferVol != None:
