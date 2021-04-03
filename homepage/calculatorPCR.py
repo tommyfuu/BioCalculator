@@ -64,13 +64,13 @@ def getVolumesPCRHelper(inputConc, inputVol, totalVol):
     elif inputConc == None and inputVol == None:
         inputVol = 0
         inputConc = 0
-        # TODO: BUG FIX HERE!
     return inputVol, inputConc
 
 
 def getVolumesPCR(totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc):
     """Given all the concentrations and the total volume of the PCR reaction, calculate the volumes for the PCR reactions"""
     # make sure totalVol is always inputted
+    error = False
     if totalVol == None:
         return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
     # 1. PCR Buffer calculation
