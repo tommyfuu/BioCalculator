@@ -1,7 +1,21 @@
 from django import forms
+from .calculatorUnitConvert import *
 
 # given a VOLUME of liquid,CONCENTRATION of this liquid, and TARGET concentration
 # calculate the VOLUME of water needed to add
+
+MASSCHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+               ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]
+VOLCHOICES = [('L', 'L'), ('kL', 'kL'), ('pL', 'pL'), ('nL', 'nL'), ('μL', 'μL'),
+              ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+CONCCHOICES = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('μM', 'μM'),
+               ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('g/L', 'g/L'), ('kg/L', 'kg/L')]
+SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+                 ('mg', 'mg'), ('cg', 'cg'), ('Mg',
+                                              'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
+                 ('L', 'L'), ('kL', 'kL'), ('pL',
+                                            'pL'), ('nL', 'nL'), ('μL', 'μL'),
+                 ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
 
 
 class DilutionForm(forms.Form):
@@ -15,6 +29,20 @@ class DilutionForm(forms.Form):
         decimal_places=5, max_digits=10000, required=False, label='Final Liquid Volume')
     FINALCONC = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Final Liquid Concentration')
+    INPUTSOLUTEUNIT = forms.CharField(
+        label='Input solute unit (Volume or mass)', widget=forms.Select(choices=SOLUTECHOICES), required=False)
+    INPUTVOLUNIT = forms.CharField(
+        label='Input volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+    INPUTCONCUNIT = forms.CharField(
+        label='Input concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
+    FINALVOLUNIT = forms.CharField(
+        label='Final volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+    FINALCONCUNIT = forms.CharField(
+        label='Final concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
+    OUTPUTVOLUNIT = forms.CharField(
+        label='Output volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+    OUTPUTCONCUNIT = forms.CharField(
+        label='Output concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
 
 
 def dilutionHelper(inputConc, finalVol, finalConc):
@@ -88,11 +116,28 @@ def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVo
     return inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
 
 
+def unitConversion(inputVol, inputConc, finalVol, finalConc, inputSolute, inputVolUnit, inputConcUnit, inputSoluteUnit, finalVolUnit, finalConcUnit, outputVolUnit, outputConcUnit):
+    '''convert unit for easier calculation'''
+    inputVolRightUnit = convert(inputVol, inputVolUnit, outputVolUnit)
+    inputConcRightUnit = convert(inputConc, inputConcUnit, outputConcUnit)
+    finalVolRightUnit = convert(finalVol, finalVolUnit, outputVolUnit)
+    finalConcRightUnit = convert(finalConc, finalConcUnit, outputConcUnit)
+    # solute
+    outputSoluteUnit, outputSoluteConversion = concToMassDict[outputConcUnit]
+    inputSoluteRightUnit = convert(
+        inputSolute, inputSoluteUnit, outputSoluteUnit)*outputSoluteConversion
+    return inputVolRightUnit, inputConcRightUnit, finalVolRightUnit, finalConcRightUnit, inputSoluteRightUnit
+
+
 def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
     if finalConc == None:
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
     if inputVol == None:
         inputVol = 0
+    # 0. if inputVol==0, it will potentially lead to line 102 division not calculable
+    # it also doesn't make sense to not have any inputVol, make it an error case
+    if inputVol == 0:
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "inputVol==0"
     # check inputConc and relevant errors
     if inputSolute != None and inputConc != None:
         # 1 if solute contradicts
@@ -171,12 +216,10 @@ def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolu
         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
 
 
-# how many rows do we need?
-# inputVol
-# inputConcentration
-# inputSolute (interchangeable from row 2)
-# finalVol
-# finalConcentration
-# addedSolute
-# addedWater
-# class NameForm(forms.Form):
+# add unit conversion
+# when calculating, converting all the numbers to output units
+# when displaying results, input unit stay the same, convert final and added units into output units
+# output units can be optional: if users choose not to input, then we just use the input units
+
+# to figure out the right solute unit, is to figure out the mass unit embedded in the outputConc unit
+# for that, we probably need Lucy and Liam to write a dictionary thats finds the mass unit from the volume unit

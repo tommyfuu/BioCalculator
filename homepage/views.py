@@ -39,10 +39,14 @@ ADDEDWATER = None
 def dilution_input_view(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+        print("REQUEST METHOD CHECKING", str(request.method))
         # create a form instance and populate it with data from the request:
         form = DilutionForm(request.POST)
+        print("FORM VALIDITY CHECKING", str(form.is_valid()))
+        print(form)
         # check whether it's valid:
         if form.is_valid():
+            print("Extracting values")
             inputVol = form.cleaned_data['INPUTVOL']
             inputConc = form.cleaned_data['INPUTCONC']
             inputSolute = form.cleaned_data['INPUTSOLUTE']
@@ -56,12 +60,8 @@ def dilution_input_view(request):
             INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
                 inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
             print("Here are the calculated input values for your desired output:")
-            # print(c)
-            # print(inputVol, inputConc, inputSolute, finalVol,
-            #       finalConc, addedSoluteVol, addedWater)
-            # redirect to a new URL:
-            # return HttpResponseRedirect('http://127.0.0.1:8000/dilutionCalculatorResult')
             if ERROR == False:
+                print("GOTORESULTPAGE")
                 return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
             elif ERROR == True:
                 return render(request, 'concentrationCalcError.html', {})
@@ -70,6 +70,8 @@ def dilution_input_view(request):
                     info = "Error: Input solution concentration not the same as the concentration value calculated with inputSolute and inputVol."
                 if ERROR == "unachievable":
                     info = "Error: Computation unachievable. The amount of solute in the final solution is smaller than the amount of solute in the input solution."
+                if ERROR == "inputVol==0":
+                    info = "Error: input volume = 0, invalid input solution."
                 return render(request, 'concentrationCalcSolute.html', {"error": info})
 
     # if a GET (or any other method) we'll create a blank form

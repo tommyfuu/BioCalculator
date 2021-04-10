@@ -43,12 +43,40 @@
                 </li>
             </ul>
             <hr style="height:3pt; visibility:hidden;" />
-            <form action="" method="post">
+            {% load crispy_forms_tags %} 
+            <form method="post">
                 {% csrf_token %}
-                <table>
-                {{ form.as_table }}
+                <table class="tableContainer" cellspacing="10px">
+                    <tbody>
+                        <tr style="height:5px;">
+                            <td> {{ form.INPUTVOL|as_crispy_field }}</td>
+                            <td> {{ form.INPUTVOLUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.INPUTCONC|as_crispy_field }}</td>
+                            <td> {{ form.INPUTCONCUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.INPUTSOLUTE|as_crispy_field }}</td>
+                            <td> {{ form.INPUTSOLUTEUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.FINALVOL|as_crispy_field }}</td>
+                            <td> {{ form.FINALVOLUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.FINALCONC|as_crispy_field }}</td>
+                            <td> {{ form.FINALCONCUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.OUTPUTVOLUNIT|as_crispy_field }}</td>
+                            <td> {{ form.OUTPUTCONCUNIT|as_crispy_field }}</td>
+                        </tr>
+                        
+                    </tbody>
                 </table>
-                <input type="submit" value="Submit" />
+
+                <button type="submit">Submit</button>
             </form>
         </center>
     </body>
