@@ -7,11 +7,14 @@ class CuttingEdgeForm(forms.Form):
     totalVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
     
+    # initial DNA concentration, final mass of dna; 
+    # don’t worry about unit conversion for now
+
     templateDNAVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
     templateDNAInitConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
-    templateDNAFinalConc = forms.DecimalField(
+    templateDNAFinalMass = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False)
 
     bufferVol = forms.DecimalField(
@@ -40,10 +43,9 @@ def updateVolumes(inputConc, inputVol, totalVol):
     '''
     if inputConc != None and inputVol != None:
         tempinputConc = inputVol/totalVol
+        # Raises an error meesage
         if tempinputConc != inputConc:
-            return "CALCULATION CONFLICT ERROR"
-        else:
-            return "IT's FINE"
+            raise Exception("CALCULATION CONFLICT ERROR")
     elif inputConc != None: # When inputVol is empty
         inputVol = totalVol*inputConc
     elif inputVol != None: # When inputConc is empty
@@ -53,8 +55,7 @@ def updateVolumes(inputConc, inputVol, totalVol):
         inputConc = 0
     return inputVol, inputConc
 
-
-def getVolumesPCR(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalConc, bufferVol, 
+def getVolumesPCR(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, 
                     bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol):
     '''Given all the concentrations and the total volume of the PCR reaction, calculate 
     the volumes for the PCR reactions'''
@@ -64,30 +65,28 @@ def getVolumesPCR(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFina
     if totalVol == None:
         return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
     
-    # DNA Calculation
-    if PCRBufferInitConc != None and PCRBufferFinalConc != None and PCRBufferVol != None:
-        tempPCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
-        if tempPCRBufferVol != PCRBufferVol:
-            return "CALCULATION CONFLICT ERROR"
-        else:
-            return "IT's FINE"
+    # DNA Calculation (Assuming that the units match for now)
+    # TODO: Implement DNA Calculation
+    if templateDNAVol != None and templateDNAInitConc != None and templateDNAFinalMass != None:
+        # Checking that the three inputs match
+        if templateDNAVol != templateDNAInitConc / templateDNAFinalMass:
+            raise Exception("CALCULATION CONFLICT ERROR")
     elif PCRBufferInitConc != None and PCRBufferFinalConc != None:
         PCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
-    elif PCRBufferVol != None and PCRBufferInitConc != None:
-        PCRBufferFinalConc = PCRBufferVol/totalVol
-    elif PCRBufferVol != None and PCRBufferFinalConc != None:
-        PCRBufferInitConc = (totalVol/PCRBufferVol)*PCRBufferFinalConc
+    # elif PCRBufferVol != None and PCRBufferInitConc != None:
+    #     PCRBufferFinalConc = PCRBufferVol/totalVol
+    # elif PCRBufferVol != None and PCRBufferFinalConc != None:
+    #     PCRBufferInitConc = (totalVol/PCRBufferVol)*PCRBufferFinalConc
     
     # the rest of calculations
     restrictionEnzymeVol, restrictionEnzymeConc = updateVolumes(
-        restrictionEnzymeVol, restrictionEnzymeConc)
-
-    
+        restrictionEnzymeVol, restrictionEnzymeConc, totalVol)
+    bufferVol, bufferConc = updateVolumes(bufferVol, bufferConc, totalVol)
     
     # water volume
-    waterVol = totalVol - PCRBufferVol - polymeraseVol - dNTPVol - MgCl2Vol - \
-        forwardPrimerVol - backwardPrimerVol - templateDNAVol - DMSOOptionalVol
-    return totalVol, waterVol, PCRBufferVol, PCRBufferInitConc, PCRBufferFinalConc, polymeraseVol, polymeraseConc, dNTPVol, dNTPConc, MgCl2Vol, MgCl2Conc, forwardPrimerVol, forwardPrimerConc, backwardPrimerVol, backwardPrimerConc, templateDNAVol, templateDNAConc, DMSOOptionalVol, DMSOOptionalConc, error
+    waterVol = totalVol - templateDNAVol - restrictionEnzymeVol - bufferVol
+
+    return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol
 
 # Things to work on: UNIT CONVERSION AAAAAAH!
 # Edge cases ideas
