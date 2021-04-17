@@ -4,7 +4,7 @@ unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', '
             ('L', 'kL'): 0.001, ('L', 'pL'): 10**12, ('L', 'nL'): 10**9, ('L', 'μL'): 10**6, ('L', 'mL'): 10**3, ('L', 'cL'): 100, ('L', 'ML'): 10**-6, ('L', 'GL'): 10**-9, ('L', 'TL'): 10**-12,
             ('mol', 'kmol'): 0.001, ('mol', 'pmol'): 10**12, ('mol', 'nmol'): 10**9, ('mol', 'μmol'): 10**6, ('mol', 'mmol'): 10**3, ('mol', 'cmol'): 100, ('mol', 'Mmol'): 10**-6, ('mol', 'Gmol'): 10**-9, ('mol', 'Tmol'): 10**-12,
             ('mol/L', 'M'): 1, ('kg/L', 'M'): 1000}
-metricUnits = ['g', 'M', 'L']
+metricUnits = ['g', 'M', 'L', 'mol']
 
 
 def convert(input, unitFrom, unitTo, molarMass=0):
@@ -18,13 +18,18 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     elif (unitTo, unitFrom) in unitDict:
         return input*(1/unitDict[(unitTo, unitFrom)])
 
-    # if we are converting M to ppm or vice versa
+    # if we are converting ppm to A or vice versa
     elif (unitFrom == 'ppm' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'ppm'):
         return MToPPM(input, unitFrom, unitTo, molarMass)
 
+    # if we are converting g/L to M or vice versa
     elif (unitFrom == 'g/L' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'g/L'):
         return MToGPerL(input, unitFrom, unitTo, molarMass)
     
+    # if we are converting mol to g or vice versa
+    elif (unitFrom == 'mol' and unitTo == 'g') or (unitFrom == 'g' and unitTo == 'mol'):
+        return molToG(input, unitFrom, unitTo, molarMass)
+
     # converting some form of mol/L to some form of M or vice versa
     elif ('/' in unitFrom and unitFrom[-1]=='L' and unitTo[-1]=='M'):
         mols = unitFrom.split('/')[0]
@@ -42,9 +47,14 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         return intermediate
 
     # if you can convert unitFrom to metric base and then to unitTo
-    elif unitFrom[-1] in metricUnits:
-        standard = convert(input, unitFrom, unitFrom[-1])
-        return convert(standard, unitFrom[-1], unitTo)
+    elif unitFrom[1:] in metricUnits:
+        standard = convert(input, unitFrom, unitFrom[1:], molarMass)
+        return convert(standard, unitFrom[1:], unitTo, molarMass)
+
+    # if you can convert To to metric base and then to unitTo
+    elif unitTo[1:] in metricUnits:
+        standard = convert(input, unitTo, unitTo[1:], molarMass)
+        return convert(standard, unitFrom, unitTo[1:], molarMass)
 
 
 def MToPPM(input, unitFrom, unitTo, molarMass):
@@ -55,6 +65,13 @@ def MToPPM(input, unitFrom, unitTo, molarMass):
     elif unitFrom == 'M' and unitTo == 'ppm':
         return input * molarMass * 1000
 
+def molToG(input, unitFrom, unitTo, molarMass):
+    '''Converts mol to g and vice versa, but you have to know the 
+    molar mass'''
+    if unitFrom == 'mol' and unitTo == 'g':
+        return input * molarMass
+    elif unitFrom == 'g' and unitTo == 'mol':
+        return input * (1/molarMass)
 
 def MToGPerL(input, unitFrom, unitTo, molarMass):
     '''Converts M to g/L and vice versa, but you have to know the molar mass'''
