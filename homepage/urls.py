@@ -9,5 +9,6 @@ urlpatterns = [
     path('dilutionCalculatorResult/', views.dilution_result_view, name='dilution'),
     path('PCRCalc/', views.pcr_input_view, name='PCR'),
     path('PCRCalcResult/', views.pcr_result_view, name='PCR'),
-    path('PCRCalcError/', views.pcr_error_view, name='PCR')
+    path('PCRCalcError/', views.pcr_error_view, name='PCR'),
+    path('calcUnitConvert/', views.unit_convert_input_view, name='unit conversion')
 ]

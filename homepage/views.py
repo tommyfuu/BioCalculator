@@ -4,6 +4,8 @@ from .calculatorDilution import DilutionForm
 from .calculatorDilution import *
 from .calculatorPCR import PCRForm
 from .calculatorPCR import *
+from .calculatorUnitConvert import ConversionForm
+from .calculatorUnitConvert import *
 
 import time
 # Create your views here.
@@ -172,3 +174,50 @@ def pcr_result_view(request):
 def pcr_error_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcPCRError.html', {"errorMsg": ERRORMSG})
+
+
+INPUTVALUE = None
+INPUTUNIT = None
+OUTPUTVALUE = None
+OUTPUTUNIT = None
+MOLARMASS = None
+
+def unit_convert_input_view(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        conversionform = ConversionForm(request.POST)
+        # check whether it's valid:
+        if conversionform.is_valid():
+            inputValue = conversionform.cleaned_data['Input Value']
+            inputUnit = conversionform.cleaned_data['Input Unit']
+            outputValue = conversionform.cleaned_data['Output Value']
+            outputUnit = conversionform.cleaned_data['Output Unit']
+            molarMass = conversionform.cleaned_data['Molar Mass']
+            results = unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass)
+            print("Here is conversion value for your input:")
+
+            INPUTVALUE, INPUTUNIT, OUTPUTVALUE, OUTPUTUNIT, MOLARMASS, ERROR = results
+
+            if ERROR == False:
+                return render(request, 'calcUnitConvertResult.html', {"Input Value": INPUTVALUE, "Input Unit": INPUTUNIT, "Output Value": OUTPUTVALUE, "Output Unit": OUTPUTUNIT, "Molar Mass": MOLARMASS})
+            else:
+                ERRORMSG = "There's some error"
+                return render(request, 'calcUnitConvertError.html', {'errorMsg': ERRORMSG})
+        else:
+            return render(request, 'calcUnitConvertError.html', {'conversionform': conversionform})
+    else:
+        conversionform = ConversionForm()
+    return render(request, 'calcUnitConvertResult.html', {'conversionform': conversionform})
+
+
+def unit_convert_result_view(request):
+    # return HttpResponse("Contact page!")
+    return render(request, 'calcUnitConvertResult.html', {"Input Value": INPUTVALUE, "Input Unit": INPUTUNIT, "Output Value": OUTPUTVALUE, "Output Unit": OUTPUTUNIT, "Molar Mass": MOLARMASS})
+
+
+def unit_convert_error_view(request):
+    # return HttpResponse("Contact page!")
+    return render(request, 'calcUnitConvertError.html', {"errorMsg": ERRORMSG})
+
+

@@ -1,3 +1,5 @@
+from django import forms
+from .calculatorUnitConvert import *
 
 unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', 'μg'): 10**6, ('g', 'mg'): 10**3, ('g', 'cg'): 100, ('g', 'Mg'): 10**-6, ('g', 'Gg'): 10**-9, ('g', 'Tg'): 10**-12,
             ('M', 'kM'): 0.001, ('M', 'pM'): 10**12, ('M', 'nM'): 10**9, ('M', 'μM'): 10**6, ('M', 'mM'): 10**3, ('M', 'cM'): 100, ('M', 'MM'): 10**-6, ('M', 'GM'): 10**-9, ('M', 'TM'): 10**-12,
@@ -5,6 +7,34 @@ unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', '
             ('mol', 'kmol'): 0.001, ('mol', 'pmol'): 10**12, ('mol', 'nmol'): 10**9, ('mol', 'μmol'): 10**6, ('mol', 'mmol'): 10**3, ('mol', 'cmol'): 100, ('mol', 'Mmol'): 10**-6, ('mol', 'Gmol'): 10**-9, ('mol', 'Tmol'): 10**-12,
             ('mol/L', 'M'): 1, ('kg/L', 'M'): 1000}
 metricUnits = ['g', 'M', 'L', 'mol']
+
+
+class ConversionForm(forms.Form):
+    INPUTVALUE = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=True, label='Input Value')
+    INPUTUNIT = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=True, label='Input Unit')
+    OUTPUTVALUE = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False, label='Output Value')
+    OUTPUTUNIT = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=True, label='Output Unit')
+    MOLARMASS = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False, label='Molar Mass')
+
+def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
+    '''Input the input value, input unit, output unit, and molar mass (if needed) and it will
+    calculate the output value'''
+
+    error = False
+    # calculation of output value
+    while outputValue== None:
+        try:
+            if inputValue != None and inputUnit != None and outputUnit != None:
+                outputValue = convert(inputValue, inputUnit, outputUnit, molarMass)
+        except:
+            error = True
+            print("Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles.")
+    return inputValue, inputUnit, outputValue, outputUnit, molarMass, error
 
 
 def convert(input, unitFrom, unitTo, molarMass=0):

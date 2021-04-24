@@ -15,7 +15,7 @@
 
 ### 3. Miscellaneous
 
-- Requirements for developement in `requirements.txt` in thr development folder. In order to install all the required dependencies, do `pip3 install -r requirements.txt`.
+- Requirements for development in `requirements.txt` in the development folder. In order to install all the required dependencies, do `pip3 install -r requirements.txt`.
 
 ### 4. Guides
 

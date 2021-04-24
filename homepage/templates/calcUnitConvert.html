@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content%}
+    <head>
+        <title>Bio Calculator Contact Page</title>
+    </head>
+
+    <body style="background-color:rgb(216, 204, 36); font-size: 18; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+        <style>
+            table { 
+                width: 50%; 
+                height: 30%;
+            } 
+            body {
+              background-image: url("http://cdn.sci-news.com/images/enlarge4/image_5354e-Escherichia-coli.jpg");
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              background-size: cover;
+              color:white;
+            }
+        </style>
+        <center>
+            <hr style="height:15pt; visibility:hidden;" />
+            <h4>Unit Conversion Calculator</h4>
+            <h5>Enter Input Value, Input Unit, Output Unit.</h5>
+            <h5>Molar Mass is required if converting between mass and moles.</h5>
+            <h5>In addition, check out the instructions below!</h5>
+            <ul>
+                <li class="dropdown">
+                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Unit Conversion</h5>
+                    <div class="dropdown-content">
+                    <h6> Mandatory inputs:</h6>
+                    <h6> Input Value </h6>
+                    <h6> Input Unit </h6> 
+                    <h6> Output Unit </h6> 
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <h5 href="javascript:void(0)" class="dropbtn">*Other Instructions*</h5>
+                    <div class="dropdown-content">
+                    <h6> *Other Instructions* </h6>
+                    </div>
+                </li>
+            </ul>
+            <hr style="height:3pt; visibility:hidden;" />
+            {% load crispy_forms_tags %} 
+            <form method="post">
+                {% csrf_token %}
+                <table class="tableContainer" cellspacing="10px">
+                    <tbody>
+                        <tr style="height:5px;">
+                            <td> {{ form.INPUTVALUE|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.INPUTUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.OUTPUTVALUE|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.OUTPUTUNIT|as_crispy_field }}</td>
+                        </tr>
+                        <tr style="height:5px;">
+                            <td> {{ form.MOLARMASS|as_crispy_field }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button type="submit">Submit</button>
+            </form>
+        </center>
+    </body>
+
+
+{% endblock %}
