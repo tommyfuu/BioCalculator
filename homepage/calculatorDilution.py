@@ -143,113 +143,120 @@ def unitConversion(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute
     return inputVolRightUnit, inputConcRightUnit, finalVolRightUnit, finalConcRightUnit, inputSoluteRightUnit
 
 
-def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
-    if finalConc == None:
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
-    if inputVol == None:
-        inputVol = 0
-    # 0. if inputVol==0, it will potentially lead to line 102 division not calculable
-    # it also doesn't make sense to not have any inputVol, make it an error case
-    if inputVol == 0:
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "inputVol==0"
-    # check inputConc and relevant errors
-    if inputSolute != None and inputConc != None:
-        # 1 if solute contradicts
-        if inputConc != inputSolute/inputVol:
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "solute"
-    # 2 if inputted inputSolute instead of inputConc, convert
-    elif inputSolute != None and inputConc == None:
-        inputConc = inputSolute/inputVol
-    # 3 Calculate inputSolute if necessary
-    elif inputConc != None and inputSolute == None:
-        inputSolute = inputVol * inputConc
-    # 4 if no inputConc measure, assume input Conc = 0
-    elif inputConc == None and inputSolute == None:
-        inputConc = 0
-        inputSolute = 0
+# def changeConcentrationTable(inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, addedWaterVol):
+#     if finalConc == None:
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+#     if inputVol == None:
+#         inputVol = 0
+#     # 0. if inputVol==0, it will potentially lead to line 102 division not calculable
+#     # it also doesn't make sense to not have any inputVol, make it an error case
+#     if inputVol == 0:
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "inputVol==0"
+#     # check inputConc and relevant errors
+#     if inputSolute != None and inputConc != None:
+#         # 1 if solute contradicts
+#         if inputConc != inputSolute/inputVol:
+#             return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "solute"
+#     # 2 if inputted inputSolute instead of inputConc, convert
+#     elif inputSolute != None and inputConc == None:
+#         inputConc = inputSolute/inputVol
+#     # 3 Calculate inputSolute if necessary
+#     elif inputConc != None and inputSolute == None:
+#         inputSolute = inputVol * inputConc
+#     # 4 if no inputConc measure, assume input Conc = 0
+#     elif inputConc == None and inputSolute == None:
+#         inputConc = 0
+#         inputSolute = 0
 
-    # check calculation cases
-    # 0 no finalConc, no point of doing calculations
-    if finalConc == None:
-        print(0)
-        print("finalConc == None")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
-    # 2 Concentration unchanged
-    if inputConc == finalConc:
-        if inputVol == finalVol:
-            print(2.1)
-            print("Conc unchanged and nothing else need to be changed")
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
-        elif inputVol < finalVol:
-            print(2.2)
-            print("Conc unchanged and increase vol")
-            addedSoluteVol = (finalVol-inputVol)*inputConc
-            addedWaterVol = finalVol-inputVol
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, False
-    # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
-    if (inputVol == None or inputVol == 0) and finalVol != None:
-        print(3)
-        inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
-            0, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
-    # 4 if input Vol = 0 and there is no final volume, return not enough input error
-    elif (inputVol == None or inputVol == 0) and finalVol == None:
-        print(4)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
-    # if inputVol != None and finalVol == None:
-    #     finalVol = inputVol
-    # 5 if input Vol and Conc are fine, and input only final concentration:
-    elif inputVol > 0 and inputConc >= 0 and finalVol == None:
-        if inputConc > finalConc:
-            print("5.1")
-            inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
-                inputVol, inputConc, inputVol, finalConc)
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
-        elif inputConc < finalConc:
-            print("5.2")
-            inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
-                inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
-    # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
-    if inputSolute > finalVol*finalConc:
-        print(1)
-        print("unachievable computation")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
-    # 6 dilution calculation
-    elif inputConc > finalConc:
-        print(6)
-        addedSoluteVol = "/"
-        inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
-            inputVol, inputConc, finalVol, finalConc)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
-    # 7 upConc calculation
-    elif inputConc < finalConc:
-        print(7)
-        inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
-            inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+#     # check calculation cases
+#     # 0 no finalConc, no point of doing calculations
+#     if finalConc == None:
+#         print(0)
+#         print("finalConc == None")
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+#     # 2 Concentration unchanged
+#     if inputConc == finalConc:
+#         if inputVol == finalVol:
+#             print(2.1)
+#             print("Conc unchanged and nothing else need to be changed")
+#             return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
+#         elif inputVol < finalVol:
+#             print(2.2)
+#             print("Conc unchanged and increase vol")
+#             addedSoluteVol = (finalVol-inputVol)*inputConc
+#             addedWaterVol = finalVol-inputVol
+#             return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, False
+#     # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
+#     if (inputVol == None or inputVol == 0) and finalVol != None:
+#         print(3)
+#         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
+#             0, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+#     # 4 if input Vol = 0 and there is no final volume, return not enough input error
+#     elif (inputVol == None or inputVol == 0) and finalVol == None:
+#         print(4)
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+#     # if inputVol != None and finalVol == None:
+#     #     finalVol = inputVol
+#     # 5 if input Vol and Conc are fine, and input only final concentration:
+#     elif inputVol > 0 and inputConc >= 0 and finalVol == None:
+#         if inputConc > finalConc:
+#             print("5.1")
+#             inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
+#                 inputVol, inputConc, inputVol, finalConc)
+#             return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+#         elif inputConc < finalConc:
+#             print("5.2")
+#             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
+#                 inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
+#             return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+#     # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
+#     if inputSolute > finalVol*finalConc:
+#         print(1)
+#         print("unachievable computation")
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
+#     # 6 dilution calculation
+#     elif inputConc > finalConc:
+#         print(6)
+#         addedSoluteVol = "/"
+#         inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
+#             inputVol, inputConc, finalVol, finalConc)
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+#     # 7 upConc calculation
+#     elif inputConc < finalConc:
+#         print(7)
+#         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
+#             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
+#         return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
 
 
 # TODO: edit in progress
 
 
-def changeConcentrationTableNew(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute, inputSoluteUnit, molarMass, finalVol, finalVolUnit, finalConc, finalConcUnit, outputVolUnit, outputConcUnit, outputSoluteUnit):
+def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute, inputSoluteUnit, molarMass, finalVol, finalVolUnit, finalConc, finalConcUnit, outputVolUnit, outputConcUnit, outputSoluteUnit, addedSoluteVol, addedWaterVol):
     inputVol, inputConc, finalVol, finalConc, inputSolute = unitConversion(
         inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute, inputSoluteUnit, molarMass, finalVol, finalVolUnit, finalConc, finalConcUnit, outputVolUnit, outputConcUnit, outputSoluteUnit)
     if finalConc == None:
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, True
     if inputVol == None:
         inputVol = 0
+
+    # TODO: add edge case for if molarMass == 0:
+
     # 0. if inputVol==0, it will potentially lead to line 102 division not calculable
     # it also doesn't make sense to not have any inputVol, make it an error case
     if inputVol == 0:
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "inputVol==0"
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "inputVol==0"
     # check inputConc and relevant errors
     if inputSolute != None and inputConc != None:
         # 1 if solute contradicts
         #  TODO: FIX: with unit conversion this is much more complicated!
-        if inputConc != inputSolute/inputVol:
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "solute"
+        if molarMass == None:
+            if inputConc != inputSolute/inputVol:
+                return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
+        else:
+            if inputSolute != inputVol*inputConc*molarMass:
+                return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
     # 2 if inputted inputSolute instead of inputConc, convert
     elif inputSolute != None and inputConc == None:
         inputConc = inputSolute/inputVol
@@ -266,29 +273,29 @@ def changeConcentrationTableNew(inputVol, inputVolUnit, inputConc, inputConcUnit
     if finalConc == None:
         print(0)
         print("finalConc == None")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, True
     # 2 Concentration unchanged
     if inputConc == finalConc:
         if inputVol == finalVol:
             print(2.1)
             print("Conc unchanged and nothing else need to be changed")
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, False
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, False
         elif inputVol < finalVol:
             print(2.2)
             print("Conc unchanged and increase vol")
             addedSoluteVol = (finalVol-inputVol)*inputConc
             addedWaterVol = finalVol-inputVol
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, False
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, False
     # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:
     if (inputVol == None or inputVol == 0) and finalVol != None:
         print(3)
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             0, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
     # 4 if input Vol = 0 and there is no final volume, return not enough input error
     elif (inputVol == None or inputVol == 0) and finalVol == None:
         print(4)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, True
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, True
     # if inputVol != None and finalVol == None:
     #     finalVol = inputVol
     # 5 if input Vol and Conc are fine, and input only final concentration:
@@ -297,30 +304,36 @@ def changeConcentrationTableNew(inputVol, inputVolUnit, inputConc, inputConcUnit
             print("5.1")
             inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
                 inputVol, inputConc, inputVol, finalConc)
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
         elif inputConc < finalConc:
             print("5.2")
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
                 inputVol, inputConc, inputVol, finalConc, addedSoluteVol, addedWaterVol)
-            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
     # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
-    if inputSolute > finalVol*finalConc:
-        print(1)
-        print("unachievable computation")
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, "unachievable"
+    if molarMass == None:
+        if inputSolute > finalVol*finalConc:
+            print(1)
+            print("unachievable computation")
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "unachievable"
+    else:
+        if inputSolute > finalVol*finalConc*molarMass:
+            print(1)
+            print("unachievable computation")
+            return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "unachievable"
     # 6 dilution calculation
-    elif inputConc > finalConc:
+    if inputConc > finalConc:
         print(6)
         addedSoluteVol = "/"
         inputVol, inputConc, finalVol, finalConc, waterVol, error = dilutionTable(
             inputVol, inputConc, finalVol, finalConc)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, error
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, waterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
     # 7 upConc calculation
     elif inputConc < finalConc:
         print(7)
         inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol, error = upConcentrationTable(
             inputVol, inputConc, finalVol, finalConc, addedSoluteVol, addedWaterVol)
-        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, error
+        return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
 
 
 # add unit conversion

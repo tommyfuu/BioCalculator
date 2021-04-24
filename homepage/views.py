@@ -52,17 +52,31 @@ def dilution_input_view(request):
             inputSolute = form.cleaned_data['INPUTSOLUTE']
             finalVol = form.cleaned_data['FINALVOL']
             finalConc = form.cleaned_data['FINALCONC']
+
+            inputSoluteUnit = form.cleaned_data['INPUTSOLUTEUNIT']
+            molarMass = form.cleaned_data['MOLARMASS']
+            inputVolUnit = form.cleaned_data['INPUTVOLUNIT']
+            inputConcUnit = form.cleaned_data['INPUTCONCUNIT']
+            finalVolUnit = form.cleaned_data['FINALVOLUNIT']
+            finalConcUnit = form.cleaned_data['FINALCONCUNIT']
+            outputVolUnit = form.cleaned_data['OUTPUTVOLUNIT']
+            outputConcUnit = form.cleaned_data['OUTPUTCONCUNIT']
+            outputSoluteUnit = form.cleaned_data['OUTPUTSOLUTEUNIT']
+
             # addedSoluteVol = form.cleaned_data['ADDEDSOLUTE']
             # waterVol = form.cleaned_data['ADDEDWATER']
             addedSoluteVol = None
             waterVol = None
 
-            INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
-                inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
+            # INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
+            #     inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
+            INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, OUTPUTVOLUNIT, OUTPUTCONCUNIT, OUTPUTSOLUTEUNIT, ERROR = changeConcentrationTable(
+                inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute, inputSoluteUnit, molarMass, finalVol, finalVolUnit, finalConc, finalConcUnit, outputVolUnit, outputConcUnit, outputSoluteUnit, addedSoluteVol, waterVol)
+
             print("Here are the calculated input values for your desired output:")
             if ERROR == False:
                 print("GOTORESULTPAGE")
-                return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+                return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
             elif ERROR == True:
                 return render(request, 'concentrationCalcError.html', {})
             else:
