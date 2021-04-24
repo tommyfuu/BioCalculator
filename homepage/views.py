@@ -208,7 +208,11 @@ def unit_convert_input_view(request):
             return render(request, 'calcUnitConvertError.html', {'conversionform': conversionform})
     else:
         conversionform = ConversionForm()
+<<<<<<< Updated upstream
     return render(request, 'calcUnitConvert.html', {'conversionform': conversionform})
+=======
+    return render(request, 'calcUnitConvertResult.html', {'conversionform': conversionform})
+>>>>>>> Stashed changes
 
 
 def unit_convert_result_view(request):
