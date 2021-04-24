@@ -182,6 +182,7 @@ OUTPUTVALUE = None
 OUTPUTUNIT = None
 MOLARMASS = None
 
+
 def unit_convert_input_view(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -194,7 +195,8 @@ def unit_convert_input_view(request):
             outputValue = conversionform.cleaned_data['Output Value']
             outputUnit = conversionform.cleaned_data['Output Unit']
             molarMass = conversionform.cleaned_data['Molar Mass']
-            results = unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass)
+            results = unitTable(inputValue, inputUnit,
+                                outputValue, outputUnit, molarMass)
             print("Here is conversion value for your input:")
 
             INPUTVALUE, INPUTUNIT, OUTPUTVALUE, OUTPUTUNIT, MOLARMASS, ERROR = results
@@ -208,11 +210,7 @@ def unit_convert_input_view(request):
             return render(request, 'calcUnitConvertError.html', {'conversionform': conversionform})
     else:
         conversionform = ConversionForm()
-<<<<<<< Updated upstream
     return render(request, 'calcUnitConvert.html', {'conversionform': conversionform})
-=======
-    return render(request, 'calcUnitConvertResult.html', {'conversionform': conversionform})
->>>>>>> Stashed changes
 
 
 def unit_convert_result_view(request):
@@ -223,5 +221,3 @@ def unit_convert_result_view(request):
 def unit_convert_error_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcUnitConvertError.html', {"errorMsg": ERRORMSG})
-
-
