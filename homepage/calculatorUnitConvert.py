@@ -12,21 +12,12 @@ metricUnits = ['g', 'M', 'L', 'mol']
 class ConversionForm(forms.Form):
     INPUTVALUE = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=True, label='Input Value')
-<<<<<<< Updated upstream
     INPUTUNIT = forms.CharField(
         label='Input Unit', max_length = 80, required = True)
     OUTPUTVALUE = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Output Value')
     OUTPUTUNIT = forms.CharField(
         label='Output Unit', max_length = 80, required = True)
-=======
-    INPUTUNIT = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=True, label='Input Unit')
-    OUTPUTVALUE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Output Value')
-    OUTPUTUNIT = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=True, label='Output Unit')
->>>>>>> Stashed changes
     MOLARMASS = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Molar Mass')
 
