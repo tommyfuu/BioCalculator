@@ -45,7 +45,9 @@ def updateVolumes(inputConc, inputVol, totalVol):
         tempinputConc = inputVol/totalVol
         # Raises an error meesage
         if tempinputConc != inputConc:
-            raise Exception("CALCULATION CONFLICT ERROR")
+            return "CALCULATION CONFLICT ERROR"
+        else:
+            return "IT's FINE"
     elif inputConc != None: # When inputVol is empty
         inputVol = totalVol*inputConc
     elif inputVol != None: # When inputConc is empty
@@ -70,13 +72,16 @@ def getVolumesPCR(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFina
     if templateDNAVol != None and templateDNAInitConc != None and templateDNAFinalMass != None:
         # Checking that the three inputs match
         if templateDNAVol != templateDNAInitConc / templateDNAFinalMass:
-            raise Exception("CALCULATION CONFLICT ERROR")
-    elif PCRBufferInitConc != None and PCRBufferFinalConc != None:
-        PCRBufferVol = totalVol*(PCRBufferFinalConc/PCRBufferInitConc)
-    # elif PCRBufferVol != None and PCRBufferInitConc != None:
-    #     PCRBufferFinalConc = PCRBufferVol/totalVol
-    # elif PCRBufferVol != None and PCRBufferFinalConc != None:
-    #     PCRBufferInitConc = (totalVol/PCRBufferVol)*PCRBufferFinalConc
+            return "CALCULATION CONFLICT ERROR"
+        else:
+            return "IT's FINE"
+    elif templateDNAVol != None and templateDNAInitConc != None:
+        templateDNAFinalMass = templateDNAInitConc / templateDNAVol
+    elif templateDNAVol != None and templateDNAFinalMass != None:
+        templateDNAInitConc = templateDNAFinalMass * templateDNAVol
+    elif templateDNAInitConc != None and templateDNAFinalMass != None:
+        templateDNAVol = templateDNAInitConc / templateDNAFinalMass   
+    # What about the case when we only have one given value
     
     # the rest of calculations
     restrictionEnzymeVol, restrictionEnzymeConc = updateVolumes(
