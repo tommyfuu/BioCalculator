@@ -180,6 +180,7 @@ INPUTUNIT = None
 OUTPUTVALUE = None
 OUTPUTUNIT = None
 MOLARMASS = None
+ERROR = False
 
 
 def unit_convert_input_view(request):
@@ -188,20 +189,20 @@ def unit_convert_input_view(request):
         # create a form instance and populate it with data from the request:
         conversionform = ConversionForm(request.POST)
         # check whether it's valid:
+        
         if conversionform.is_valid():
-            inputValue = conversionform.cleaned_data['Input Value']
-            inputUnit = conversionform.cleaned_data['Input Unit']
-            outputValue = conversionform.cleaned_data['Output Value']
-            outputUnit = conversionform.cleaned_data['Output Unit']
-            molarMass = conversionform.cleaned_data['Molar Mass']
-            results = unitTable(inputValue, inputUnit,
-                                outputValue, outputUnit, molarMass)
+            inputValue = conversionform.cleaned_data['INPUTVALUE']
+            inputUnit = conversionform.cleaned_data['INPUTUNIT']
+            outputValue = conversionform.cleaned_data['OUTPUTVALUE']
+            outputUnit = conversionform.cleaned_data['OUTPUTUNIT']
+            molarMass = conversionform.cleaned_data['MOLARMASS']
+            results = unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass)
             print("Here is conversion value for your input:")
 
             INPUTVALUE, INPUTUNIT, OUTPUTVALUE, OUTPUTUNIT, MOLARMASS, ERROR = results
 
             if ERROR == False:
-                return render(request, 'calcUnitConvertResult.html', {"Input Value": INPUTVALUE, "Input Unit": INPUTUNIT, "Output Value": OUTPUTVALUE, "Output Unit": OUTPUTUNIT, "Molar Mass": MOLARMASS})
+                return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
             else:
                 ERRORMSG = "There's some error"
                 return render(request, 'calcUnitConvertError.html', {'errorMsg': ERRORMSG})
@@ -214,8 +215,7 @@ def unit_convert_input_view(request):
 
 def unit_convert_result_view(request):
     # return HttpResponse("Contact page!")
-    return render(request, 'calcUnitConvertResult.html', {"Input Value": INPUTVALUE, "Input Unit": INPUTUNIT, "Output Value": OUTPUTVALUE, "Output Unit": OUTPUTUNIT, "Molar Mass": MOLARMASS})
-
+    return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
 
 def unit_convert_error_view(request):
     # return HttpResponse("Contact page!")

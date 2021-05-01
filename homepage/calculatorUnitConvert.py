@@ -26,16 +26,17 @@ def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
     '''Input the input value, input unit, output unit, and molar mass (if needed) and it will
     calculate the output value'''
 
-    error = False
     # calculation of output value
-    while outputValue == None:
-        try:
-            if inputValue != None and inputUnit != None and outputUnit != None:
-                outputValue = convert(
-                    inputValue, inputUnit, outputUnit, molarMass)
-        except:
-            error = True
-            print("Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles.")
+    #while outputValue == None:
+    error = False
+    try:
+        if inputValue != None and inputUnit != None and outputUnit != None and molarMass == None:
+            outputValue = convert(inputValue, inputUnit, outputUnit)
+        elif inputValue != None and inputUnit != None and outputUnit != None and molarMass != None:
+            outputValue = convert(inputValue, inputUnit, outputUnit, molarMass)
+    except:
+        error = True
+        print("Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles.")
     return inputValue, inputUnit, outputValue, outputUnit, molarMass, error
 
 
@@ -46,9 +47,9 @@ def convert(input, unitFrom, unitTo, molarMass=0):
 
     # if unitFrom and unitTo in conversion dictionary
     if (unitFrom, unitTo) in unitDict:
-        return input*unitDict[(unitFrom, unitTo)]
+        return input * unitDict[(unitFrom, unitTo)]
     elif (unitTo, unitFrom) in unitDict:
-        return input*(1/unitDict[(unitTo, unitFrom)])
+        return float(input) * (1/unitDict[(unitTo, unitFrom)])
 
     # if we are converting ppm to A or vice versa
     elif (unitFrom == 'ppm' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'ppm'):
