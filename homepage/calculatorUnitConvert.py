@@ -46,6 +46,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         return input
 
     # if unitFrom and unitTo in conversion dictionary
+    # ERROR HERE! WHEN DOING CONVERSION from M to kg, needs to take into account of the molar mass, here we just skip it!
     if (unitFrom, unitTo) in unitDict:
         return input * unitDict[(unitFrom, unitTo)]
     elif (unitTo, unitFrom) in unitDict:
