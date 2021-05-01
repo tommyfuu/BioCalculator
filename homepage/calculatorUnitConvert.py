@@ -65,19 +65,35 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         return molToG(input, unitFrom, unitTo, molarMass)
 
     # converting some form of mol/L to some form of M or vice versa
-    elif ('/' in unitFrom and unitFrom[-1] == 'L' and unitTo[-1] == 'M'):
+    elif ('mol/' in unitFrom and unitFrom[-1] == 'L' and unitTo[-1] == 'M'):
         mols = unitFrom.split('/')[0]
         volume = unitFrom.split('/')[1]
         intermediate = convert(input, mols, 'mol')
         intermediate = convert(intermediate, 'L', volume)
         intermediate = convert(intermediate, 'M', unitTo[-2:])
         return intermediate
-    elif ('/' in unitTo and unitFrom[-1] == 'M' and unitTo[-1] == 'L'):
+    elif ('mol/' in unitTo and unitTo[-1] == 'L' and unitFrom[-1] == 'M'):
         mols = unitTo.split('/')[0]
         volume = unitTo.split('/')[1]
         intermediate = convert(input, unitFrom, 'M')
         intermediate = convert(intermediate, volume, 'L')
         intermediate = convert(intermediate, 'mol', mols)
+        return intermediate
+
+    # converting some form of g/L to some form of M or vice versa
+    elif ('g/' in unitFrom and unitFrom[-1] == 'L' and unitTo[-1] == 'M'):
+        mass = unitFrom.split('/')[0]
+        volume = unitFrom.split('/')[1]
+        intermediate = convert(input, mass, 'mol', molarMass)
+        intermediate = convert(intermediate, 'L', volume)
+        intermediate = convert(intermediate, 'M', unitTo)
+        return intermediate
+    elif ('g/' in unitTo and unitTo[-1] == 'L' and unitFrom[-1] == 'M'):
+        mass = unitTo.split('/')[0]
+        volume = unitTo.split('/')[1]
+        intermediate = convert(input, unitFrom, 'M')
+        intermediate = convert(intermediate, volume, 'L')
+        intermediate = convert(intermediate, 'mol', mass, molarMass)
         return intermediate
 
     # if you can convert unitFrom to metric base and then to unitTo
