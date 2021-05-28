@@ -194,6 +194,7 @@ def unitConversion(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute
     # solute
     if inputSolute != None:
         if not checkWhetherUseMolarMass(inputConcUnit, outputConcUnit):
+            # not gonna use molar mass
             inputSoluteRightUnit = convert(
                 inputSolute, inputSoluteUnit, outputSoluteUnit)
         else:
@@ -312,7 +313,8 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
     if finalConc != None:
         finalConc = float(finalConc)
     checkWhetherUseMolarMassBool = checkWhetherUseMolarMass(
-        inputConcUnit, outputConcUnit)
+        inputConcUnit, outputConcUnit)  # if true, then we use molar mass
+    print("checkWhetherUseMolarMassBool", checkWhetherUseMolarMassBool)
     # deal with the missing inputSolute or missing inputConc
     # if inputConc != None and inputSolute == None:
     #     inputVolinL = convert(inputVol, inputVolUnit,
@@ -346,7 +348,17 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
         # 1 if solute contradicts
         #  TODO: FIX: with unit conversion this is much more complicated!
         if not checkWhetherUseMolarMassBool:
-            if inputConc != inputSolute/inputVol:
+            # if inputConcUnit in MOLARCONCOPTIONS:
+
+            if convert(inputConc, outputConcUnit, 'kg/L', molarMass) != convert(inputSolute, inputSoluteUnit, 'kg')/convert(inputVol, outputVolUnit, 'L'):
+                # if inputConc != inputSolute/inputVol:
+                print("AAAAA WHATS WRONG")
+                print(inputConc)
+                print(molarMass)
+                print(outputConcUnit)
+                print(convert(inputConc, outputConcUnit, 'kg/L', molarMass))
+                print(convert(inputSolute, inputSoluteUnit, 'kg'))
+                print(convert(inputVol, outputVolUnit, 'L'))
                 return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
         else:
             inputSoluteInKG = convert(
@@ -434,9 +446,13 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
             return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, error
     # 0 unachievable: amount of solute in the final solution smaller than initial amount of solute
     if not checkWhetherUseMolarMassBool:
-        if inputSolute > finalVol*finalConc:
+        if inputSolute > convert(finalVol, outputVolUnit, 'L')*convert(finalConc, outputConcUnit, 'kg/L', molarMass):
             print(1)
             print("unachievable computation")
+            print("AHAHAHAHA")
+            print(inputSolute)
+            print(convert(finalVol, outputVolUnit, 'L'))
+            print(convert(finalConc, outputConcUnit, 'kg/L', molarMass))
             return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "unachievable"
     else:
         inputSoluteInKG = convert(

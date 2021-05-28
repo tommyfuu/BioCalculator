@@ -25,3 +25,11 @@
 - You should implement your visual with an html file by referencing [concentrationCalc.html](https://github.com/tommyfuu/BioCalculator/blob/main/homepage/templates/concentrationCalc.html).
 - You should add your html file to the url file [here](https://github.com/tommyfuu/BioCalculator/blob/main/homepage/urls.py).
 - You should render your calculator in the `dilution_input_view` function in [views.py](https://github.com/tommyfuu/BioCalculator/blob/main/homepage/views.py).
+
+### in case you dumbass forget about how to run django again
+
+```
+python manage.py runserver # running it
+python manage.py migrate # add changes to remote
+python manage.py createsuperuser
+```

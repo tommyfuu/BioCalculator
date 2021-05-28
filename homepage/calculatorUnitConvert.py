@@ -5,7 +5,8 @@ unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', '
             ('M', 'kM'): 0.001, ('M', 'pM'): 10**12, ('M', 'nM'): 10**9, ('M', 'μM'): 10**6, ('M', 'mM'): 10**3, ('M', 'cM'): 100, ('M', 'MM'): 10**-6, ('M', 'GM'): 10**-9, ('M', 'TM'): 10**-12,
             ('L', 'kL'): 0.001, ('L', 'pL'): 10**12, ('L', 'nL'): 10**9, ('L', 'μL'): 10**6, ('L', 'mL'): 10**3, ('L', 'cL'): 100, ('L', 'ML'): 10**-6, ('L', 'GL'): 10**-9, ('L', 'TL'): 10**-12,
             ('mol', 'kmol'): 0.001, ('mol', 'pmol'): 10**12, ('mol', 'nmol'): 10**9, ('mol', 'μmol'): 10**6, ('mol', 'mmol'): 10**3, ('mol', 'cmol'): 100, ('mol', 'Mmol'): 10**-6, ('mol', 'Gmol'): 10**-9, ('mol', 'Tmol'): 10**-12,
-            ('mol/L', 'M'): 1, ('kg/L', 'M'): 1000}
+            ('mol/L', 'M'): 1}
+unitMolarMassDict = {('kg/L', 'M'): 1}
 metricUnits = ['g', 'M', 'L', 'mol']
 
 
@@ -27,7 +28,7 @@ def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
     calculate the output value'''
 
     # calculation of output value
-    #while outputValue == None:
+    # while outputValue == None:
     error = False
     try:
         if inputValue != None and inputUnit != None and outputUnit != None and molarMass == None:
@@ -42,15 +43,21 @@ def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
 
 def convert(input, unitFrom, unitTo, molarMass=0):
     '''Converts the input number from unitFrom to unitTo'''
+    print("CONFUZZLED")
     if (unitFrom == unitTo):
         return input
 
     # if unitFrom and unitTo in conversion dictionary
-    # ERROR HERE! WHEN DOING CONVERSION from M to kg, needs to take into account of the molar mass, here we just skip it!
+    # ERROR HERE! WHEN DOING CONVERSION from M to kg/L, needs to take into account of the molar mass, here we just skip it!
     if (unitFrom, unitTo) in unitDict:
         return input * unitDict[(unitFrom, unitTo)]
     elif (unitTo, unitFrom) in unitDict:
         return float(input) * (1/unitDict[(unitTo, unitFrom)])
+
+    if (unitFrom, unitTo) in unitMolarMassDict:
+        return input * unitMolarMassDict[(unitFrom, unitTo)]/molarMass
+    elif (unitTo, unitFrom) in unitMolarMassDict:
+        return float(input) * (1/unitMolarMassDict[(unitTo, unitFrom)])*molarMass
 
     # if we are converting ppm to A or vice versa
     elif (unitFrom == 'ppm' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'ppm'):
@@ -58,6 +65,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
 
     # if we are converting g/L to M or vice versa
     elif (unitFrom == 'g/L' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'g/L'):
+        print("XACAVCX")
         return MToGPerL(input, unitFrom, unitTo, molarMass)
 
     # if we are converting mol to g or vice versa
