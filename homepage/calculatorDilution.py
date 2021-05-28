@@ -196,7 +196,8 @@ def unitConversion(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute
     else:
         inputVolRightUnit = None
     if inputConc != None:
-        inputConcRightUnit = convert(inputConc, inputConcUnit, outputConcUnit)
+        inputConcRightUnit = convert(
+            inputConc, inputConcUnit, outputConcUnit, molarMass)
     else:
         inputConcRightUnit = None
     if finalVol != None:
@@ -204,7 +205,8 @@ def unitConversion(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute
     else:
         finalVolRightUnit = None
     if finalConc != None:
-        finalConcRightUnit = convert(finalConc, finalConcUnit, outputConcUnit)
+        finalConcRightUnit = convert(
+            finalConc, finalConcUnit, outputConcUnit, molarMass)
     else:
         finalConcRightUnit = None
     print("inputVolRightUnit", inputVolRightUnit, outputVolUnit)
@@ -220,6 +222,8 @@ def unitConversion(inputVol, inputVolUnit, inputConc, inputConcUnit, inputSolute
                 inputSolute, inputSoluteUnit, outputSoluteUnit)
             print("inputSoluteRightUnit", inputSoluteRightUnit)
         else:
+            print("IS IT HERE")
+            print(molarMass)
             inputSoluteRightUnit = convert(
                 inputSolute, inputSoluteUnit, outputSoluteUnit, molarMass)
     else:
@@ -384,8 +388,8 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
                 return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
         else:
             inputSoluteInKG = convert(
-                inputSolute, inputSoluteUnit, 'kg', molarMass=molarMass)
-            inputVolInL = convert(inputVol, inputVolUnit,
+                inputSolute, outputSoluteUnit, 'kg', molarMass=molarMass)
+            inputVolInL = convert(inputVol, outputVolUnit,
                                   'L', molarMass=molarMass)
             inputConcInM = convert(
                 inputConc, outputConcUnit, 'M', molarMass=molarMass)

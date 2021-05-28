@@ -55,6 +55,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         return float(input) * (1/unitDict[(unitTo, unitFrom)])
 
     if (unitFrom, unitTo) in unitMolarMassDict:
+        print(molarMass)
         return input * unitMolarMassDict[(unitFrom, unitTo)]/molarMass
     elif (unitTo, unitFrom) in unitMolarMassDict:
         return float(input) * (1/unitMolarMassDict[(unitTo, unitFrom)])*molarMass
