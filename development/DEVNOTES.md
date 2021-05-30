@@ -26,7 +26,7 @@
 - You should add your html file to the url file [here](https://github.com/tommyfuu/BioCalculator/blob/main/homepage/urls.py).
 - You should render your calculator in the `dilution_input_view` function in [views.py](https://github.com/tommyfuu/BioCalculator/blob/main/homepage/views.py).
 
-### in case you dumbass (this is referring to tom himself) forget about how to run django again
+### in case you forget about how to run django again
 
 ```
 python manage.py runserver # running it

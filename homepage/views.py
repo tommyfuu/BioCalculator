@@ -6,6 +6,8 @@ from .calculatorPCR import PCRForm
 from .calculatorPCR import *
 from .calculatorUnitConvert import ConversionForm
 from .calculatorUnitConvert import *
+from .calculatorCuttingReaction import CuttingEdgeForm
+from .calculatorCuttingReaction import *
 
 import time
 # Create your views here.
@@ -77,6 +79,7 @@ def dilution_input_view(request):
                 print("GOTORESULTPAGE")
                 return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
             elif ERROR == True:
+                # not enough inputs
                 return render(request, 'concentrationCalcError.html', {})
             else:
                 if ERROR == "solute":
@@ -189,14 +192,15 @@ def unit_convert_input_view(request):
         # create a form instance and populate it with data from the request:
         conversionform = ConversionForm(request.POST)
         # check whether it's valid:
-        
+
         if conversionform.is_valid():
             inputValue = conversionform.cleaned_data['INPUTVALUE']
             inputUnit = conversionform.cleaned_data['INPUTUNIT']
             outputValue = conversionform.cleaned_data['OUTPUTVALUE']
             outputUnit = conversionform.cleaned_data['OUTPUTUNIT']
             molarMass = conversionform.cleaned_data['MOLARMASS']
-            results = unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass)
+            results = unitTable(inputValue, inputUnit,
+                                outputValue, outputUnit, molarMass)
             print("Here is conversion value for your input:")
 
             INPUTVALUE, INPUTUNIT, OUTPUTVALUE, OUTPUTUNIT, MOLARMASS, ERROR = results
@@ -217,6 +221,44 @@ def unit_convert_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
 
+
 def unit_convert_error_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcUnitConvertError.html', {"errorMsg": ERRORMSG})
+
+
+def cutting_reaction_input_view(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        cuttingform = CuttingEdgeForm(request.POST)
+        # check whether it's valid:
+
+        if cuttingform.is_valid():
+            totalVol = cuttingform.cleaned_data['totalVol']
+            # templateDNAVol = cuttingform.cleaned_data['templateDNAVol']
+            # templateDNAInitConc = cuttingform.cleaned_data['templateDNAInitConc']
+            # templateDNAFinalMass = cuttingform.cleaned_data['templateDNAFinalMass']
+            # bufferVol = cuttingform.cleaned_data['bufferVol']
+            # bufferConc = cuttingform.cleaned_data['bufferConc']
+            # restrictionEnzymeVol = cuttingform.cleaned_data['restrictionEnzymeVol']
+            # restrictionEnzymeConc = cuttingform.cleaned_data['restrictionEnzymeConc']
+
+            # call python functions from your py file
+            results = getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
+                                                bufferConc, restrictionEnzymeVol, restrictionEnzymeConc)
+            print("Here is conversion value for your input:")
+
+            # parsing your results
+            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, ERROR = results
+
+            # feed that into the result/error
+        #     if ERROR == False:
+        #         return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
+        #     else:
+        #         ERRORMSG = "There's some error"
+        #         return render(request, 'calcUnitConvertError.html', {'errorMsg': ERRORMSG})
+        # else:
+        #     return render(request, 'cuttingReactionCalcError.html', {'cuttingform': cuttingform})
+    else:
+        cuttingform = CuttingEdgeForm()
+    return render(request, 'cuttingReactionCalc.html', {'cuttingform': cuttingform})
