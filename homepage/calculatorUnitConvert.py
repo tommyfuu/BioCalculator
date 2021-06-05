@@ -29,21 +29,21 @@ def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
 
     # calculation of output value
     # while outputValue == None:
-    error = False
+    error = ''
     try:
         if inputValue != None and inputUnit != None and outputUnit != None and molarMass == None:
             outputValue = convert(inputValue, inputUnit, outputUnit)
         elif inputValue != None and inputUnit != None and outputUnit != None and molarMass != None:
             outputValue = convert(inputValue, inputUnit, outputUnit, molarMass)
-    except:
-        error = True
-        print("Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles.")
+    except Exception as ex:
+        print(ex)
+        error = ex.args[0]
+        # error = "Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles."
     return inputValue, inputUnit, outputValue, outputUnit, molarMass, error
 
 
 def convert(input, unitFrom, unitTo, molarMass=0):
     '''Converts the input number from unitFrom to unitTo'''
-    print("CONFUZZLED")
     if (unitFrom == unitTo):
         return input
 
@@ -66,7 +66,6 @@ def convert(input, unitFrom, unitTo, molarMass=0):
 
     # if we are converting g/L to M or vice versa
     elif (unitFrom == 'g/L' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'g/L'):
-        print("XACAVCX")
         return MToGPerL(input, unitFrom, unitTo, molarMass)
 
     # if we are converting mol to g or vice versa
@@ -115,10 +114,23 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         standard = convert(input, unitTo, unitTo[1:], molarMass)
         return convert(standard, unitFrom, unitTo[1:], molarMass)
 
+    # if the inputs do not match any of the above cases, print an error message
+    else:
+        # Molarity to Volume
+        if (unitTo[-1:] == 'L' and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L'):
+            raise Exception('You can not convert from volume to molarity or vice versa')
+        # Mass to Molarity
+        elif (unitTo[-1] == 'g' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-1] == 'g'):
+            raise Exception('You can not convert from mass to molarity or vice versa')    
+        # Mols to Molarity
+        elif (unitTo[-3:] == 'mol' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-3:] == 'mol'):
+            raise Exception('You can not convert from moles to molarity or vice versa')  
+        # Unrecognized error
+        else:
+            raise Exception('Unit conversion calculator has no case to handle this conversion')
 
 def MToPPM(input, unitFrom, unitTo, molarMass):
-    '''Converts M to ppm and vice versa, but you have to know the 
-    molar mass'''
+    '''Converts M to ppm and vice versa, but you have to know the molar mass'''
     if unitFrom == 'ppm' and unitTo == 'M':
         return input * 0.001 * (1/molarMass)
     elif unitFrom == 'M' and unitTo == 'ppm':
@@ -126,8 +138,7 @@ def MToPPM(input, unitFrom, unitTo, molarMass):
 
 
 def molToG(input, unitFrom, unitTo, molarMass):
-    '''Converts mol to g and vice versa, but you have to know the 
-    molar mass'''
+    '''Converts mol to g and vice versa, but you have to know the molar mass'''
     if unitFrom == 'mol' and unitTo == 'g':
         return input * molarMass
     elif unitFrom == 'g' and unitTo == 'mol':
