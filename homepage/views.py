@@ -235,23 +235,28 @@ def cutting_reaction_input_view(request):
 
         if cuttingform.is_valid():
             totalVol = cuttingform.cleaned_data['totalVol']
-            # templateDNAVol = cuttingform.cleaned_data['templateDNAVol']
-            # templateDNAInitConc = cuttingform.cleaned_data['templateDNAInitConc']
-            # templateDNAFinalMass = cuttingform.cleaned_data['templateDNAFinalMass']
-            # bufferVol = cuttingform.cleaned_data['bufferVol']
-            # bufferConc = cuttingform.cleaned_data['bufferConc']
-            # restrictionEnzymeVol = cuttingform.cleaned_data['restrictionEnzymeVol']
-            # restrictionEnzymeConc = cuttingform.cleaned_data['restrictionEnzymeConc']
+            templateDNAVol = cuttingform.cleaned_data['templateDNAVol']
+            templateDNAInitConc = cuttingform.cleaned_data['templateDNAInitConc']
+            templateDNAFinalMass = cuttingform.cleaned_data['templateDNAFinalMass']
+            bufferVol = cuttingform.cleaned_data['bufferVol']
+            bufferConc = cuttingform.cleaned_data['bufferConc']
+            restrictionEnzymeVol = cuttingform.cleaned_data['restrictionEnzymeVol']
+            restrictionEnzymeConc = cuttingform.cleaned_data['restrictionEnzymeConc']
 
             # call python functions from your py file
             results = getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
                                                 bufferConc, restrictionEnzymeVol, restrictionEnzymeConc)
-            print("Here is conversion value for your input:")
+            print("Here is conversion value for your input:", results)
 
             # parsing your results
-            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, ERROR = results
+            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol, ERROR = results, False
 
             # feed that into the result/error
+            if ERROR == False:
+                return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol, 
+                                                    "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass, 
+                                                    "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
+                                                    "restrictionEnzymeConc": restrictionEnzymeConc, "waterVol": waterVol})
         #     if ERROR == False:
         #         return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
         #     else:
@@ -262,3 +267,12 @@ def cutting_reaction_input_view(request):
     else:
         cuttingform = CuttingEdgeForm()
     return render(request, 'cuttingReactionCalc.html', {'cuttingform': cuttingform})
+
+
+## TODO: Define global variables --> Work on the results page
+def cutting_reaction_result_view(request):
+    # return HttpResponse("Contact page!")
+    # return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol, 
+    #                                                 "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass, 
+    #                                                 "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
+    #                                                 "restrictionEnzymeConc": restrictionEnzymeConc, "waterVol": waterVol})

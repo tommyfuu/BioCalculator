@@ -33,26 +33,26 @@ class CuttingEdgeForm(forms.Form):
 # we can just put in 10 microL of PCR
 
 
-def updateVolumes(inputConc, inputVol, totalVol):
+def updateVolumes(inputVol, inputConc, totalVol):
     '''
     Takes in an ingredient with a certain concentration and volume,
     and updates it with the current volume and concentration with
     respect to the total volume
     '''
     if inputConc != None and inputVol != None:
-        tempinputConc = inputVol/totalVol
+        tempTotalVol = inputConc * inputVol
         # Raises an error meesage
-        if tempinputConc != inputConc:
+        if tempTotalVol != totalVol:
             return "CALCULATION CONFLICT ERROR"
         else:
             return "IT's FINE"
     elif inputConc != None:  # When inputVol is empty
-        inputVol = totalVol*inputConc
+        inputVol = totalVol/inputConc
     elif inputVol != None:  # When inputConc is empty
-        inputConc = inputVol/totalVol
+        inputConc = totalVol/inputVol
     elif inputConc == None and inputVol == None:
-        inputVol = 0
-        inputConc = 0
+        inputVol = 0.0
+        inputConc = 0.0
     return inputVol, inputConc
 
 
@@ -69,16 +69,16 @@ def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, tem
     # DNA Calculation (Assuming that the units match for now)
     if templateDNAVol != None and templateDNAInitConc != None and templateDNAFinalMass != None:
         # Checking that the three inputs match
-        if templateDNAVol != templateDNAInitConc / templateDNAFinalMass:
+        if templateDNAVol != templateDNAFinalMass / templateDNAInitConc :
             return "CALCULATION CONFLICT ERROR"
         else:
             return "IT's FINE"
     elif templateDNAVol != None and templateDNAInitConc != None:
-        templateDNAFinalMass = templateDNAInitConc / templateDNAVol
+        templateDNAFinalMass = templateDNAInitConc * templateDNAVol
     elif templateDNAVol != None and templateDNAFinalMass != None:
-        templateDNAInitConc = templateDNAFinalMass * templateDNAVol
+        templateDNAInitConc = templateDNAFinalMass / templateDNAVol
     elif templateDNAInitConc != None and templateDNAFinalMass != None:
-        templateDNAVol = templateDNAInitConc / templateDNAFinalMass
+        templateDNAVol = templateDNAFinalMass / templateDNAInitConc
     # What about the case when we only have one given value
 
     # the rest of calculations
@@ -91,3 +91,14 @@ def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, tem
     # Return an error if water volume is negative
 
     return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol
+
+# Test Case #1 from example
+# totalVol = 40
+# templateDNAVol = None
+# templateDNAInitConc = 0.1
+# templateDNAFinalMass = 1
+# bufferVol = None
+# bufferConc = 10
+# restrictionEnzymeVol = None
+# restrictionEyznmeConc = 20
+# (40, None, 0.1, 1, None, 10, None, 20)
