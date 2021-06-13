@@ -259,6 +259,7 @@ def cutting_reaction_input_view(request):
 
 ## TODO: Define global variables --> Work on the results page
 def cutting_reaction_result_view(request):
+    return
     # return HttpResponse("Contact page!")
     # return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol, 
     #                                                 "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass, 
