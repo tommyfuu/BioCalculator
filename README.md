@@ -1,14 +1,24 @@
 # BioCalculator
 
+Starting from 6/15/2021, please start to commit your changes to the `development` branch instead of the main branch! The main branch has been synced with the deployed website so any changes made there will be reflected on the actual website. Make sure that the things function before merging things into the main branch :)
+
 Creating a calculator for common biology lab experiments.
 
-So far:
+### 1. Calculator Implementation
 
-- Implemented a simple concentration change calculator!
-- Able to do simple dilution/concentration increase; with rendering in Django
-- General website aesthetics (homepage, navigation bar, templates)
-- Implementing PCR calculator and unit conversion calculator.
-- Please note that [the development notes](https://github.com/tommyfuu/BioCalculator/blob/main/development/DEVNOTES.md) can be helpful!
+- Concentration change calculator completed.
+- Deployment completed and tested, ready to be deployed when needed.
+- Unit conversion being tested and bug fixing.
+- Cutting reaction being implemented and tested.
+- PCR calculator being implemented: basic functionalities implemented, waiting to be refined; output not rendered.
+
+### 2. Website general
+
+- Aesthetics to be improved.
+
+### 3. Goal
+
+- First iteration including fully functioning concentration-change calculator and cutting reaction calculator are to be deployed on July 11, 2021.
 
 ## Acknowledgement
 
@@ -16,7 +26,10 @@ Developers:\
 Tom Fu (@tommyfuu)\
 Lucy Paddock (@lucinda-paddock)\
 Liam Chalk (@liamchalk00)\
-April Zhao (@abooli)
+April Zhao (@abooli)\
+Tristan Huang (@thuang8)\
+Michelle Lee (@mi929lee)\
+Allison Tsai (@aztsai)
 
 Affiliation: Harvey Mudd College BioMakerspace (Polymerspace).
 
