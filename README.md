@@ -1,8 +1,13 @@
 # BioCalculator
 
-Starting from 6/15/2021, please start to commit your changes to the `development` branch instead of the main branch! The main branch has been synced with the deployed website so any changes made there will be reflected on the actual website. Make sure that the things function before merging things into the main branch :)
+### VISITING OUR DEPLOYED TRIAL SITE
 
-Creating a calculator for common biology lab experiments.
+We are creating a calculator for common biology lab experiments. The beta version of our website is [here](https://tommyfuu-biocalculator.zeet.app/), or you can access via the url below:
+**https://tommyfuu-biocalculator.zeet.app/**
+
+### 0. Notes for the developers
+
+Starting from 6/15/2021, please start to commit your changes to the `development` branch instead of the main branch! The main branch has been synced with the deployed website so any changes made there will be reflected on the actual website. Make sure that the things function before merging things into the main branch :)
 
 ### 1. Calculator Implementation
 
