@@ -2,16 +2,19 @@
 
 ## Progress
 
+Starting from 6/15/2021, please start to commit your changes to the `development` branch instead of the main branch! The main branch has been synced with the deployed website so any changes made there will be reflected on the actual website. Make sure that the things function before merging things into the main branch :)
+
 ### 1. Calculator Implementation
 
-- Dilution calculation implemented, functions to undergo testing; need to add unit conversion later.
-- Unit conversion waiting to be implemented.
+- Concentration change calculator completed.
+- Deployment completed and tested, ready to be deployed when needed.
+- Unit conversion being tested and bug fixing.
+- Cutting reaction being implemented and tested.
 - PCR calculator being implemented: basic functionalities implemented, waiting to be refined; output not rendered.
 
 ### 2. Website general
 
-- About/Contact pages waiting to be made better.
-- Within-site hotlinks need to be fixed.
+- Aesthetics to be improved.
 
 ### 3. Miscellaneous
 

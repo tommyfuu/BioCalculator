@@ -12,17 +12,21 @@ from .calculatorCuttingReaction import *
 import time
 # Create your views here.
 
+
 def home(request):
     # return HttpResponse("Home page!")
     return render(request, 'login.html', {})
+
 
 def contact(request):
     # return HttpResponse("Contact page!")
     return render(request, 'contact.html', {})
 
+
 def about(request):
     # return HttpResponse("Contact page!")
     return render(request, 'about.html', {})
+
 
 # CALCULATORS
 # DILUTION CALCULATOR
@@ -34,6 +38,7 @@ FINALVOL = None
 FINALCONC = None
 ADDEDSOLUTE = None
 ADDEDWATER = None
+
 
 def dilution_input_view(request):
     # if this is a POST request we need to process the form data
@@ -85,6 +90,8 @@ def dilution_input_view(request):
                     info = "Error: input volume = 0, invalid input solution."
                 if ERROR == "zeroMolarMass":
                     info = "Error: zero molar mass. You should either NOT input molar mass if your calculation does not involve molar conversion, or you should enter a numerical molar mass value."
+                if ERROR == "displayUnit":
+                    info = "Error: inputted input liquid concentration but not molar mass. This way the amount of solute cannot be displayed in mass, which is problematic for our current implementation."
                 return render(request, 'concentrationCalcSolute.html', {"error": info})
 
     # if a GET (or any other method) we'll create a blank form
@@ -92,9 +99,11 @@ def dilution_input_view(request):
         form = DilutionForm()
     return render(request, "concentrationCalc.html", {'form': form})
 
+
 def dilution_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+
 
 # PCR CALCULATOR
 # GLOBAL VARIABLES
@@ -118,6 +127,7 @@ RESULTtemplateDNAConc = None
 RESULTDMSOOptionalVol = None
 RESULTDMSOOptionalConc = None
 ERRORMSG = ''
+
 
 def pcr_input_view(request):
     # if this is a POST request we need to process the form data
@@ -161,13 +171,16 @@ def pcr_input_view(request):
         pcrform = PCRForm()
     return render(request, 'calcPCR.html', {'pcrform': pcrform})
 
+
 def pcr_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcPCRResult.html', {"RESULTtotalVol": RESULTtotalVol, "RESULTwaterVol": RESULTwaterVol, "RESULTPCRBufferVol": RESULTPCRBufferVol, "RESULTPCRBufferInitConc": RESULTPCRBufferInitConc, "RESULTPCRBufferFinalConc": RESULTPCRBufferFinalConc, "RESULTpolymeraseVol": RESULTpolymeraseVol, "RESULTpolymeraseConc": RESULTpolymeraseConc, "RESULTdNTPVol": RESULTdNTPVol, "RESULTdNTPConc": RESULTdNTPConc, "RESULTMgCl2Vol": RESULTMgCl2Vol, "RESULTMgCl2Conc": RESULTMgCl2Conc, "RESULTforwardPrimerVol": RESULTforwardPrimerVol, "RESULTforwardPrimerConc": RESULTforwardPrimerConc, "RESULTbackwardPrimerVol": RESULTbackwardPrimerVol, "RESULTbackwardPrimerConc": RESULTbackwardPrimerConc, "RESULTtemplateDNAVol": RESULTtemplateDNAVol, "RESULTtemplateDNAConc": RESULTtemplateDNAConc, "RESULTDMSOOptionalVol": RESULTDMSOOptionalVol, "RESULTDMSOOptionalConc": RESULTDMSOOptionalConc})
 
+
 def pcr_error_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcPCRError.html', {"errorMsg": ERRORMSG})
+
 
 # UNIT CONVERSION CALCULATOR
 # GLOBAL VARIABLES
@@ -177,6 +190,7 @@ OUTPUTVALUE = None
 OUTPUTUNIT = None
 MOLARMASS = None
 ERROR = False
+
 
 def unit_convert_input_view(request):
     # if this is a POST request we need to process the form data
@@ -207,13 +221,16 @@ def unit_convert_input_view(request):
         conversionform = ConversionForm()
     return render(request, 'calcUnitConvert.html', {'conversionform': conversionform})
 
+
 def unit_convert_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
 
+
 def unit_convert_error_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'calcUnitConvertError.html', {"errorMsg": ERRORMSG})
+
 
 def cutting_reaction_input_view(request):
     if request.method == 'POST':
@@ -241,10 +258,10 @@ def cutting_reaction_input_view(request):
 
             # feed that into the result/error
             if ERROR == False:
-                return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol, 
-                                                    "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass, 
-                                                    "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
-                                                    "restrictionEnzymeConc": restrictionEnzymeConc, "waterVol": waterVol})
+                return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol,
+                                                                          "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass,
+                                                                          "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
+                                                                          "restrictionEnzymeConc": restrictionEnzymeConc, "waterVol": waterVol})
         #     if ERROR == False:
         #         return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
         #     else:
@@ -257,10 +274,11 @@ def cutting_reaction_input_view(request):
     return render(request, 'cuttingReactionCalc.html', {'cuttingform': cuttingform})
 
 
-## TODO: Define global variables --> Work on the results page
+# TODO: Define global variables --> Work on the results page
 def cutting_reaction_result_view(request):
+    return
     # return HttpResponse("Contact page!")
-    # return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol, 
-    #                                                 "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass, 
+    # return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol,
+    #                                                 "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass,
     #                                                 "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
     #                                                 "restrictionEnzymeConc": restrictionEnzymeConc, "waterVol": waterVol})
