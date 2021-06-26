@@ -237,7 +237,7 @@ def cutting_reaction_input_view(request):
             print("Here is conversion value for your input:", results)
 
             # parsing your results
-            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol, ERROR = results, False
+            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol, ERROR = (results, False)
 
             # feed that into the result/error
             if ERROR == False:
