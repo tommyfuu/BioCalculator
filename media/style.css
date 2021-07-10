@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 table { 
     width: 50%; 
     height: 30%;
@@ -6,8 +11,6 @@ body {
     background-color: rgb(172, 182, 201);
     font-size: 18;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* background-image: url("/media/image_5354e-Escherichia-coli.jpeg"); */
-    /* opacity: 0.25; */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

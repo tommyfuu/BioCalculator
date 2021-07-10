@@ -3,12 +3,6 @@ header {
   background-color: cornsilk;
 }
 
-/* h1 {
-  font-family: Helvetica, sans-serif;
-  text-align:center;
-  font-size:50px;
-  color:black;
-} */
 
 h1 {
   font-family: Helvetica, sans-serif;
@@ -21,11 +15,9 @@ h1 {
 ul {
     list-style-type: none;
     display: table;
-    /* margin: 0 auto; */
     margin: 0;
     padding: 0;
     overflow: hidden;
-    /* text-align:center; */
   }
   
   li {
