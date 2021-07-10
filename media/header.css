@@ -29,13 +29,14 @@ ul {
     display: block;
     color: rgb(56, 54, 54);
     text-align: center;
-    padding: 10px 16px;
+    padding: 10px 33px;
     text-decoration: none;
   }
   
   li a:hover, .dropdown:hover .dropbtn {
     background-color: rgb(56, 54, 54);
     color: white;
+    
   }
   
   li.dropdown {
@@ -46,7 +47,8 @@ ul {
     display: none;
     position: absolute;
     background-color: rgb(209, 208, 208);
-    min-width: 129px;
+    width: 142.48px;
+    /* min-width: 129px; */
     z-index: 1;
   }
   
@@ -64,6 +66,7 @@ ul {
     /* background-color: rgb(102, 117, 138); */
     color: rgb(56, 54, 54);
     background-color: rgb(221, 221, 221);
+    
   }
   
   .dropdown:hover .dropdown-content {
