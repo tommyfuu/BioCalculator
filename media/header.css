@@ -5,7 +5,8 @@ header {
 
 
 h1 {
-  font-family: Helvetica, sans-serif;
+  font-family: Georgia, serif;
+  /* font-family: Helvetica, sans-serif; */
   font-size:50px;
   color: rgb(56, 54, 54);
   padding-left: 3px;

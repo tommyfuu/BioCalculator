@@ -17,6 +17,10 @@ def home(request):
     # return HttpResponse("Home page!")
     return render(request, 'login.html', {})
 
+def calculators(request):
+    # return HttpResponse("Calculators page!")
+    return render(request, 'calculators.html', {})
+
 def faq(request):
     # return HttpResponse("FAQ page!")
     return render(request, 'faq.html', {})
