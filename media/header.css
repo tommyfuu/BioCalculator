@@ -5,12 +5,16 @@ header {
 
 
 h1 {
-  font-family: Georgia, serif;
-  /* font-family: Helvetica, sans-serif; */
+  font-family: Helvetica, sans-serif;
   font-size:50px;
   color: rgb(56, 54, 54);
-  padding-left: 3px;
+  padding-left: 19px;
   margin: 10px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: inherit;
 }
 
 ul {
@@ -37,6 +41,7 @@ ul {
   li a:hover, .dropdown:hover .dropbtn {
     background-color: rgb(56, 54, 54);
     color: white;
+    /* border-radius: 8px 8px 8px 8px; */
     
   }
   
