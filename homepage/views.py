@@ -15,16 +15,18 @@ import time
 
 def home(request):
     # return HttpResponse("Home page!")
-    return render(request, 'login.html', {})
+    return render(request, 'home.html', {})
 
+def calculators(request):
+    # return HttpResponse("Calculators page!")
+    return render(request, 'calculators.html', {})
 
-def contact(request):
-    # return HttpResponse("Contact page!")
-    return render(request, 'contact.html', {})
-
+def faq(request):
+    # return HttpResponse("FAQ page!")
+    return render(request, 'faq.html', {})
 
 def about(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("About page!")
     return render(request, 'about.html', {})
 
 

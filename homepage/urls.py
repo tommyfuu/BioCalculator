@@ -3,8 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('contact/', views.contact, name='contact'),
+    path('faq/', views.faq, name='faq'),
     path('about/', views.about, name='about'),
+    path('calculators/', views.calculators, name='calculators'),
     path('dilutionCalculator/', views.dilution_input_view, name='dilution'),
     path('dilutionCalculatorResult/', views.dilution_result_view, name='dilution'),
     path('PCRCalc/', views.pcr_input_view, name='PCR'),
