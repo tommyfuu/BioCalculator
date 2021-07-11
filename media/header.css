@@ -25,11 +25,14 @@ ul {
     overflow: hidden;
   }
   
-  li {
+  /* li {
+    float: left;
+  } */
+  .navItem {
     float: left;
   }
   
-  li a, .dropbtn {
+  .navbar, .dropbtn {
     font-family: Helvetica, sans-serif;  
     display: block;
     color: rgb(56, 54, 54);
@@ -37,8 +40,8 @@ ul {
     padding: 10px 33px;
     text-decoration: none;
   }
-  
-  li a:hover, .dropdown:hover .dropbtn {
+
+  .navbar:hover, .dropdown:hover .dropbtn {
     background-color: rgb(56, 54, 54);
     color: white;
     /* border-radius: 8px 8px 8px 8px; */

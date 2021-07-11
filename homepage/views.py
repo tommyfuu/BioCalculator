@@ -15,7 +15,7 @@ import time
 
 def home(request):
     # return HttpResponse("Home page!")
-    return render(request, 'login.html', {})
+    return render(request, 'home.html', {})
 
 def calculators(request):
     # return HttpResponse("Calculators page!")
