@@ -9,18 +9,36 @@ unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', '
 unitMolarMassDict = {('kg/L', 'M'): 1}
 metricUnits = ['g', 'M', 'L', 'mol']
 
+MASSCHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+               ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]
+VOLCHOICES = [('L', 'L'), ('kL', 'kL'), ('pL', 'pL'), ('nL', 'nL'), ('μL', 'μL'),
+              ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+CONCCHOICES = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('μM', 'μM'),
+               ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('g/L', 'g/L'), ('kg/L', 'kg/L')]
+SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+                 ('mg', 'mg'), ('cg', 'cg'), ('Mg',
+                                              'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
+                 ('L', 'L'), ('kL', 'kL'), ('pL',
+                                            'pL'), ('nL', 'nL'), ('μL', 'μL'),
+                 ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+UNITCHOICES = MASSCHOICES + VOLCHOICES + CONCCHOICES + SOLUTECHOICES
+
 
 class ConversionForm(forms.Form):
     INPUTVALUE = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=True, label='Input Value')
+    #INPUTUNIT = forms.CharField(
+    #    label='Input Unit', max_length=80, required=True)
     INPUTUNIT = forms.CharField(
-        label='Input Unit', max_length=80, required=True)
+        label='Input Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
     OUTPUTVALUE = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Output Value')
+    #OUTPUTUNIT = forms.CharField(
+    #    label='Output Unit', max_length=80, required=True)
     OUTPUTUNIT = forms.CharField(
-        label='Output Unit', max_length=80, required=True)
+        label='Output Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
     MOLARMASS = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Molar Mass')
+        decimal_places=5, max_digits=10000, required=False, label='Molar Mass (g/mol)')
 
 
 def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
