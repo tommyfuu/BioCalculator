@@ -42,8 +42,10 @@ ul {
   }
 
   .navbar:hover, .dropdown:hover .dropbtn {
-    background-color: rgb(56, 54, 54);
+    /* background-color: rgb(56, 54, 54); */
     color: white;
+    /* inset: 50px auto auto 607px; */
+    background-color: none;
     /* border-radius: 8px 8px 8px 8px; */
     
   }

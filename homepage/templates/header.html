@@ -1,25 +1,29 @@
-<head>
-  <link rel="stylesheet" href="/media/header.css">
-</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+  <div class="container-fluid ms-3">
+    <a href="/" class="navbar-brand">biocalculator</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarItems">
+      <div class="navbar-nav">
+        <li><a href="/" class="nav-link" aria-current="page">home</a></li>
+        
+        <li class="nav-item dropdown">
+          <a href="/calculators/" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">calculators</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a href="/PCRCalc/" class="dropdown-item">PCR</a></li>
+            <li><a href="/cutting/" class="dropdown-item">cutting reaction</a></li>
+            <li><a href="/calcUnitConvert/" class="dropdown-item">unit conversion</a></li>
+            <li><a href="/dilutionCalculator/" class="dropdown-item">dilution</a></li>
+          </ul>
+        </li>
+        
+        <li><a href="/faq/" class="nav-link" aria-current="page">FAQ</a></li>
+        <li><a href="/about/" class="nav-link" aria-current="page">about</a></li>
 
-<header>
-  <h1>
-    <a href="/">biocalculator</a>
-  </h1>
-  <ul>
-    <li class='navItem'><a class="active navbar" href="/">home</a></li>
-    <li class="dropdown navItem">
-      <a href="/calculators/" class="dropbtn navbar">calculators</a>
-      <div class="dropdown-content">
-        <a href="/PCRCalc/">PCR</a>
-        <a href="/cutting/">cutting reaction</a>
-        <a href="/calcUnitConvert/">unit conversion</a>
-        <a href="/dilutionCalculator/">dilution</a>
       </div>
-    </li>
-    <li class='navItem'><a href="/faq/" class="navbar">FAQ</a></li>
-    <li class='navItem'><a href="/about/" class="navbar">about</a></li>
-  </ul>
-</header>
+    </div>
+  </div>
+</nav>
 
 
