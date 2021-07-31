@@ -1,24 +1,21 @@
 {% extends 'base.html' %}
 {% block content%}
-    <head>
-        <title>Bio Calculator About Page</title>
-    </head>
+    <!-- <head>
+        <title>About</title>
+    </head> -->
 
     <body>
-        <center>
-            <hr style="height:20pt; visibility:hidden;" />
-            <h1></h1>
-
-            <p>
-                <strong>Welcome to the BioCalculator!</strong>
-                <br><br>
-                <!-- Get to know more about the creators behind the BioCalculator here!
-                <br> -->
+        <div class="container-fluid ms-3 my-5">
+            <h4 class="mb-3">BioCalculator About Page</h4>
+            <p class="mb-0">
                 There are currently seven members working on this website, and we are students at Harvey Mudd College under the 
-                <a href="https://biomakerspace.com/">BioMakerspace</a>.
-                <br><br>
-                <strong>Members:</strong>
-                <br><br>
+                <strong>
+                    <a href="https://biomakerspace.com/" class="text-dark text-decoration-none">BioMakerspace</a>
+                </strong>.
+                <br>
+                <div class="mt-3 mb-2">
+                    <strong>Members:</strong>
+                </div>
                 <div>
                     <li>Tom Fu</li>
                     <li>Lucy Paddock</li>
@@ -28,16 +25,8 @@
                     <li>Michelle Lee</li>
                     <li>Allison Tsai</li>
                 </div>
-                
-                    
-                    
-                    
-                
-                
             </p>
-            <hr style="height:15pt; visibility:hidden;" />
-        </center>
+        </div>
     </body>
-
 
 {% endblock %}
