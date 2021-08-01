@@ -1,61 +1,64 @@
-{% extends 'base.html' %}
-{% block content%}
-    <head>
-        <title>Bio Calculator Contact Page</title>
-    </head>
+{% extends 'base.html' %} {% block content%}
+<!-- <head>
+        <title>Unit Conversion</title>
+    </head> -->
 
-    <body>
-        <center>
-            <hr style="height:15pt; visibility:hidden;" />
-            <h4>Unit Conversion Calculator</h4>
-    `        <h5>Enter Input Value, Input Unit, Output Unit.</h5>
-            <h5>Molar Mass is required if converting between mass and moles.</h5>
-            <h5>In addition, check out the instructions below!</h5>
-            <ul>
-                <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Unit Conversion</h5>
-                    <div class="dropdown-content">
-                    <h6> Mandatory inputs:</h6>
-                    <h6> Input Value </h6>
-                    <h6> Input Unit </h6> 
-                    <h6> Output Unit </h6> 
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">*Other Instructions*</h5>
-                    <div class="dropdown-content">
-                    <h6> *Other Instructions* </h6>
-                    </div>
-                </li>
-            </ul>
-            <hr style="height:3pt; visibility:hidden;" />
-            {% load crispy_forms_tags %} 
-            <form method="post">
-                {% csrf_token %}
-                <table class="tableContainer" cellspacing="10px">
-                    <tbody>
-                        <tr style="height:5px;">
-                            <td> {{ conversionform.INPUTVALUE|as_crispy_field }}</td>
-                        </tr>
-                        <tr style="height:5px;">
-                            <td> {{ conversionform.INPUTUNIT|as_crispy_field }}</td>
-                        </tr>
-                        <tr style="height:5px;">
-                            <td> {{ conversionform.OUTPUTVALUE|as_crispy_field }}</td>
-                        </tr>
-                        <tr style="height:5px;">
-                            <td> {{ conversionform.OUTPUTUNIT|as_crispy_field }}</td>
-                        </tr>
-                        <tr style="height:5px;">
-                            <td> {{ conversionform.MOLARMASS|as_crispy_field }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+<body>
+  <div class="container-fluid ms-3 my-5">
+    <h4 class="mb-3">Unit Conversion Calculator</h4>
+    <h5>Instructions:</h5>
+    <ul class="ms-1">
+      <li>
+        Please input the appropriate values for the required (*) form fields. Conversions between ___ are allowed.
+      </li>
+      <li>
+        Molar mass is required only when converting between mass and moles.
+      </li>
+      <li>
+        Appropriate units:
+        <ul>
+          <li><u>Mass</u>: g, kg, pg, ng, μg, mg, cg, Mg, Gg, Tg</li>
+          <li><u>Molarity</u>: M, kM, pM, nM, μM, mM, cM, MM, GM, TM</li>
+          <li><u>Volume</u>: L, kL, pL, nL, μL, mL, cL, ML, GL, TL</li></li>
+          <li><u>Mole</u>: mol, kmol, pmol, nmol, μmol, mmol, cmol, Mmol, Gmol, Tmol</li>
+          <li><u>Molar mass</u>: g/mol</li>
+        </ul>
+      </li>
+    </ul>
 
-                <button type="submit">Submit</button>
-            </form>
-        </center>
-    </body>
+    <h5 class="mb-4">Inputs:</h5>
+    {% load crispy_forms_tags %}
+    
+    <form method="post">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+          <span class="input-group-text">input value *</span>
+          {{ conversionform.INPUTVALUE|as_crispy_field }}
+      </div>
 
+      <div class="input-group mb-3">
+        <span class="input-group-text">input unit *</span>
+        {{ conversionform.INPUTUNIT|as_crispy_field }}
+      </div>
+      
+      <div class="input-group mb-3">
+          <span class="input-group-text">output value</span>
+          {{ conversionform.OUTPUTVALUE|as_crispy_field }}
+      </div>
+
+      <div class="input-group mb-3">
+          <span class="input-group-text">output unit *</span>
+          {{ conversionform.OUTPUTUNIT|as_crispy_field }}
+      </div>
+
+      <div class="input-group mb-4">
+          <span class="input-group-text">molar mass</span>
+          {{ conversionform.MOLARMASS|as_crispy_field }}
+      </div>
+
+      <button type="submit" class="btn btn-warning">Submit</button>
+    </form>
+  </div>
+</body>
 
 {% endblock %}
