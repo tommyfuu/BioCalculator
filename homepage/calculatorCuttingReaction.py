@@ -6,27 +6,27 @@ from crispy_forms.layout import Submit
 class CuttingEdgeForm(forms.Form):
     # reference: https://www.genscript.com/pcr-protocol-pcr-steps.html
     totalVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
     # initial DNA concentration, final mass of dna;
     # don’t worry about unit conversion for now
 
     templateDNAVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Template DNA Volume")
+        decimal_places=5, max_digits=10000, required=False, label=False)
     templateDNAInitConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Template DNA Initial Concentration")
+        decimal_places=5, max_digits=10000, required=False, label=False)
     templateDNAFinalMass = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Template DNA Final Mass")
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
     bufferVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Buffer Solution Volume")
+        decimal_places=5, max_digits=10000, required=False, label=False)
     bufferConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Buffer Solution Concentration")
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
     restrictionEnzymeVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Restriction Enzyme Volume")
+        decimal_places=5, max_digits=10000, required=False, label=False)
     restrictionEnzymeConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label="Restriction Enzyme Concentration")
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
 # 10 X PCR Buffer -> 1X PCR Buffer in the final concentration
 # final solution has total volume 100 microL
