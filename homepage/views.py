@@ -79,10 +79,10 @@ def dilution_input_view(request):
             print("Here are the calculated input values for your desired output:")
             if ERROR == False:
                 print("GOTORESULTPAGE")
-                return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
+                return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
             elif ERROR == True:
                 # not enough inputs
-                return render(request, 'concentrationCalcError.html', {})
+                return render(request, 'dilutionCalcError.html', {})
             else:
                 if ERROR == "solute":
                     info = "Error: Input solution concentration not the same as the concentration value calculated with inputSolute and inputVol."
@@ -94,17 +94,17 @@ def dilution_input_view(request):
                     info = "Error: zero molar mass. You should either NOT input molar mass if your calculation does not involve molar conversion, or you should enter a numerical molar mass value."
                 if ERROR == "displayUnit":
                     info = "Error: inputted input liquid concentration but not molar mass. This way the amount of solute cannot be displayed in mass, which is problematic for our current implementation."
-                return render(request, 'concentrationCalcSolute.html', {"error": info})
+                return render(request, 'dilutionCalcSolute.html', {"error": info})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = DilutionForm()
-    return render(request, "concentrationCalc.html", {'form': form})
+    return render(request, "dilutionCalc.html", {'form': form})
 
 
 def dilution_result_view(request):
     # return HttpResponse("Contact page!")
-    return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+    return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
 
 # PCR CALCULATOR

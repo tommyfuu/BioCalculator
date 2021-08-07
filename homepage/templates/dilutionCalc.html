@@ -1,0 +1,155 @@
+{% extends 'base.html' %} {% block content%}
+<!-- <head>
+        <title>Concentration Change Calculator</title>
+    </head> -->
+
+<body>
+  <div class="container-fluid ms-3 my-5">
+    <h4 class="mb-3">Dilution Calculator</h4>
+    <h5>Instructions:</h5>
+    <ul class="ms-1">
+      <li>
+        Hello! This calculator calculates how much water and solute you have
+        added to your solution.
+      </li>
+      <li>
+        // we should put why this calculator is useful (in what experiment) //
+      </li>
+      <li>
+        Required fields:
+        <ul>
+          <li>final solvent concentration</li>
+          <li>final solvent volume (if input solvent volume is 0)</li>
+          <li>
+            molar mass (if you're using M as a concentration unit during any
+            point in the calculation)
+          </li>
+        </ul>
+      </li>
+      <li>
+        Optional Forms:
+        <ul>
+          <li>input solvent volume</li>
+          <li>input solvent concentration</li>
+          <li>input solute mass</li>
+        </ul>
+      </li>
+      <li>
+        All final form values must be greater than their initial form values
+      </li>
+      <li>The final result units will be in the "displayed units"</li>
+    </ul>
+
+    <h5 class="mb-4">Input:</h5>
+    {% load crispy_forms_tags %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="container-fluid px-0">
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-2">
+              <span class="input-group-text">initial solvent volume</span>
+              {{ form.INPUTVOL|as_crispy_field }}
+              <span class="input-group-text">units</span>
+              {{ form.INPUTVOLUNIT|as_crispy_field }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-2">
+              <span class="input-group-text">final solvent volume</span>
+              {{ form.FINALVOL|as_crispy_field }}
+              <span class="input-group-text">units</span>
+              {{ form.FINALVOLUNIT|as_crispy_field }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-2">
+              <span class="input-group-text"
+                >initial solvent concentration</span
+              >
+              {{ form.INPUTCONC|as_crispy_field }}
+              <span class="input-group-text">units</span>
+              {{ form.INPUTCONCUNIT|as_crispy_field }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-2">
+              <span class="input-group-text"
+                >final solvent concentration *</span
+              >
+              {{ form.FINALCONC|as_crispy_field }}
+              <span class="input-group-text">units</span>
+              {{ form.FINALCONCUNIT|as_crispy_field }}
+            </div>
+          </div>
+        </div>
+
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-2">
+              <span class="input-group-text">initial solute mass</span>
+              {{ form.INPUTSOLUTE|as_crispy_field }}
+              <span class="input-group-text">units</span>
+              {{ form.INPUTSOLUTEUNIT|as_crispy_field }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-4">
+              <span class="input-group-text">molar mass *</span>
+              {{ form.MOLARMASS|as_crispy_field }}
+              <span class="input-group-text">kg/mol</span>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="mb-4">displayed units</h6>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text">volume</span>
+            {{ form.OUTPUTVOLUNIT|as_crispy_field }}
+          </div>
+          <div class="input-group mb-2">
+            <span class="input-group-text">concentration</span>
+            {{ form.OUTPUTCONCUNIT|as_crispy_field }}
+          </div>
+          <div class="input-group mb-5">
+            <span class="input-group-text">solute</span>
+            {{ form.OUTPUTSOLUTEUNIT|as_crispy_field }}
+          </div>
+      </div>
+
+      
+      <!-- <div class="container-fluid">
+        <div class="row align-items-start">
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">volume</span>
+              {{ form.OUTPUTVOLUNIT|as_crispy_field }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">concentration</span>
+              {{ form.OUTPUTCONCUNIT|as_crispy_field }}
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text">solute</span>
+              {{ form.OUTPUTSOLUTEUNIT|as_crispy_field }}
+            </div>
+          </div>
+        </div>
+      </div> -->
+      
+      
+      <button type="submit" class="btn btn-warning">Submit</button>
+    </form>
+  </div>
+</body>
+
+{% endblock %}
