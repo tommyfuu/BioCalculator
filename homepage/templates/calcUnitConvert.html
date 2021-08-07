@@ -31,27 +31,27 @@
     
     <form method="post">
       {% csrf_token %}
-      <div class="input-group mb-3">
+      <div class="input-group mb-2">
           <span class="input-group-text">input value *</span>
           {{ conversionform.INPUTVALUE|as_crispy_field }}
       </div>
 
-      <div class="input-group mb-3">
+      <div class="input-group mb-2">
         <span class="input-group-text">input unit *</span>
         {{ conversionform.INPUTUNIT|as_crispy_field }}
       </div>
       
-      <div class="input-group mb-3">
+      <div class="input-group mb-2">
           <span class="input-group-text">output value</span>
           {{ conversionform.OUTPUTVALUE|as_crispy_field }}
       </div>
 
-      <div class="input-group mb-3">
+      <div class="input-group mb-2">
           <span class="input-group-text">output unit *</span>
           {{ conversionform.OUTPUTUNIT|as_crispy_field }}
       </div>
 
-      <div class="input-group mb-4">
+      <div class="input-group mb-5">
           <span class="input-group-text">molar mass</span>
           {{ conversionform.MOLARMASS|as_crispy_field }}
       </div>

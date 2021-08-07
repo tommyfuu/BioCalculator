@@ -35,35 +35,35 @@
 
         <form method="post">
             {% csrf_token %}
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">total volume</span>
                 {{ cuttingform.totalVol|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">template DNA volume</span>
                 {{ cuttingform.templateDNAVol|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">template DNA initial concentration</span>
                 {{ cuttingform.templateDNAInitConc|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">template DNA final mass</span>
                 {{ cuttingform.templateDNAFinalMass|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">buffer solution volume</span>
                 {{ cuttingform.bufferVol|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">buffer solution concentration</span>
                 {{ cuttingform.bufferConc|as_crispy_field }}
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <span class="input-group-text">restriction enzyme volume</span>
                 {{ cuttingform.restrictionEnzymeVol|as_crispy_field }}
             </div>
-            <div class="input-group mb-4">
+            <div class="input-group mb-5">
                 <span class="input-group-text">restriction enzyme concentration</span>
                 {{ cuttingform.restrictionEnzymeConc|as_crispy_field }}
             </div>
