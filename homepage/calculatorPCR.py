@@ -7,43 +7,43 @@ class PCRForm(forms.Form):
     # reference: https://www.genscript.com/pcr-protocol-pcr-steps.html
 
     totalVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     waterVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     PCRBufferVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     PCRBufferInitConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     PCRBufferFinalConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     polymeraseVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     polymeraseConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     dNTPVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     dNTPConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     MgCl2Vol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     MgCl2Conc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     forwardPrimerVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     forwardPrimerConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     backwardPrimerVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     backwardPrimerConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     templateDNAVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     templateDNAConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     DMSOOptionalVol = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
     DMSOOptionalConc = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False)
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
 # 10 X PCR Buffer -> 1X PCR Buffer in the final concentration
 # final solution has total volume 100 microL

@@ -1,30 +1,26 @@
-{% extends 'base.html' %}
-{% block content%}
-    
-    <head>
-        <title>Bio Calculator Home Page</title>
-    </head>
+{% extends 'base.html' %} {% block content%}
 
-    <body>
-        <center>
-            <hr style="height:20pt; visibility:hidden;" />
-            <h1></h1>
-            <p>
-                <strong>Welcome to the BioCalculator!</strong>
-                <br><br>
-                This is a website that provides calculators for that are helpful for various biological and chemical procedures. Hover over the 'calculators' link at the top to view all the calculators we currently provide, or click on it to enter a home page that also has links to all the 
-                <a href="/calculators/">calculators</a>.
-                
-                <br><br>
-                If you have any questions or concerns, visit the 
-                <a href="/faq/">FAQ page</a>
-                ! If you are facing issues, please contact us via 
-                <a href="https://github.com/tommyfuu/BioCalculator">GitHub</a>! 
-            </p> 
-            
-             
-            <hr style="height:15pt; visibility:hidden;" />
-        </center>
-    </body>
+<body>
+  <div class="container-fluid ms-3 my-5">
+    <h4 class="mb-3">Welcome to the BioCalculator!</h4>
+    <p class="mb-0">
+      This is a website that provides calculators for that are helpful for
+      various biological and chemical procedures.
+      <br/>
+      If you have any questions or concerns, visit the
+      <strong
+        ><a href="/faq/" class="text-dark text-decoration-none">FAQ</a></strong
+      >
+      page! If you are facing issues, please contact us via
+      <strong
+        ><a
+          href="https://github.com/tommyfuu/BioCalculator"
+          class="text-dark text-decoration-none"
+          >GitHub</a
+        ></strong
+      >!
+    </p>
+  </div>
+</body>
 
 {% endblock %}

@@ -8,27 +8,9 @@
         <center>
             <hr style="height:15pt; visibility:hidden;" />
             <h4>Cutting Reaction Calculator</h4>
-            <h5>Make sure to fill out the final concentration!</h5>
-            <h5>While inputVol/inputSol/inputConc are optional, if left blank, they will be considered as 0.</h5>
-            <h5>In addition, check out the instructions below!</h5>
-            <ul>
-                <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Dilution</h5>
-                    <div class="dropdown-content">
-                    <h6> Mandatory inputs:</h6>
-                    <h6> finalConc</h6>
-                    <h6> FinalVol (only if inputVol is 0) </h6> 
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <h5 href="javascript:void(0)" class="dropbtn">Instructions for Increasing Concentration</h5>
-                    <div class="dropdown-content">
-                    <h6> Mandatory inputs: </h6>
-                    <h6> finalConc</h6>
-                    <h6> finalVol (only if inputVol is 0) </h6>
-                    </div>
-                </li>
-            </ul>
+            
+            
+            
             <hr style="height:3pt; visibility:hidden;" />
    <td> Final Liquid Volume </td>
                         <td> {{finalVol}} {{ outputVolUnit }}</td>
@@ -60,15 +42,23 @@
                     </tr>
                     <tr>
                         <td> Buffer Concentration</td>
-                        <td> {{bufferConc}} </td>
+                        <td> {{bufferInitConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Buffer Concentration</td>
+                        <td> {{bufferFinalConc}} </td>
                     </tr>
                     <tr>
                         <td> Restriction Enzyme Volume</td>
                         <td> {{restrictionEnzymeVol}} </td>
                     </tr>
                     <tr>
-                        <td> Restriction Enzyme Concentration</td>
-                        <td> {{restrictionEnzymeConc}} </td>
+                        <td> Restriction Enzyme Initial Concentration</td>
+                        <td> {{restrictionEnzymeInitConc}} </td>
+                    </tr>
+                    <tr>
+                        <td> Restriction Enzyme Final Concentration</td>
+                        <td> {{restrictionEnzymeFinalConc}} </td>
                     </tr>
                     <tr>
                         <td> Water Volume</td>

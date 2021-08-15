@@ -17,13 +17,16 @@ def home(request):
     # return HttpResponse("Home page!")
     return render(request, 'home.html', {})
 
+
 def calculators(request):
     # return HttpResponse("Calculators page!")
     return render(request, 'calculators.html', {})
 
+
 def faq(request):
     # return HttpResponse("FAQ page!")
     return render(request, 'faq.html', {})
+
 
 def about(request):
     # return HttpResponse("About page!")
@@ -79,10 +82,10 @@ def dilution_input_view(request):
             print("Here are the calculated input values for your desired output:")
             if ERROR == False:
                 print("GOTORESULTPAGE")
-                return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
+                return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER, "outputVolUnit": OUTPUTVOLUNIT, "outputConcUnit": OUTPUTCONCUNIT, "outputSoluteUnit": OUTPUTSOLUTEUNIT})
             elif ERROR == True:
                 # not enough inputs
-                return render(request, 'concentrationCalcError.html', {})
+                return render(request, 'dilutionCalcError.html', {})
             else:
                 if ERROR == "solute":
                     info = "Error: Input solution concentration not the same as the concentration value calculated with inputSolute and inputVol."
@@ -94,17 +97,17 @@ def dilution_input_view(request):
                     info = "Error: zero molar mass. You should either NOT input molar mass if your calculation does not involve molar conversion, or you should enter a numerical molar mass value."
                 if ERROR == "displayUnit":
                     info = "Error: inputted input liquid concentration but not molar mass. This way the amount of solute cannot be displayed in mass, which is problematic for our current implementation."
-                return render(request, 'concentrationCalcSolute.html', {"error": info})
+                return render(request, 'dilutionCalcSolute.html', {"error": info})
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = DilutionForm()
-    return render(request, "concentrationCalc.html", {'form': form})
+    return render(request, "dilutionCalc.html", {'form': form})
 
 
 def dilution_result_view(request):
     # return HttpResponse("Contact page!")
-    return render(request, 'concentrationCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+    return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
 
 # PCR CALCULATOR
@@ -262,31 +265,30 @@ def cutting_reaction_input_view(request):
         # create a form instance and populate it with data from the request:
         cuttingform = CuttingEdgeForm(request.POST)
         # check whether it's valid:
-
         if cuttingform.is_valid():
-            totalVol = cuttingform.cleaned_data['TOTALVOL']
-            templateDNAVol = cuttingform.cleaned_data['TEMPLATEDNAVOLUME']
-            templateDNAInitConc = cuttingform.cleaned_data['TEMPLATEDNAINITCONC']
-            templateDNAFinalMass = cuttingform.cleaned_data['TEMPLATEDNAFINALMASS']
-            bufferVol = cuttingform.cleaned_data['BUFFERVOL']
-            bufferConc = cuttingform.cleaned_data['BUFFERCONC']
-            restrictionEnzymeVol = cuttingform.cleaned_data['RESTRICTIONENZYMEVOL']
-            restrictionEnzymeConc = cuttingform.cleaned_data['RESTRICTIONENZYMECONC']
+            totalVol = cuttingform.cleaned_data['totalVol']
+            templateDNAVol = cuttingform.cleaned_data['templateDNAVol']
+            templateDNAInitConc = cuttingform.cleaned_data['templateDNAInitConc']
+            templateDNAFinalMass = cuttingform.cleaned_data['templateDNAFinalMass']
+            bufferVol = cuttingform.cleaned_data['bufferVol']
+            bufferInitConc = cuttingform.cleaned_data['bufferInitConc']
+            bufferFinalConc = cuttingform.cleaned_data['bufferFinalConc']
+            restrictionEnzymeVol = cuttingform.cleaned_data['restrictionEnzymeVol']
+            restrictionEnzymeInitConc = cuttingform.cleaned_data['restrictionEnzymeInitConc']
+            restrictionEnzymeFinalConc = cuttingform.cleaned_data['restrictionEnzymeFinalConc']
 
             # call python functions from your py file
             results = getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
-                                                bufferConc, restrictionEnzymeVol, restrictionEnzymeConc)
-            print("Here is conversion value for your input:", results)
+                                                bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc)
 
             # parsing your results
-            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol, ERROR = (results, False)
-
+            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol, ERROR = results
             # feed that into the result/error
             if ERROR == False:
-                return render(request, 'cuttingReactionCalcResult.html', {"totalVol": TOTALVOL, "templateDNAVol": TEMPLATEDNAVOL,
-                                                                          "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
-                                                                          "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
-                                                                          "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
+                return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol,
+                                                                          "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass,
+                                                                          "bufferVol": bufferVol, "bufferInitConc": bufferInitConc, "bufferFinalConc": bufferFinalConc, "restrictionEnzymeVol": restrictionEnzymeVol,
+                                                                          "restrictionEnzymeInitConc": restrictionEnzymeInitConc, "restrictionEnzymeFinalConc": restrictionEnzymeFinalConc, "waterVol": waterVol})
         #     if ERROR == False:
         #         return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
         #     else:
@@ -303,6 +305,6 @@ def cutting_reaction_input_view(request):
 def cutting_reaction_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'cuttingReactionCalcResult.html', {"totalVol": TOTALVOL, "templateDNAVol": TEMPLATEDNAVOL,
-                                                     "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
-                                                     "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
-                                                     "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
+                                                              "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
+                                                              "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
+                                                              "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})

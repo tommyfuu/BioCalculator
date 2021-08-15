@@ -32,33 +32,33 @@ def checkWhetherUseMolarMass(inputConcUnit, outputConcUnit):
 
 class DilutionForm(forms.Form):
     INPUTVOL = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Input Liquid Volume')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     INPUTCONC = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Input Liquid Concentration')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     INPUTSOLUTE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Input Solute Mass')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     FINALVOL = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Final Liquid Volume')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     FINALCONC = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Final Liquid Concentration')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     INPUTSOLUTEUNIT = forms.CharField(
-        label='Input solute unit (Volume or mass)', widget=forms.Select(choices=MASSCHOICES), required=False)
+        label=False, widget=forms.Select(choices=MASSCHOICES), required=False)
     MOLARMASS = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Molar Mass (kg/mol)')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     INPUTVOLUNIT = forms.CharField(
-        label='Input volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+        label=False, widget=forms.Select(choices=VOLCHOICES), required=False)
     INPUTCONCUNIT = forms.CharField(
-        label='Input concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
+        label=False, widget=forms.Select(choices=CONCCHOICES), required=False)
     FINALVOLUNIT = forms.CharField(
-        label='Final volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+        label=False, widget=forms.Select(choices=VOLCHOICES), required=False)
     FINALCONCUNIT = forms.CharField(
-        label='Final concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
+        label=False, widget=forms.Select(choices=CONCCHOICES), required=False)
     OUTPUTVOLUNIT = forms.CharField(
-        label='Displayed volume unit', widget=forms.Select(choices=VOLCHOICES), required=False)
+        label=False, widget=forms.Select(choices=VOLCHOICES), required=False)
     OUTPUTCONCUNIT = forms.CharField(
-        label='Displayed concentration unit', widget=forms.Select(choices=CONCCHOICES), required=False)
+        label=False, widget=forms.Select(choices=CONCCHOICES), required=False)
     OUTPUTSOLUTEUNIT = forms.CharField(
-        label='Displayed solute unit', widget=forms.Select(choices=MASSCHOICES), required=False)
+        label=False, widget=forms.Select(choices=MASSCHOICES), required=False)
 
 
 def dilutionHelper(inputConc, finalVol, finalConc):
