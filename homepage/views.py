@@ -242,7 +242,6 @@ def cutting_reaction_input_view(request):
         # create a form instance and populate it with data from the request:
         cuttingform = CuttingEdgeForm(request.POST)
         # check whether it's valid:
-        print("AXZZXXZZZZZ", cuttingform)
         if cuttingform.is_valid():
             print("AXSCX", cuttingform.cleaned_data)
             totalVol = cuttingform.cleaned_data['totalVol']
@@ -256,15 +255,12 @@ def cutting_reaction_input_view(request):
             restrictionEnzymeInitConc = cuttingform.cleaned_data['restrictionEnzymeInitConc']
             restrictionEnzymeFinalConc = cuttingform.cleaned_data['restrictionEnzymeFinalConc']
 
-            print("AH", restrictionEnzymeInitConc, restrictionEnzymeFinalConc)
             # call python functions from your py file
             results = getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
                                                 bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc)
-            print("Here is conversion value for your input:", results)
 
             # parsing your results
-            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol, ERROR = results, False
-
+            totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol, ERROR = results
             # feed that into the result/error
             if ERROR == False:
                 return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol,

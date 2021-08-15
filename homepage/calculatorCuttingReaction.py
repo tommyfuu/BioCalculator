@@ -70,11 +70,11 @@ def updateVolumes1(inputVol, inputConc, outputConc, totalVol):
         tempTotalVol = (inputConc * inputVol)/outputConc
         # Raises an error meesage
         if tempTotalVol != totalVol:
-            return "CALCULATION CONFLICT ERROR"
+            return None, None, "CALCULATION CONFLICT ERROR"
         else:
-            return "IT's FINE"
+            return None, None, "IT's FINE"
     elif outputConc == None:
-        return "NO OUTPUT CONC, DOESN'T MAKE SENSE"
+        return None, None, "NO OUTPUT CONC, DOESN'T MAKE SENSE"
     elif inputConc != None:  # When inputVol is empty
         inputVol = (totalVol*outputConc)/inputConc
     elif inputVol != None:  # When inputConc is empty
@@ -82,7 +82,7 @@ def updateVolumes1(inputVol, inputConc, outputConc, totalVol):
     elif (inputConc == None and inputVol == None) or outputConc == None:
         inputVol = 0.0
         inputConc = 0.0
-    return inputVol, inputConc
+    return inputVol, inputConc, False
 
 
 def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
@@ -93,16 +93,12 @@ def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, tem
     # make sure totalVol is always inputted
     error = False
     if totalVol == None:
-        return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
-    print("All values", totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
-          bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc)
+        return None, None, None, None, None, None, None, None, None, None, None, "Total Volume None"
     # DNA Calculation (Assuming that the units match for now)
     if templateDNAVol != None and templateDNAInitConc != None and templateDNAFinalMass != None:
         # Checking that the three inputs match
         if templateDNAVol != templateDNAFinalMass / templateDNAInitConc:
-            return "CALCULATION CONFLICT ERROR"
-        else:
-            return "IT's FINE"
+            return None, None, None, None, None, None, None, None, None, None, None, "CALCULATION CONFLICT ERROR"
     elif templateDNAVol != None and templateDNAInitConc != None:
         templateDNAFinalMass = templateDNAInitConc * templateDNAVol
     elif templateDNAVol != None and templateDNAFinalMass != None:
@@ -112,22 +108,20 @@ def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, tem
     # What about the case when we only have one given value
 
     # the rest of calculations
-    # print("bufferVol", bufferVol)
-    # print("bufferConc", bufferInitConc)
-    bufferVol, bufferInitConc = updateVolumes1(
+    bufferVol, bufferInitConc, error = updateVolumes1(
         bufferVol, bufferInitConc, bufferFinalConc, totalVol)
-    print("WTF", restrictionEnzymeInitConc, restrictionEnzymeFinalConc)
-    huh = updateVolumes1(
+    if error != False:
+        error = "buffer:"+error
+    restrictionEnzymeVol, restrictionEnzymeInitConc, error = updateVolumes1(
         restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, totalVol)
-    print('huh', huh)
-    restrictionEnzymeVol, restrictionEnzymeInitConc = huh
-    # print("bufferVol", bufferVol)
-    # print("bufferConc", bufferConc)
+    if error != False:
+        error = "restriction enzymes:"+error
+
     # water volume
     waterVol = totalVol - templateDNAVol - restrictionEnzymeVol - bufferVol
     # Return an error if water volume is negative
 
-    return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol
+    return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol, error
 
 # Test Case #1 from example
 # totalVol = 40
