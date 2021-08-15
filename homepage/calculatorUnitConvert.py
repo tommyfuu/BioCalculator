@@ -9,18 +9,36 @@ unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', '
 unitMolarMassDict = {('kg/L', 'M'): 1}
 metricUnits = ['g', 'M', 'L', 'mol']
 
+MASSCHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+               ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]
+VOLCHOICES = [('L', 'L'), ('kL', 'kL'), ('pL', 'pL'), ('nL', 'nL'), ('μL', 'μL'),
+              ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+CONCCHOICES = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('μM', 'μM'),
+               ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('g/L', 'g/L'), ('kg/L', 'kg/L')]
+SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+                 ('mg', 'mg'), ('cg', 'cg'), ('Mg',
+                                              'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
+                 ('L', 'L'), ('kL', 'kL'), ('pL',
+                                            'pL'), ('nL', 'nL'), ('μL', 'μL'),
+                 ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+UNITCHOICES = MASSCHOICES + VOLCHOICES + CONCCHOICES + SOLUTECHOICES
+
 
 class ConversionForm(forms.Form):
     INPUTVALUE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=True, label=False)
+        decimal_places=5, max_digits=10000, required=True, label='Input Value')
+    # INPUTUNIT = forms.CharField(
+    #    label='Input Unit', max_length=80, required=True)
     INPUTUNIT = forms.CharField(
-        label=False, max_length=80, required=True)
+        label='Input Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
     OUTPUTVALUE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label=False)
+        decimal_places=5, max_digits=10000, required=False, label='Output Value')
+    # OUTPUTUNIT = forms.CharField(
+    #    label='Output Unit', max_length=80, required=True)
     OUTPUTUNIT = forms.CharField(
-        label=False, max_length=80, required=True)
+        label='Output Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
     MOLARMASS = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label=False)
+        decimal_places=5, max_digits=10000, required=False, label='Molar Mass (g/mol)')
 
 
 def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
@@ -118,16 +136,21 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     else:
         # Molarity to Volume
         if (unitTo[-1:] == 'L' and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L'):
-            raise Exception('You can not convert from volume to molarity or vice versa')
+            raise Exception(
+                'You can not convert from volume to molarity or vice versa')
         # Mass to Molarity
         elif (unitTo[-1] == 'g' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-1] == 'g'):
-            raise Exception('You can not convert from mass to molarity or vice versa')    
+            raise Exception(
+                'You can not convert from mass to molarity or vice versa')
         # Mols to Molarity
         elif (unitTo[-3:] == 'mol' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-3:] == 'mol'):
-            raise Exception('You can not convert from moles to molarity or vice versa')  
+            raise Exception(
+                'You can not convert from moles to molarity or vice versa')
         # Unrecognized error
         else:
-            raise Exception('Unit conversion calculator has no case to handle this conversion')
+            raise Exception(
+                'Unit conversion calculator has no case to handle this conversion')
+
 
 def MToPPM(input, unitFrom, unitTo, molarMass):
     '''Converts M to ppm and vice versa, but you have to know the molar mass'''
