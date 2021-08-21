@@ -1,77 +1,101 @@
-{% extends 'base.html' %}
-{% block content%}
-    <head>
-        <title>Bio Calculator Contact Page</title>
-    </head>
+{% extends 'base.html' %} {% block content%}
+<!-- <head>
+  <title>Cutting Reaction Result Page</title>
+</head> -->
 
-    <body>
-        <center>
-            <hr style="height:15pt; visibility:hidden;" />
-            <h4>Cutting Reaction Calculator</h4>
-            
-            
-            
-            <hr style="height:3pt; visibility:hidden;" />
-   <td> Final Liquid Volume </td>
-                        <td> {{finalVol}} {{ outputVolUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Final Liquid
-            <table border = "1">
-                <hr style="height:15pt; visibility:hidden;" />
+<body>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-3">Cutting Reaction Results</h4>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">volume</th>
+          <th scope="col">concentration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">total</th>
+          <td>{{totalVol}}</td>
+          <td>n/a</td>
+        </tr>
+
+        <tr>
+            <th scope="row">template DNA</th>
+            <td>{{templateDNAVol}}</td>
+            <td>
+              <table class="table table-hover table-borderless table-sm table-fixed mb-0">
+                  <tbody>
+                      <tr>
+                          <th style="width: 70%">initial conc</th>
+                          <td style="width: 30%">{{templateDNAInitConc}}</td>
+                      </tr>
+                      <tr>
+                          <th>final mass</th>
+                          <td>{{templateDNAFinalMass}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+            </td>
+          </tr>
+
+        <tr>
+          <th scope="row">buffer</th>
+          <td>{{bufferVol}}</td>
+          <td>
+              <table class="table table-hover table-borderless table-sm mb-0">
+                  <tbody>
+                      <tr>
+                          <th style="width: 70%">initial</th>
+                          <td style="width: 30%">{{bufferInitConc}}</td>
+                      </tr>
+                      <tr>
+                          <th>final</th>
+                          <td>{{bufferFinalConc}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row">restriction enzyme</th>
+          <td>{{restrictionEnzymeVol}}</td>
+          <td>
+            <table class="table table-hover table-borderless table-sm mb-0">
                 <tbody>
                     <tr>
-                        <td> Total Volume </td>
-                        <td> {{ totalVol }} </td>
+                        <th style="width: 70%">initial</th>
+                        <td style="width: 30%">{{restrictionEnzymeInitConc}}</td>
                     </tr>
                     <tr>
-                        <td> Template DNA Volume</td>
-                        <td> {{templateDNAVol}} </td>
-                    </tr>
-                    <tr>
-                        <td> Template DNA Initial Concentration</td>
-                        <td> {{templateDNAInitConc}} </td>
-                    </tr>
-                    <tr>
-                        <td> Template DNA Final Mass </td>
-                        <td> {{templateDNAFinalMass}} </td>
-                    </tr>
-                    <tr>
-                        <td> Buffer Volume</td>
-                        <td> {{bufferVol}} </td>
-                    </tr>
-                    <tr>
-                        <td> Buffer Concentration</td>
-                        <td> {{bufferInitConc}} </td>
-                    </tr>
-                    <tr>
-                        <td> Buffer Concentration</td>
-                        <td> {{bufferFinalConc}} </td>
-                    </tr>
-                    <tr>
-                        <td> Restriction Enzyme Volume</td>
-                        <td> {{restrictionEnzymeVol}} </td>
-                    </tr>
-                    <tr>
-                        <td> Restriction Enzyme Initial Concentration</td>
-                        <td> {{restrictionEnzymeInitConc}} </td>
-                    </tr>
-                    <tr>
-                        <td> Restriction Enzyme Final Concentration</td>
-                        <td> {{restrictionEnzymeFinalConc}} </td>
-                    </tr>
-                    <tr>
-                        <td> Water Volume</td>
-                        <td> {{waterVol}} </td>
+                        <th>final</th>
+                        <td>{{restrictionEnzymeFinalConc}}</td>
                     </tr>
                 </tbody>
             </table>
-            <ul>
+          </td>
+        </tr>
 
-            <li><a href="http://127.0.0.1:8000/cutting/">REFRESH</a></li>
-            </ul>
-        </center>
-    </body>
-
+        <tr>
+          <th scope="row">water</th>
+          <td>{{waterVol}}</td>
+          <td>n/a</td>
+        </tr>
+      </tbody>
+    </table>
+    <center>
+      <a
+        href="/cutting/"
+        class="btn btn-warning mt-3"
+        role="button"
+        aria-disabled="true"
+        >refresh</a
+      >
+    </center>
+  </div>
+</body>
 
 {% endblock %}
