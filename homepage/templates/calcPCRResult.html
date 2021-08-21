@@ -26,9 +26,18 @@
           <th scope="row">PCR buffer</th>
           <td>{{RESULTPCRBufferVol}}</td>
           <td>
-            <u>initial</u>: {{RESULTPCRBufferInitConc}}
-            <br />
-            <u>final</u>: {{RESULTPCRBufferFinalConc}}
+              <table class="table table-hover table-borderless table-sm mb-0">
+                  <tbody>
+                    <tr>
+                        <th style="width: 70%">initial</th>
+                        <td style="width: 30%">{{RESULTPCRBufferInitConc}}</td>
+                    </tr>
+                    <tr>
+                        <th>final</th>
+                        <td>{{RESULTPCRBufferFinalConc}}</td>
+                    </tr>
+                  </tbody>
+              </table>
           </td>
         </tr>
 
