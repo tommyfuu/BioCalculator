@@ -103,8 +103,12 @@ def dilution_input_view(request):
 
 
 def dilution_result_view(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("dilution calculator result page")
     return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
+
+def dilution_error_view(request):
+    # return HttpResponse("dilution calculator error page")
+    return render(request, 'dilutionCalcError.html', {"errorMsg": ERRORMSG})
 
 
 # PCR CALCULATOR
@@ -175,12 +179,12 @@ def pcr_input_view(request):
 
 
 def pcr_result_view(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("PCR result page!")
     return render(request, 'calcPCRResult.html', {"RESULTtotalVol": RESULTtotalVol, "RESULTwaterVol": RESULTwaterVol, "RESULTPCRBufferVol": RESULTPCRBufferVol, "RESULTPCRBufferInitConc": RESULTPCRBufferInitConc, "RESULTPCRBufferFinalConc": RESULTPCRBufferFinalConc, "RESULTpolymeraseVol": RESULTpolymeraseVol, "RESULTpolymeraseConc": RESULTpolymeraseConc, "RESULTdNTPVol": RESULTdNTPVol, "RESULTdNTPConc": RESULTdNTPConc, "RESULTMgCl2Vol": RESULTMgCl2Vol, "RESULTMgCl2Conc": RESULTMgCl2Conc, "RESULTforwardPrimerVol": RESULTforwardPrimerVol, "RESULTforwardPrimerConc": RESULTforwardPrimerConc, "RESULTbackwardPrimerVol": RESULTbackwardPrimerVol, "RESULTbackwardPrimerConc": RESULTbackwardPrimerConc, "RESULTtemplateDNAVol": RESULTtemplateDNAVol, "RESULTtemplateDNAConc": RESULTtemplateDNAConc, "RESULTDMSOOptionalVol": RESULTDMSOOptionalVol, "RESULTDMSOOptionalConc": RESULTDMSOOptionalConc})
 
 
 def pcr_error_view(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("PCR error page!")
     return render(request, 'calcPCRError.html', {"errorMsg": ERRORMSG})
 
 
@@ -225,12 +229,12 @@ def unit_convert_input_view(request):
 
 
 def unit_convert_result_view(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("unit conversion result page!")
     return render(request, 'calcUnitConvertResult.html', {"inputValue": INPUTVALUE, "inputUnit": INPUTUNIT, "outputValue": OUTPUTVALUE, "outputUnit": OUTPUTUNIT, "molarMass": MOLARMASS})
 
 
 def unit_convert_error_view(request):
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("unit conversion error page!")
     return render(request, 'calcUnitConvertError.html', {"errorMsg": ERRORMSG})
 
 
@@ -279,7 +283,7 @@ def cutting_reaction_input_view(request):
 # TODO: Define global variables --> Work on the results page
 def cutting_reaction_result_view(request):
     return
-    # return HttpResponse("Contact page!")
+    # return HttpResponse("cutting reaction result page!")
     # return render(request, 'cuttingReactionCalcResult.html', {"totalVol": totalVol, "templateDNAVol": templateDNAVol,
     #                                                 "templateDNAInitConc": templateDNAInitConc, "templateDNAFinalMass": templateDNAFinalMass,
     #                                                 "bufferVol": bufferVol, "bufferConc": bufferConc, "restrictionEnzymeVol": restrictionEnzymeVol,
