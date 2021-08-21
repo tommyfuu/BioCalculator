@@ -20,12 +20,16 @@ class CuttingEdgeForm(forms.Form):
 
     bufferVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label=False)
-    bufferConc = forms.DecimalField(
+    bufferInitConc = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False, label=False)
+    bufferFinalConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label=False)
 
     restrictionEnzymeVol = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label=False)
-    restrictionEnzymeConc = forms.DecimalField(
+    restrictionEnzymeInitConc = forms.DecimalField(
+        decimal_places=5, max_digits=10000, required=False, label=False)
+    restrictionEnzymeFinalConc = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label=False)
 
 # 10 X PCR Buffer -> 1X PCR Buffer in the final concentration
@@ -56,23 +60,45 @@ def updateVolumes(inputVol, inputConc, totalVol):
     return inputVol, inputConc
 
 
+def updateVolumes1(inputVol, inputConc, outputConc, totalVol):
+    '''
+    Takes in an ingredient with a certain concentration and volume,
+    and updates it with the current volume and concentration with
+    respect to the total volume
+    '''
+    if inputConc != None and inputVol != None and outputConc != None:
+        tempTotalVol = (inputConc * inputVol)/outputConc
+        # Raises an error meesage
+        if tempTotalVol != totalVol:
+            return None, None, "CALCULATION CONFLICT ERROR"
+        else:
+            return None, None, "IT's FINE"
+    elif outputConc == None:
+        return None, None, "NO OUTPUT CONC, DOESN'T MAKE SENSE"
+    elif inputConc != None:  # When inputVol is empty
+        inputVol = (totalVol*outputConc)/inputConc
+    elif inputVol != None:  # When inputConc is empty
+        inputConc = (totalVol*outputConc)/inputVol
+    elif (inputConc == None and inputVol == None) or outputConc == None:
+        inputVol = 0.0
+        inputConc = 0.0
+    return inputVol, inputConc, False
+
+
 def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol,
-                              bufferConc, restrictionEnzymeVol, restrictionEnzymeConc):
+                              bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc):
     '''Given all the concentrations and the total volume of the PCR reaction, calculate 
     the volumes for the PCR reactions'''
 
     # make sure totalVol is always inputted
     error = False
     if totalVol == None:
-        return "TOTALVOL MISSING ERROR", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, True
-
+        return None, None, None, None, None, None, None, None, None, None, None, "Total Volume None"
     # DNA Calculation (Assuming that the units match for now)
     if templateDNAVol != None and templateDNAInitConc != None and templateDNAFinalMass != None:
         # Checking that the three inputs match
-        if templateDNAVol != templateDNAFinalMass / templateDNAInitConc :
-            return "CALCULATION CONFLICT ERROR"
-        else:
-            return "IT's FINE"
+        if templateDNAVol != templateDNAFinalMass / templateDNAInitConc:
+            return None, None, None, None, None, None, None, None, None, None, None, "CALCULATION CONFLICT ERROR"
     elif templateDNAVol != None and templateDNAInitConc != None:
         templateDNAFinalMass = templateDNAInitConc * templateDNAVol
     elif templateDNAVol != None and templateDNAFinalMass != None:
@@ -82,15 +108,20 @@ def getVolumesCuttingReaction(totalVol, templateDNAVol, templateDNAInitConc, tem
     # What about the case when we only have one given value
 
     # the rest of calculations
-    restrictionEnzymeVol, restrictionEnzymeConc = updateVolumes(
-        restrictionEnzymeVol, restrictionEnzymeConc, totalVol)
-    bufferVol, bufferConc = updateVolumes(bufferVol, bufferConc, totalVol)
+    bufferVol, bufferInitConc, error = updateVolumes1(
+        bufferVol, bufferInitConc, bufferFinalConc, totalVol)
+    if error != False:
+        error = "buffer:"+error
+    restrictionEnzymeVol, restrictionEnzymeInitConc, error = updateVolumes1(
+        restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, totalVol)
+    if error != False:
+        error = "restriction enzymes:"+error
 
     # water volume
     waterVol = totalVol - templateDNAVol - restrictionEnzymeVol - bufferVol
     # Return an error if water volume is negative
 
-    return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferConc, restrictionEnzymeVol, restrictionEnzymeConc, waterVol
+    return totalVol, templateDNAVol, templateDNAInitConc, templateDNAFinalMass, bufferVol, bufferInitConc, bufferFinalConc, restrictionEnzymeVol, restrictionEnzymeInitConc, restrictionEnzymeFinalConc, waterVol, error
 
 # Test Case #1 from example
 # totalVol = 40

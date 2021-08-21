@@ -198,7 +198,7 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "inputVol==0"
     # check inputConc and relevant errors
     # 0.5 if there exists input liquid conc but not molar mass then that's problematic bc we need to display solute in mass
-    if inputConc != None and molarMass == None:
+    if inputConc != None and inputConcUnit.split('/')[0] not in [massUnits[0] for massUnits in MASSCHOICES] and molarMass == None:
         return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "displayUnit"
 
     if inputSolute != None and inputConc != None:
