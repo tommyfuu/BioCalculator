@@ -30,19 +30,19 @@ UNITCHOICES = MASSCHOICES + VOLCHOICES + \
 
 class ConversionForm(forms.Form):
     INPUTVALUE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=True, label='Input Value')
+        decimal_places=5, max_digits=10000, required=True, label=False)
     # INPUTUNIT = forms.CharField(
     #    label='Input Unit', max_length=80, required=True)
     INPUTUNIT = forms.CharField(
-        label='Input Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
+        label=False, widget=forms.Select(choices=UNITCHOICES), required=False)
     OUTPUTVALUE = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Output Value')
+        decimal_places=5, max_digits=10000, required=False, label=False)
     # OUTPUTUNIT = forms.CharField(
     #    label='Output Unit', max_length=80, required=True)
     OUTPUTUNIT = forms.CharField(
-        label='Output Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
+        label=False, widget=forms.Select(choices=UNITCHOICES), required=False)
     MOLARMASS = forms.DecimalField(
-        decimal_places=5, max_digits=10000, required=False, label='Molar Mass (g/mol)')
+        decimal_places=5, max_digits=10000, required=False, label=False)
 
 
 def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
