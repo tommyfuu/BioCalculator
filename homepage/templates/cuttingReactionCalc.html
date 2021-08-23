@@ -1,7 +1,8 @@
+<head>
+  <title>Cutting Reaction Calculator</title>
+</head>
+
 {% extends 'base.html' %} {% block content%}
-<!-- <head>
-    <title>Cutting Reaction Calculator</title>
-</head> -->
 
 <body>
   <div class="container-fluid px-5 my-5">
@@ -53,11 +54,15 @@
         {{ cuttingform.restrictionEnzymeVol|as_crispy_field }}
       </div>
       <div class="input-group mb-2">
-        <span class="input-group-text">restriction enzyme initial concentration</span>
+        <span class="input-group-text"
+          >restriction enzyme initial concentration</span
+        >
         {{ cuttingform.restrictionEnzymeInitConc|as_crispy_field }}
       </div>
       <div class="input-group mb-4">
-        <span class="input-group-text">restriction enzyme final concentration</span>
+        <span class="input-group-text"
+          >restriction enzyme final concentration</span
+        >
         {{ cuttingform.restrictionEnzymeFinalConc|as_crispy_field }}
       </div>
       <button type="submit" class="btn btn-warning">Submit</button>
