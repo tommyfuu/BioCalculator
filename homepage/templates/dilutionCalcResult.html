@@ -1,55 +1,105 @@
-{% extends 'base.html' %}
-{% block content%}
-    <head>
-        <title>Bio Calculator Contact Page</title>
-    </head>
+{% extends 'base.html' %} {% block content%}
+<!-- <head>
+  <title>Dilution Calculator Result Page</title>
+</head> -->
 
-    <body>
-        <center>
-            <hr style="height:15pt; visibility:hidden;" />
-            <h4>Concentration Change Calculator</h4>
-             
+<body>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-3">Dilution Calculator Results</h4>
 
-            <hr style="height:3pt; visibility:hidden;" />
-
-            <table border = "1">
-                <hr style="height:15pt; visibility:hidden;" />
-                <tbody>
-                    <tr>
-                        <td> Input Liquid Volume </td>
-                        <td> {{ inputVol }} {{ outputVolUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Input Liquid Concentration</td>
-                        <td> {{inputConc}} {{ outputConcUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Input Solute Mass/Volume</td>
-                        <td> {{inputSolute}} {{ outputSoluteUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Final Liquid Volume </td>
-                        <td> {{finalVol}} {{ outputVolUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Final Liquid Concentration </td>
-                        <td> {{finalConc}} {{ outputConcUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Added Solute Mass/Volume</td>
-                        <td> {{addedSolute}} {{ outputSoluteUnit }}</td>
-                    </tr>
-                    <tr>
-                        <td> Added Water Volume</td>
-                        <td> {{addedWater}} {{ outputVolUnit }}</td>
-                    </tr>
-                </tbody>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">volume</th>
+          <th scope="col">concentration</th>
+          <th scope="col">mass</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">solvent</th>
+          <td>
+            <table class="table table-hover table-borderless table-sm mb-0">
+              <tbody>
+                <tr>
+                  <th style="width: 70%">initial</th>
+                  <td style="width: 30%">{{ inputVol }} {{ outputVolUnit }}</td>
+                </tr>
+                <tr>
+                  <th>final</th>
+                  <td>{{finalVol}} {{ outputVolUnit }}</td>
+                </tr>
+              </tbody>
             </table>
-            <ul>
-            <li><a href="/dilutionCalculator/">REFRESH</a></li>
-            </ul>
-        </center>
-    </body>
+          </td>
+          <td>
+            <table class="table table-hover table-borderless table-sm mb-0">
+              <tbody>
+                <tr>
+                  <th style="width: 70%">initial</th>
+                  <td style="width: 30%">{{inputConc}} {{ outputConcUnit }}</td>
+                </tr>
+                <tr>
+                  <th>final</th>
+                  <td>{{finalConc}} {{ outputConcUnit }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>n/a</td>
+        </tr>
 
+        <tr>
+          <th scope="row">solute</th>
+          <td>n/a</td>
+          <td>n/a</td>
+          <td>
+            <table class="table table-hover table-borderless table-sm mb-0">
+              <tbody>
+                <tr>
+                  <th style="width: 70%">initial</th>
+                  <td style="width: 30%">
+                    {{inputSolute}} {{ outputSoluteUnit }}
+                  </td>
+                </tr>
+                <tr>
+                  <th>added</th>
+                  <td>{{addedSolute}} {{ outputSoluteUnit }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <th scope="row">water</th>
+          <td>
+            <table class="table table-hover table-borderless table-sm mb-0">
+              <tbody>
+                <tr>
+                  <th style="width: 70%">added</th>
+                  <td>{{addedWater}} {{ outputVolUnit }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>n/a</td>
+          <td>n/a</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <center>
+      <a
+        href="/dilutionCalculator/"
+        class="btn btn-warning mt-3"
+        role="button"
+        aria-disabled="true"
+        >refresh</a
+      >
+    </center>
+  </div>
+</body>
 
 {% endblock %}
