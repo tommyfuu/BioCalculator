@@ -16,5 +16,6 @@ urlpatterns = [
     path('calcUnitConvertResult/', views.pcr_result_view, name='unit conversion'),
     path('calcUnitConvertError/', views.pcr_error_view, name='unit conversion'),
     path('cutting/', views.cutting_reaction_input_view, name='Cutting Reaction'),
-    path('cuttingResults/', views.cutting_reaction_result_view, name = 'Cutting Reaction')
+    path('cuttingResults/', views.cutting_reaction_result_view, name = 'Cutting Reaction'),
+    path('AROpentrons/', views.opentrons_view, name="AR opentrons")
     ]

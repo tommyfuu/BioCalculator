@@ -312,3 +312,7 @@ def cutting_reaction_result_view(request):
                                                               "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
                                                               "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
                                                               "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
+
+def opentrons_view(request):
+    # return HttpResponse("AR opentrons page")
+    return render(request, 'opentrons.html', {})
