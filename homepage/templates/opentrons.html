@@ -6,7 +6,13 @@
 {% block content %}
 
 <body>
-    hello
+    hello!
+    
+    {% load crispy_forms_tags %}
+    <form method="post">
+        {% csrf_token %}
+
+    </form>
 </body>
 
 {% endblock %}

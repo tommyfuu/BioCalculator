@@ -1,3 +1,4 @@
+from homepage.opentrons import RandomNumGenerator
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 # importing calculators
 from .calculatorDilution import DilutionForm
@@ -314,5 +315,14 @@ def cutting_reaction_result_view(request):
                                                               "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
 
 def opentrons_view(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        randomForm = RandomNumGenerator(request.POST)
+        # check whether it's valid:
+        if randomForm.is_valid():
+            floor = randomForm.cleaned_data['floor']
+            ceiling = randomForm.cleaned_data['ceiling']
+    
     # return HttpResponse("AR opentrons page")
     return render(request, 'opentrons.html', {})
