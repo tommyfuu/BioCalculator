@@ -1,5 +1,5 @@
 <head>
-    <title>Unit Conversion</title>
+  <title>Unit Conversion</title>
 </head>
 
 {% extends 'base.html' %} {% block content%}
@@ -7,7 +7,7 @@
 <body>
   <div class="container-fluid px-5 my-5">
     <h4 class="mb-4">Unit Conversion Calculator</h4>
-    
+
     <p><span class="h5">Purpose: </span>To convert mass, volume, molarity, and density units.</p>
 
     <h5 class="mb-3">Instructions:</h5>
@@ -26,18 +26,22 @@
         </ul>
       </li>
       <li>
-        <u>Note</u>: <span class="h6">molar mass </span>is <span class="h6">required</span> when converting density <--> molarity.
+        <u>Note</u>: 
+        <span class="h6">molar mass </span>
+        is 
+        <span class="h6">required</span> 
+        when converting density <--> molarity.
       </li>
     </ul>
 
     <h5 class="my-4">Inputs:</h5>
     {% load crispy_forms_tags %}
-    
+
     <form method="post">
       {% csrf_token %}
       <div class="input-group mb-2">
-          <span class="input-group-text">input value *</span>
-          {{ conversionform.INPUTVALUE|as_crispy_field }}
+        <span class="input-group-text">input value *</span>
+        {{ conversionform.INPUTVALUE|as_crispy_field }}
       </div>
 
       <div class="input-group mb-2">
@@ -46,14 +50,14 @@
       </div>
 
       <div class="input-group mb-2">
-          <span class="input-group-text">output unit *</span>
-          {{ conversionform.OUTPUTUNIT|as_crispy_field }}
+        <span class="input-group-text">output unit *</span>
+        {{ conversionform.OUTPUTUNIT|as_crispy_field }}
       </div>
 
       <div class="input-group mb-4">
-          <span class="input-group-text">molar mass</span>
-          {{ conversionform.MOLARMASS|as_crispy_field }}
-          <span class="input-group-text">g/mol</span>
+        <span class="input-group-text">molar mass</span>
+        {{ conversionform.MOLARMASS|as_crispy_field }}
+        <span class="input-group-text">g/mol</span>
       </div>
 
       <button type="submit" class="btn btn-warning">Submit</button>
