@@ -6,28 +6,31 @@
 
 <body>
   <div class="container-fluid px-5 my-5">
-    <h4 class="mb-3">Unit Conversion Calculator</h4>
-    <h5>Instructions:</h5>
+    <h4 class="mb-4">Unit Conversion Calculator</h4>
+    
+    <p><span class="h5">Purpose: </span>To convert mass, volume, molarity, and density units.</p>
+
+    <h5 class="mb-3">Instructions:</h5>
     <ul class="ms-1">
       <li>
-        Please input the appropriate values for the required (*) form fields. Conversions between ___ are allowed.
+        Please input the appropriate values for the required (*) form fields.
       </li>
       <li>
-        Molar mass is required only when converting between mass and moles.
-      </li>
-      <li>
-        Appropriate units:
+        <u><span class="h6">Conversions Allowed</span></u>:
         <ul>
-          <li><u>Mass</u>: g, kg, pg, ng, μg, mg, cg, Mg, Gg, Tg</li>
-          <li><u>Molarity</u>: M, kM, pM, nM, μM, mM, cM, MM, GM, TM</li>
-          <li><u>Volume</u>: L, kL, pL, nL, μL, mL, cL, ML, GL, TL</li></li>
-          <li><u>Mole</u>: mol, kmol, pmol, nmol, μmol, mmol, cmol, Mmol, Gmol, Tmol</li>
-          <li><u>Molar mass</u>: g/mol</li>
+          <li>mass <--> mass</li>
+          <li>volume <--> volume</li>
+          <li>molarity <--> molarity</li>
+          <li>density <--> density</li>
+          <li>density <--> molarity</li>
         </ul>
+      </li>
+      <li>
+        <u>Note</u>: <span class="h6">molar mass </span>is <span class="h6">required</span> when converting density <--> molarity.
       </li>
     </ul>
 
-    <h5 class="mb-4">Inputs:</h5>
+    <h5 class="my-4">Inputs:</h5>
     {% load crispy_forms_tags %}
     
     <form method="post">
@@ -41,11 +44,6 @@
         <span class="input-group-text">input unit *</span>
         {{ conversionform.INPUTUNIT|as_crispy_field }}
       </div>
-      
-      <div class="input-group mb-2">
-          <span class="input-group-text">output value</span>
-          {{ conversionform.OUTPUTVALUE|as_crispy_field }}
-      </div>
 
       <div class="input-group mb-2">
           <span class="input-group-text">output unit *</span>
@@ -55,6 +53,7 @@
       <div class="input-group mb-4">
           <span class="input-group-text">molar mass</span>
           {{ conversionform.MOLARMASS|as_crispy_field }}
+          <span class="input-group-text">g/mol</span>
       </div>
 
       <button type="submit" class="btn btn-warning">Submit</button>
