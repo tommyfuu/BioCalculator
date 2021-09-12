@@ -57,17 +57,16 @@ def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
     if inputValue != None and inputUnit != None and outputUnit != None and molarMass == None:
         outputValue, error = convert(inputValue, inputUnit, outputUnit)
     elif inputValue != None and inputUnit != None and outputUnit != None and molarMass != None:
-        print("AAAAAAAH", convert(inputValue, inputUnit, outputUnit, molarMass))
+        print("convertoutput", convert(
+            inputValue, inputUnit, outputUnit, molarMass))
         outputValue, error = convert(
             inputValue, inputUnit, outputUnit, molarMass)
+        outputValue = round(outputValue, 10)
     if type(outputValue) == tuple:
-        outputValue = round(outputValue[0], 20)
+        outputValue = round(outputValue[0], 10)
     elif outputValue != None:
-        outputValue = round(outputValue, 20)
-    # except Exception as ex:
-    #     print(ex)
-    #     error = ex.args[0]
-        # error = "Need to have an Input Value, Input Unit, Output Unit. Molar Mass is required if converting between mass and moles."
+        outputValue = round(outputValue, 10)
+    print("outputValue", outputValue)
     return inputValue, inputUnit, outputValue, outputUnit, molarMass, error
 
 
@@ -78,16 +77,20 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     error = ''
     if molarMass == None and ((unitFrom[-1] == 'M' and unitTo in [unit[0] for unit in CONCCHOICESMASSPERVOL]) or (unitFrom in [unit[0] for unit in CONCCHOICESMASSPERVOL] and unitTo in [unit[0] for unit in CONCCHOICESMOLARITY])):
         error = 'You can not convert from molarity to mass/volume or vice versa without molar mass'
+        print("IF1")
         return None, error
 
     if (unitFrom == unitTo):
+        print("IF2")
         return input, error
 
     # if unitFrom and unitTo in conversion dictionary
     # ERROR HERE! WHEN DOING CONVERSION from M to kg/L, needs to take into account of the molar mass, here we just skip it!
     if (unitFrom, unitTo) in unitDict:
+        print("IF3")
         return float(input) * unitDict[(unitFrom, unitTo)], error
     elif (unitTo, unitFrom) in unitDict:
+        print("IF4")
         return float(input) * (1/unitDict[(unitTo, unitFrom)]), error
 
     # if unitFrom in [unitPair[0] for unitPair in unitDict.keys]:
@@ -96,31 +99,46 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     #             return convert()
 
     if (unitFrom, unitTo) in unitMolarMassDict:
-
+        print("IF5")
         return float(
             input) * float(unitMolarMassDict[(unitFrom, unitTo)])/float(molarMass), error
     elif (unitTo, unitFrom) in unitMolarMassDict:
+        print("IF6")
         return float(
             input) * float((1/unitMolarMassDict[(unitTo, unitFrom)]))*float(molarMass), error
 
     # if we are converting ppm to M or vice versa
     elif (unitFrom == 'ppm' and unitTo in [unit[0] for unit in CONCCHOICESMOLARITY]) or (unitFrom in [unit[0] for unit in CONCCHOICESMOLARITY] and unitTo == 'ppm'):
+        print("IF7")
         return MToPPM(input, unitFrom, unitTo, molarMass)
 
     # if we are converting ppm to concentration or vice versa
     elif (unitFrom == 'ppm' and unitTo in [unit[0] for unit in CONCCHOICESMASSPERVOL]) or (unitFrom in [unit[0] for unit in CONCCHOICESMASSPERVOL] and unitTo == 'ppm'):
+        print("IF8")
         return GPerLToPPM(input, unitFrom, unitTo, molarMass)
 
     # if we are converting g/L to M or vice versa
     elif (unitFrom == 'g/L' and unitTo == 'M') or (unitFrom == 'M' and unitTo == 'g/L'):
+        print("IF9")
         return MToGPerL(input, unitFrom, unitTo, molarMass), error
 
     # if we are converting mol to g or vice versa
     elif (unitFrom == 'mol' and unitTo == 'g') or (unitFrom == 'g' and unitTo == 'mol'):
+        print("IF10")
+        print("Is it this one?", input, molToG(
+            input, unitFrom, unitTo, molarMass))
         return molToG(input, unitFrom, unitTo, molarMass), error
+
+     # if we are converting _mol to _g or vice versa
+    elif (unitFrom[-3:] == 'mol' and unitTo[-1] == 'g') or (unitFrom[-1] == 'g' and unitTo[-3:] == 'mol'):
+        print("IF10.5")
+        print("Is it this one?", input, someMolToSomeG(
+            input, unitFrom, unitTo, molarMass))
+        return someMolToSomeG(input, unitFrom, unitTo, molarMass), error
 
     # converting some form of mol/L to some form of M or vice versa
     elif ('mol/' in unitFrom and unitFrom[-1] == 'L' and unitTo[-1] == 'M'):
+        print("IF11")
         mols = unitFrom.split('/')[0]
         volume = unitFrom.split('/')[1]
         intermediate = convert(input, mols, 'mol')
@@ -128,6 +146,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         intermediate = convert(intermediate, 'M', unitTo[-2:])
         return intermediate, error
     elif ('mol/' in unitTo and unitTo[-1] == 'L' and unitFrom[-1] == 'M'):
+        print("IF12")
         mols = unitTo.split('/')[0]
         volume = unitTo.split('/')[1]
         intermediate = convert(input, unitFrom, 'M')
@@ -137,6 +156,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
 
     # converting some form of g/L to some form of M or vice versa
     elif ('g/' in unitFrom and unitFrom[-1] == 'L' and unitTo[-1] == 'M'):
+        print("IF13")
         mass = unitFrom.split('/')[0]
         volume = unitFrom.split('/')[1]
         intermediate = convert(input, mass, 'mol', molarMass)[0]
@@ -144,27 +164,35 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         intermediate = convert(intermediate, 'M', unitTo)[0]
         return intermediate, error
     elif ('g/' in unitTo and unitTo[-1] == 'L' and unitFrom[-1] == 'M'):
-        mass = unitTo.split('/')[0]
+        print("IF14")
+        print("WE ARE TRYING")
+        mass_unit = unitTo.split('/')[0]
         volume = unitTo.split('/')[1]
-        intermediate = convert(input, unitFrom, 'M')[0]
-        intermediate = convert(intermediate, volume, 'L')[0]
-        intermediate = convert(intermediate, 'mol', mass, molarMass)
-        return intermediate, error
+        intermediate_M = convert(input, unitFrom, 'M')[0]
+        print(intermediate_M, "M")
+        intermediate_GPerL = MToGPerL(intermediate_M, 'M', 'g/L', molarMass)
+        print("By this point, we converted input into g/L")
+        final = convert(intermediate_GPerL, 'g/L', unitTo)[0]
+        print('final')
+        return final, error
 
     # if you can convert unitFrom to metric base and then to unitTo
     elif unitFrom[1:] in metricUnits:
+        print("IF15")
         standard = convert(input, unitFrom, unitFrom[1:], molarMass)
         return convert(standard[0], unitFrom[1:], unitTo, molarMass), error
 
     # if you can convert To to metric base and then to unitTo
     elif unitTo[1:] in metricUnits:
         standard = convert(input, unitTo, unitTo[1:], molarMass)[0]
+        print("IF16", standard)
         return convert(standard, unitFrom, unitTo[1:], molarMass), error
 
     # if the inputs do not match any of the above cases, print an error message
     else:
+        print("IF17-error")
         # Molarity to Volume
-        if (unitTo[-1:] == 'L' and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L'):
+        if (unitTo[-1:] == 'L' and ('/' not in unitTo) and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L' and ('/' not in unitToFrom)):
             error = 'You can not convert from volume to molarity or vice versa'
         # Mass to Molarity
         elif (unitTo[-1] == 'g' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-1] == 'g'):
@@ -174,6 +202,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
             error = 'You can not convert from moles to molarity or vice versa'
         # Unrecognized error
         else:
+            print("all four inputs", input, unitFrom, unitTo, molarMass)
             error = 'Unit conversion calculator has no case to handle this conversion'
         return None, error
 
@@ -215,6 +244,23 @@ def molToG(input, unitFrom, unitTo, molarMass):
         return float(input) * float(molarMass)
     elif unitFrom == 'g' and unitTo == 'mol':
         return float(input) * float((1/molarMass))
+
+
+def someMolToSomeG(input, unitFrom, unitTo, molarMass):
+    '''Converts mol to some form of g (mass unit) and vice versa, but you have to know the molar mass'''
+    if unitFrom[-3:] == 'mol' and unitTo[-1] == 'g':
+        print("someMOLTOSOMEG", 1)
+        intermediate_mol, error_mol = convert(input, unitFrom, 'mol')
+        intermediate_g, error_g = convert(1, unitTo, 'g')
+        if error_mol == None and error_g == None:
+            # MAYBE DEBUG
+            return float(intermediate_mol) * float(molarMass) * float(intermediate_g), None
+    elif unitFrom[-1] == 'g' and unitTo[-3:] == 'mol':
+        print("someMOLTOSOMEG", 2)
+        intermediate_g, error_g = convert(input, unitFrom, 'g')
+        intermediate_mol, error_mol = convert(1, unitTo, 'mol')
+        if error_mol == None and error_g == None:
+            return float(intermediate_g) * float((1/molarMass)) * float(intermediate_mol), None
 
 
 def MToGPerL(input, unitFrom, unitTo, molarMass):
