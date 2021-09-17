@@ -1,19 +1,35 @@
 <head>
-  <title>Cutting Reaction Calculator</title>
+  <title>Restriction Enzyme Digestion Calculator</title>
 </head>
 
 {% extends 'base.html' %} {% block content%}
 
 <body>
   <div class="container-fluid px-5 my-5">
-    <h4 class="mb-4">Cutting Reaction Calculator</h4>
+    <h4 class="mb-4">Restriction Enzyme Digestion Calculator</h4>
 
-    <!-- <p><span class="h5">Purpose: </span> </p> -->
+    <h5 class="mb-3">Purpose:</h5>
+    <ul class="ms-1">
+      <li>To calculate the following, for the restriction enzyme digestion reaction:</li>
+      <ul>
+        <li><u>the missing input from these 3</u>:</li>
+        <ul>
+          <li>template DNA volume</li>
+          <li>template DNA initial concentration</li>
+          <li>template DNA final mass</li>
+        </ul>
+        <li>buffer volume</li>
+        <li>restriction enzyme volume</li>
+      </ul>
+    </ul>
 
     <h5 class="mb-3">Instructions:</h5>
     <ul class="ms-1">
       <li>
         Please input the appropriate values for the required (*) form fields.
+      </li>
+      <li>
+        Follow the instructions below for the template DNA inputs.
       </li>
     </ul>
 
@@ -23,10 +39,39 @@
     <form method="post">
       {% csrf_token %}
       <div class="input-group mb-2">
-        <span class="input-group-text">total volume</span>
+        <span class="input-group-text">total volume *</span>
         {{ cuttingform.totalVol|as_crispy_field }}
         <span class="input-group-text">μL</span>
       </div>
+      <div class="input-group mb-2">
+        <span class="input-group-text">buffer initial concentration *</span>
+        {{ cuttingform.bufferInitConc|as_crispy_field }}
+        <span class="input-group-text">M</span>
+      </div>
+      <div class="input-group mb-2">
+        <span class="input-group-text">buffer final concentration *</span>
+        {{ cuttingform.bufferFinalConc|as_crispy_field }}
+        <span class="input-group-text">M</span>
+      </div>
+      <div class="input-group mb-2">
+        <span class="input-group-text"
+          >restriction enzyme initial concentration *</span
+        >
+        {{ cuttingform.restrictionEnzymeInitConc|as_crispy_field }}
+        <span class="input-group-text">M</span>
+      </div>
+      <div class="input-group mb-4">
+        <span class="input-group-text"
+          >restriction enzyme final concentration *</span
+        >
+        {{ cuttingform.restrictionEnzymeFinalConc|as_crispy_field }}
+        <span class="input-group-text">M</span>
+      </div>
+
+      <div class="mb-2">
+        <span class="h6">Please fill in any two of the three inputs:</span>
+      </div>
+
       <div class="input-group mb-2">
         <span class="input-group-text">template DNA volume</span>
         {{ cuttingform.templateDNAVol|as_crispy_field }}
@@ -37,44 +82,10 @@
         {{ cuttingform.templateDNAInitConc|as_crispy_field }}
         <span class="input-group-text">M</span>
       </div>
-      <div class="input-group mb-2">
+      <div class="input-group mb-4">
         <span class="input-group-text">template DNA final mass</span>
         {{ cuttingform.templateDNAFinalMass|as_crispy_field }}
         <span class="input-group-text">g</span>
-      </div>
-      <div class="input-group mb-2">
-        <span class="input-group-text">buffer volume</span>
-        {{ cuttingform.bufferVol|as_crispy_field }}
-        <span class="input-group-text">μL</span>
-      </div>
-      <div class="input-group mb-2">
-        <span class="input-group-text">buffer initial concentration</span>
-        {{ cuttingform.bufferInitConc|as_crispy_field }}
-        <span class="input-group-text">M</span>
-      </div>
-      <div class="input-group mb-2">
-        <span class="input-group-text">buffer final concentration</span>
-        {{ cuttingform.bufferFinalConc|as_crispy_field }}
-        <span class="input-group-text">M</span>
-      </div>
-      <div class="input-group mb-2">
-        <span class="input-group-text">restriction enzyme volume</span>
-        {{ cuttingform.restrictionEnzymeVol|as_crispy_field }}
-        <span class="input-group-text">μL</span>
-      </div>
-      <div class="input-group mb-2">
-        <span class="input-group-text"
-          >restriction enzyme initial concentration</span
-        >
-        {{ cuttingform.restrictionEnzymeInitConc|as_crispy_field }}
-        <span class="input-group-text">M</span>
-      </div>
-      <div class="input-group mb-4">
-        <span class="input-group-text"
-          >restriction enzyme final concentration</span
-        >
-        {{ cuttingform.restrictionEnzymeFinalConc|as_crispy_field }}
-        <span class="input-group-text">M</span>
       </div>
       <button type="submit" class="btn btn-warning">Submit</button>
     </form>
