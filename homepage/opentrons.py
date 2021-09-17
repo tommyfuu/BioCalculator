@@ -6,9 +6,9 @@ import random
 
 class RandomNumGenerator(forms.Form):
     floor = forms.DecimalField(
-        decimal_places=0, max_digits=10000, required=True, label="min")
+        decimal_places=0, max_digits=10000, required=True, label=False)
     ceiling = forms.DecimalField(
-        decimal_places=0, max_digits=10000, required=True, label="max")
+        decimal_places=0, max_digits=10000, required=True, label=False)
 
 def random(floor, ceiling):
     '''Given a floor and ceiling integer, generates a random

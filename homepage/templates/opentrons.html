@@ -7,11 +7,18 @@
 
 <body>
     hello!
-    
+
     {% load crispy_forms_tags %}
     <form method="post">
         {% csrf_token %}
-
+        <div class="input-group mb-2">
+            <span class="input-group-text">minimum</span>
+            {{ randomForm.floor|as_crispy_field }}
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text">maximum</span>
+            {{ randomForm.ceiling|as_crispy_field }}
+        </div>
     </form>
 </body>
 

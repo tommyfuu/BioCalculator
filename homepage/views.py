@@ -1,4 +1,3 @@
-from homepage.opentrons import RandomNumGenerator
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 # importing calculators
 from .calculatorDilution import DilutionForm
@@ -9,6 +8,8 @@ from .calculatorUnitConvert import ConversionForm
 from .calculatorUnitConvert import *
 from .calculatorCuttingReaction import CuttingEdgeForm
 from .calculatorCuttingReaction import *
+from .opentrons import RandomNumGenerator
+from .opentrons import *
 
 import time
 # Create your views here.
@@ -315,14 +316,26 @@ def cutting_reaction_result_view(request):
                                                               "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
 
 def opentrons_view(request):
+    print('please work')
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
+        print('helloooooo')
         # create a form instance and populate it with data from the request:
         randomForm = RandomNumGenerator(request.POST)
         # check whether it's valid:
         if randomForm.is_valid():
+            print('i want dessert')
             floor = randomForm.cleaned_data['floor']
             ceiling = randomForm.cleaned_data['ceiling']
+
+            # call python functions from your py file
+            results = random(floor, ceiling)
+            # parsing results
+            floor, ceiling = results
+
+            return render(request, 'opentrons.html', {"floor": floor, "ceiling": ceiling})
+        else:
+            randomForm = RandomNumGenerator()
     
-    # return HttpResponse("AR opentrons page")
-    return render(request, 'opentrons.html', {})
+        # return HttpResponse("AR opentrons page")
+        return render(request, 'opentrons.html', {"randomForm": randomForm})
