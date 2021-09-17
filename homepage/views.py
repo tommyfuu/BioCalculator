@@ -1,3 +1,8 @@
+<<<<<<< Updated upstream
+=======
+from django.shortcuts import render, redirect, get_object_or_404
+from homepage.opentrons import RandomNumGenerator
+>>>>>>> Stashed changes
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 # importing calculators
 from .calculatorDilution import DilutionForm
@@ -5,6 +10,7 @@ from .calculatorDilution import *
 from .calculatorPCR import PCRForm
 from .calculatorPCR import *
 from .calculatorUnitConvert import ConversionForm
+from .models import UnitSubset, Unit, UnitConversionInputs
 from .calculatorUnitConvert import *
 from .calculatorCuttingReaction import CuttingEdgeForm
 from .calculatorCuttingReaction import *
@@ -109,6 +115,14 @@ def dilution_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
+<<<<<<< Updated upstream
+=======
+
+def dilution_error_view(request):
+    # return HttpResponse("dilution calculator error page")
+    return render(request, 'dilutionCalcError.html', {"errorMsg": ERRORMSG})
+
+>>>>>>> Stashed changes
 
 # PCR CALCULATOR
 # GLOBAL VARIABLES
@@ -195,6 +209,37 @@ OUTPUTVALUE = None
 OUTPUTUNIT = None
 MOLARMASS = None
 ERROR = False
+
+# for the dependent dropdown
+
+
+def unit_convert_create_view(request):
+    form = ConversionForm()
+    if request.method == 'POST':
+        form = ConversionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('person_add')
+    return render(request, 'calcUnitConvert.html', {'form': form})
+
+
+def unit_convert_update_view(request, pk):
+    unitConversionInputs = get_object_or_404(UnitConversionInputs, pk=pk)
+    form = ConversionForm(instance=UnitConversionInputs)
+    if request.method == 'POST':
+        form = ConversionForm(request.POST, instance=UnitConversionInputs)
+        if form.is_valid():
+            form.save()
+            return redirect('person_change', pk=pk)
+    return render(request, 'calcUnitConvert.html', {'form': form})
+
+
+# AJAX
+def load_units(request):
+    unitSubset_id = request.GET.get('unitSubset_id')
+    cities = UnitConversionInputs.objects.filter(
+        unitSubset_id=unitSubset_id).all()
+    return render(request, 'persons/city_dropdown_list_options.html', {'cities': cities})
 
 
 def unit_convert_input_view(request):
@@ -308,3 +353,20 @@ def cutting_reaction_result_view(request):
                                                               "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
                                                               "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
                                                               "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
+<<<<<<< Updated upstream
+=======
+
+
+def opentrons_view(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        randomForm = RandomNumGenerator(request.POST)
+        # check whether it's valid:
+        if randomForm.is_valid():
+            floor = randomForm.cleaned_data['floor']
+            ceiling = randomForm.cleaned_data['ceiling']
+
+    # return HttpResponse("AR opentrons page")
+    return render(request, 'opentrons.html', {})
+>>>>>>> Stashed changes

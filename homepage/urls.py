@@ -11,10 +11,20 @@ urlpatterns = [
     path('PCRCalc/', views.pcr_input_view, name='PCR'),
     path('PCRCalcResult/', views.pcr_result_view, name='PCR'),
     path('PCRCalcError/', views.pcr_error_view, name='PCR'),
-    path('calcUnitConvert/', views.unit_convert_input_view, name='unit conversion'),
+    # path('calcUnitConvert/', views.unit_convert_input_view, name='unit conversion'),
+    path('calcUnitConvert/', views.unit_convert_create_view, name='person_add'),
+    path('calcUnitConvert/<int:pk>/',
+         views.unit_convert_update_view, name='person_change'),
     path('calcUnitConvertResult/', views.pcr_result_view, name='unit conversion'),
     path('calcUnitConvertError/', views.pcr_error_view, name='unit conversion'),
     path('calcUnitConvert/', views.unit_convert_input_view, name='unit conversion'),
     path('cutting/', views.cutting_reaction_input_view, name='Cutting Reaction'),
+<<<<<<< Updated upstream
     path('cuttingResults/', views.cutting_reaction_result_view, name = 'Cutting Reaction')
     ]
+=======
+    path('cuttingResults/', views.cutting_reaction_result_view,
+         name='Cutting Reaction'),
+    path('AROpentrons/', views.opentrons_view, name="AR opentrons")
+]
+>>>>>>> Stashed changes

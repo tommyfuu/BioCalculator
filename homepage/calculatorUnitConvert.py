@@ -1,4 +1,5 @@
 from django import forms
+from models import UnitSubset, Unit
 # from .calculatorUnitConvert import *
 
 unitDict = {('g', 'kg'): 0.001, ('g', 'pg'): 10**12, ('g', 'ng'): 10**9, ('g', 'μg'): 10**6, ('g', 'mg'): 10**3, ('g', 'cg'): 100, ('g', 'Mg'): 10**-6, ('g', 'Gg'): 10**-9, ('g', 'Tg'): 10**-12,
@@ -12,9 +13,17 @@ metricUnits = ['g', 'M', 'L', 'mol']
 MASSCHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
                ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]
 VOLCHOICES = [('L', 'L'), ('kL', 'kL'), ('pL', 'pL'), ('nL', 'nL'), ('μL', 'μL'),
+<<<<<<< Updated upstream
               ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
 CONCCHOICES = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('μM', 'μM'),
                ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('g/L', 'g/L'), ('kg/L', 'kg/L')]
+=======
+              ('mL',                    'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+CONCCHOICESMOLARITY = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('μM', 'μM'),
+                       ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('ppm', 'ppm')]
+CONCCHOICESMASSPERVOL = [('g/L', 'g/L'), ('kg/L', 'kg/L'),
+                         ('mg/L', 'mg/L')]
+>>>>>>> Stashed changes
 SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
                  ('mg', 'mg'), ('cg', 'cg'), ('Mg',
                                               'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
@@ -24,6 +33,7 @@ SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', '
 UNITCHOICES = MASSCHOICES + VOLCHOICES + CONCCHOICES + SOLUTECHOICES
 
 
+<<<<<<< Updated upstream
 class ConversionForm(forms.Form):
     INPUTVALUE = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=True, label='Input Value')
@@ -39,6 +49,42 @@ class ConversionForm(forms.Form):
         label='Output Unit', widget=forms.Select(choices=UNITCHOICES), required=False)
     MOLARMASS = forms.DecimalField(
         decimal_places=5, max_digits=10000, required=False, label='Molar Mass (g/mol)')
+=======
+class ConversionForm(forms.ModelForm):
+    class Meta:
+        model = Unit
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['unit'].queryset = Unit.objects.none()
+
+        if 'unitSubset' in self.data:
+            try:
+                unitSubset_id = int(self.data.get('unitSubset'))
+                self.fields['unit'].queryset = Unit.objects.filter(
+                    country_id=unitSubset_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+        elif self.instance.pk:
+            self.fields['unit'].queryset = self.instance.unitSubset.city_set.order_by(
+                'name')
+
+        # INPUTVALUE = forms.DecimalField(
+        #     decimal_places=5, max_digits=10000, required=True, label=False)
+        # # INPUTUNIT = forms.CharField(
+        # #    label='Input Unit', max_length=80, required=True)
+        # INPUTUNIT = forms.CharField(
+        #     label=False, widget=forms.Select(choices=UNITCHOICES), required=False)
+        # OUTPUTVALUE = forms.DecimalField(
+        #     decimal_places=5, max_digits=10000, required=False, label=False)
+        # # OUTPUTUNIT = forms.CharField(
+        # #    label='Output Unit', max_length=80, required=True)
+        # OUTPUTUNIT = forms.CharField(
+        #     label=False, widget=forms.Select(choices=UNITCHOICES), required=False)
+        # MOLARMASS = forms.DecimalField(
+        #     decimal_places=5, max_digits=10000, required=False, label=False)
+>>>>>>> Stashed changes
 
 
 def unitTable(inputValue, inputUnit, outputValue, outputUnit, molarMass):
@@ -135,9 +181,14 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     # if the inputs do not match any of the above cases, print an error message
     else:
         # Molarity to Volume
+<<<<<<< Updated upstream
         if (unitTo[-1:] == 'L' and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L'):
             raise Exception(
                 'You can not convert from volume to molarity or vice versa')
+=======
+        if (unitTo[-1:] == 'L' and ('/' not in unitTo) and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L' and ('/' not in unitFrom)):
+            error = 'You can not convert from volume to molarity or vice versa'
+>>>>>>> Stashed changes
         # Mass to Molarity
         elif (unitTo[-1] == 'g' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-1] == 'g'):
             raise Exception(
