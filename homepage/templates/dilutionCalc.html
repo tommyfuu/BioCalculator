@@ -1,12 +1,16 @@
+<head>
+  <title>Concentration Change Calculator</title>
+</head>
+
 {% extends 'base.html' %} {% block content%}
-<!-- <head>
-    <title>Concentration Change Calculator</title>
-</head> -->
 
 <body>
-  <div class="container-fluid ms-3 my-5">
-    <h4 class="mb-3">Dilution Calculator</h4>
-    <h5>Instructions:</h5>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-3">Concentration Change Calculator</h4>
+
+    <p><span class="h5">Purpose: </span></p>
+
+    <h5 class="h5">Instructions:</h5>
     <ul class="ms-1">
       <li>
         Hello! This calculator calculates how much water and solute you have
@@ -57,7 +61,7 @@
           </div>
           <div class="col">
             <div class="input-group mb-2">
-              <span class="input-group-text">final solvent volume</span>
+              <span class="input-group-text">final solution volume</span>
               {{ form.FINALVOL|as_crispy_field }}
               <span class="input-group-text">units</span>
               {{ form.FINALVOLUNIT|as_crispy_field }}
@@ -106,7 +110,7 @@
           </div>
         </div>
 
-        <h6 class="mb-4">displayed units</h6>
+        <h6 class="mb-4">Displayed Units</h6>
 
         <div class="input-group mb-2">
           <span class="input-group-text">volume</span>
@@ -116,7 +120,7 @@
           <span class="input-group-text">concentration</span>
           {{ form.OUTPUTCONCUNIT|as_crispy_field }}
         </div>
-        <div class="input-group mb-5">
+        <div class="input-group mb-4">
           <span class="input-group-text">solute</span>
           {{ form.OUTPUTSOLUTEUNIT|as_crispy_field }}
         </div>

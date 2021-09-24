@@ -1,46 +1,52 @@
-{% extends 'base.html' %}
-{% block content%}
-    <head>
-        <title>Bio Calculator Contact Page</title>
-    </head>
+<head>
+  <title>Unit Conversion Result Page</title>
+</head>
 
-    <body>
-         <center>
-            <hr style="height:15pt; visibility:hidden;" />
-            <h4>Unit Conversion Calculator</h4>
+{% extends 'base.html' %} {% block content%}
 
-            <hr style="height:3pt; visibility:hidden;" />
+<body>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-3">Unit Conversion Results</h4>
 
-            <table border = "1">
-                <hr style="height:15pt; visibility:hidden;" />
-                <tbody>
-                    <tr>
-                        <td> Input Value </td>
-                        <td> {{inputValue}}</td>
-                    </tr>
-                    <tr>
-                        <td> Input Units</td>
-                        <td> {{inputUnit}}</td>
-                    </tr>
-                    <tr>
-                        <td> Output Value</td>
-                        <td> {{outputValue}}</td>
-                    </tr>
-                    <tr>
-                        <td> Output Units </td>
-                        <td> {{outputUnit}}</td>
-                    </tr>
-                    <tr>
-                        <td> Molar Mass </td>
-                        <td> {{molarMass}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <ul>
-            <li><a href="/calcUnitConvert/">REFRESH</a></li>
-            </ul>
-        </center>
-    </body>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">value</th>
+          <th scope="col">units</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">input</th>
+          <td>{{inputValue}}</td>
+          <td>{{inputUnit}}</td>
+        </tr>
 
+        <tr>
+          <th scope="row">output</th>
+          <td>{{outputValue}}</td>
+          <td>{{outputUnit}}</td>
+        </tr>
+
+        <tr>
+          <th scope="row">molar mass</th>
+          <td>{{molarMass}}</td>
+          <td>g/mol</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <center>
+      <a
+        href="/calcUnitConvert/"
+        class="btn btn-warning mt-3"
+        role="button"
+        aria-disabled="true"
+        >refresh</a
+      >
+    </center>
+  </div>
+</body>
 
 {% endblock %}

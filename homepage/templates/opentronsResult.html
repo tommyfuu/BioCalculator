@@ -1,0 +1,39 @@
+<head>
+    <title>AR Opentrons Results</title>
+</head>
+
+{% extends 'base.html' %} {% block content%}
+
+<body>
+    <div class="container-fluid px-5 my-5">
+        <h4 class="mb-3">AR Opentrons Results</h4>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 50%"></th>
+                    <th scope="col" style="width: 50%">value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">floor</th>
+                    <td>{{floor}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">ceiling</th>
+                    <td>{{ceiling}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">result</th>
+                    <td>{{result}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <center>
+            <a href="/AROpentrons/" class="btn btn-warning mt-3" role="button" aria-disabled="true">refresh</a>
+        </center>
+    </div>
+</body>
+
+{% endblock %}

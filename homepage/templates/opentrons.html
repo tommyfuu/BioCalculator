@@ -1,0 +1,32 @@
+<head>
+    <title>AR Opentrons</title>
+</head>
+
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+
+    <div class="container-fluid px-5 my-5">
+        
+        <h4 class="mb-4">AR Opentrons</h4>
+        
+        {% load crispy_forms_tags %}
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-2">
+                <span class="input-group-text">minimum</span>
+                {{ randomForm.floor|as_crispy_field }}
+            </div>
+            <div class="input-group mb-4">
+                <span class="input-group-text">maximum</span>
+                {{ randomForm.ceiling|as_crispy_field }}
+            </div>
+
+            <button type="submit" class="btn btn-warning">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+{% endblock %}

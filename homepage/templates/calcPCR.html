@@ -1,34 +1,27 @@
+<head>
+  <title>PCR Calculator</title>
+</head>
+
 {% extends 'base.html' %} {% block content%}
-<!-- <head>
-    <title>PCR Calculator</title>
-</head> -->
 
 <body>
-  <div class="container-fluid ms-3 my-5">
-    <h4 class="mb-3">PCR Calculator</h4>
-    <h5>Instructions:</h5>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-4">PCR Calculator</h4>
+
+    <p><span class="h5">Purpose: </span>To calculate missing volumes and concentrations for PCR experiments.</p>
+
+    <h5 class="mb-3">Instructions:</h5>
     <ul class="ms-1">
-      <li>// what this calculator does //</li>
       <li>
-        // we should put why this calculator is useful (in what experiment) //
+        Except for total volume (required), please input either volume or concentration for each PCR component (e.g.
+        polymerase).
       </li>
       <li>
-        Required Forms (*):
-        <ul>
-          <li>Each row requires at least one input</li>
-        </ul>
-      </li>
-      <li>
-        Optional Forms:
-        <ul>
-          <li>DMSO volume</li>
-          <li>DMSO concentration</li>
-          <li>water volume</li>
-        </ul>
+        <u>Note</u>: Each row requires at least one input.
       </li>
     </ul>
 
-    <h5 class="mb-4">Inputs:</h5>
+    <h5 class="my-4">Inputs:</h5>
     {%load crispy_forms_tags %}
 
     <form method="post">
@@ -44,10 +37,8 @@
         </div>
 
         <div class="mb-2">
-          <span
-            ><strong>PCR buffer</strong>: input either volume or both initial &
-            final concentration</span
-          >
+          <span><strong>PCR Buffer</strong>: input either volume or both initial &
+            final concentration</span>
         </div>
 
         <div class="row">
@@ -76,10 +67,8 @@
         </div>
 
         <div class="mb-2">
-          <span
-            ><strong>inputs below</strong>: input either volume or concentration
-            for each row</span
-          >
+          <span><strong>Inputs Below</strong>: input either volume or concentration
+            for each row</span>
         </div>
 
         <div class="row">
@@ -155,9 +144,7 @@
           </div>
           <div class="col">
             <div class="input-group mb-2">
-              <span class="input-group-text"
-                >backward primer concentration</span
-              >
+              <span class="input-group-text">backward primer concentration</span>
               {{ pcrform.backwardPrimerConc|as_crispy_field }}
             </div>
           </div>
@@ -178,7 +165,7 @@
           </div>
         </div>
 
-        <div class="mb-2"><strong>optional</strong>:</div>
+        <div class="mb-2"><strong>Optional</strong>:</div>
 
         <div class="row">
           <div class="col">
