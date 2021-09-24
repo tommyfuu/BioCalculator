@@ -5,28 +5,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<body>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+     {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+  
+  {% if img_obj %}
+    <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+  {% endif %}
 
-    <div class="container-fluid px-5 my-5">
-        
-        <h4 class="mb-4">AR Opentrons</h4>
-        Colony Counter
-        {% load crispy_forms_tags %}
-        <form method="POST">
-            {% csrf_token %}
-            <div class="input-group mb-2">
-                <span class="input-group-text">minimum</span>
-                {{ randomForm.floor|as_crispy_field }}
-            </div>
-            <div class="input-group mb-4">
-                <span class="input-group-text">maximum</span>
-                {{ randomForm.ceiling|as_crispy_field }}
-            </div>
-
-            <button type="submit" class="btn btn-warning">Submit</button>
-        </form>
-    </div>
-
-</body>
-
-{% endblock %}
+  {% endblock %}

@@ -11,7 +11,7 @@ from .calculatorCuttingReaction import CuttingEdgeForm
 from .calculatorCuttingReaction import *
 from .opentrons import RandomNumGenerator
 from .opentrons import *
-from .colonyCounter import RandomNumGenerator_1
+from .colonyCounter import ColonyCounterForm
 from .colonyCounter import *
 
 import time
@@ -592,28 +592,20 @@ def colony_counter_view(request):
     if request.method == "POST":
         print("helloooooo")
         # create a form instance and populate it with data from the request:
-        randomForm_1 = RandomNumGenerator_1(request.POST)
+        colonyCounterForm = ColonyCounterForm(request.POST, request.FILES)
         # check whether it's valid:
-        if randomForm_1.is_valid():
-            print("i want dessert")
-            FLOOR_1 = randomForm_1.cleaned_data["floor"]
-            CEILING_1 = randomForm_1.cleaned_data["ceiling"]
+        if colonyCounterForm.is_valid():
+            colonyCounterForm.save()
+            # Get the current instance object to display in the template
+            img_obj = colonyCounterForm.instance
+            return render(request, "colonyCounterInput.html", {'form': colonyCounterForm, 'img_obj': img_obj})
 
-            # call python functions from your py file
-            OPENTRONS_RESULT_1 = randomNumGenerator_1(FLOOR_1, CEILING_1)
-
-            return render(
-                request,
-                "colonyCounterResult.html",
-                {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
-            )
     # else clause should be 'else' compared to "if request.method == 'POST':"
     else:
-        randomForm_1 = RandomNumGenerator_1()
+        colonyCounterForm = ColonyCounterForm()
 
     # return HttpResponse("AR opentrons page")
-    return render(request, "colonyCounterInput.html", {"randomForm": randomForm_1})
-
+    return render(request, "colonyCounterInput.html", {'form': colonyCounterForm})
 
 def colony_counter_result_view(request):
     # return HTTP response object
