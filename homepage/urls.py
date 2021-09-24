@@ -18,5 +18,7 @@ urlpatterns = [
     path('cutting/', views.cutting_reaction_input_view, name='Cutting Reaction'),
     path('cuttingResults/', views.cutting_reaction_result_view, name = 'Cutting Reaction'),
     path('AROpentrons/', views.opentrons_view, name="AR opentrons"),
-    path('AROpentronsResult/', views.opentrons_result_view, name="AR opentrons result")
+    path('AROpentronsResult/', views.opentrons_result_view, name="AR opentrons result"),
+    path('colonyCounter/', views.colony_counter_view, name="Colony Counter"),
+    path('colonyCounterResult/', views.colony_counter_result_view, name="Colony Counter"),
     ]

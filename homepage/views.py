@@ -11,6 +11,8 @@ from .calculatorCuttingReaction import CuttingEdgeForm
 from .calculatorCuttingReaction import *
 from .opentrons import RandomNumGenerator
 from .opentrons import *
+from .colonyCounter import RandomNumGenerator_1
+from .colonyCounter import *
 
 import time
 
@@ -426,16 +428,6 @@ WATERVOL = None
 ERRORMSG = ""
 
 
-# totalVol = cuttingform.cleaned_data['TOTALVOL']
-#             templateDNAVol = cuttingform.cleaned_data['templateDNAVol']
-#             templateDNAInitConc = cuttingform.cleaned_data['templateDNAInitConc']
-#             templateDNAFinalMass = cuttingform.cleaned_data['templateDNAFinalMass']
-#             bufferVol = cuttingform.cleaned_data['bufferVol']
-#             bufferConc = cuttingform.cleaned_data['bufferConc']
-#             restrictionEnzymeVol = cuttingform.cleaned_data['restrictionEnzymeVol']
-#             restrictionEnzymeConc = cuttingform.cleaned_data['restrictionEnzymeConc']
-
-
 def cutting_reaction_input_view(request):
     if request.method == "POST":
         # create a form instance and populate it with data from the request:
@@ -582,4 +574,51 @@ def opentrons_result_view(request):
         request,
         "opentronsResult.html",
         {"floor": FLOOR, "ceiling": CEILING, "result": OPENTRONS_RESULT},
+    )
+
+######################################## AR OPENTRONS CALCULATOR #######################################
+
+# global variable
+FLOOR_1 = None
+CEILING_1 = None
+OPENTRONS_RESULT_1 = None
+
+
+def colony_counter_view(request):
+    print("request method:", request.method)
+    # if this is a POST request we need to process the form data
+    # request.method="POST"
+    print("request.method", request.method)
+    if request.method == "POST":
+        print("helloooooo")
+        # create a form instance and populate it with data from the request:
+        randomForm_1 = RandomNumGenerator_1(request.POST)
+        # check whether it's valid:
+        if randomForm_1.is_valid():
+            print("i want dessert")
+            FLOOR_1 = randomForm_1.cleaned_data["floor"]
+            CEILING_1 = randomForm_1.cleaned_data["ceiling"]
+
+            # call python functions from your py file
+            OPENTRONS_RESULT_1 = randomNumGenerator_1(FLOOR_1, CEILING_1)
+
+            return render(
+                request,
+                "colonyCounterResult.html",
+                {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
+            )
+    # else clause should be 'else' compared to "if request.method == 'POST':"
+    else:
+        randomForm_1 = RandomNumGenerator_1()
+
+    # return HttpResponse("AR opentrons page")
+    return render(request, "colonyCounterInput.html", {"randomForm": randomForm_1})
+
+
+def colony_counter_result_view(request):
+    # return HTTP response object
+    return render(
+        request,
+        "colonyCounterResult.html",
+        {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
     )
