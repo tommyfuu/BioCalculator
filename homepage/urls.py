@@ -18,5 +18,12 @@ urlpatterns = [
     path('cutting/', views.cutting_reaction_input_view, name='Cutting Reaction'),
     path('cuttingResults/', views.cutting_reaction_result_view, name = 'Cutting Reaction'),
     path('AROpentrons/', views.opentrons_view, name="AR opentrons"),
-    path('AROpentronsResult/', views.opentrons_result_view, name="AR opentrons result")
+    path('AROpentronsResult/', views.opentrons_result_view, name="AR opentrons result"),
+
+    ### new trial codes
+    # path('', views.PersonListView.as_view(), name='person_changelist'),
+    # path('trialDep/', views.PersonListView.as_view(), name='person_changelist'),
+    # path('add/', views.PersonCreateView.as_view(), name='person_add'),
+    # path('<int:pk>/', views.PersonUpdateView.as_view(), name='person_change'),
+    #  path('ajax/load-cities/', views.load_cities, name='ajax_load_cities'),  # <-- this one here
     ]

@@ -12,6 +12,9 @@ from .calculatorCuttingReaction import *
 from .opentrons import RandomNumGenerator
 from .opentrons import *
 
+
+# from .models import Person
+
 import time
 
 # Create your views here.
@@ -583,3 +586,24 @@ def opentrons_result_view(request):
         "opentronsResult.html",
         {"floor": FLOOR, "ceiling": CEILING, "result": OPENTRONS_RESULT},
     )
+
+
+
+# ####### TRIAL DEPENDENT DROPDOWN AAA AAAA #########
+# from django.views.generic import ListView, CreateView, UpdateView
+# from django.urls import reverse_lazy
+
+# class PersonListView(ListView):
+#     model = Person
+#     context_object_name = 'people'
+
+# class PersonCreateView(CreateView):
+#     model = Person
+#     form_class = PersonForm
+#     success_url = reverse_lazy('person_changelist')
+
+# class PersonUpdateView(UpdateView):
+#     model = Person
+#     form_class = PersonForm
+#     success_url = reverse_lazy('person_changelist')
+

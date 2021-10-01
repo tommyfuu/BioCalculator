@@ -18,14 +18,14 @@ CONCCHOICESMOLARITY = [('M', 'M'), ('kM', 'kM'), ('pM', 'pM'), ('nM', 'nM'), ('�
                        ('mM', 'mM'), ('cM', 'cM'), ('MM', 'MM'), ('GM', 'GM'), ('TM', 'TM'), ('ppm', 'ppm')]
 CONCCHOICESMASSPERVOL = [('g/L', 'g/L'), ('kg/L', 'kg/L'),
                          ('mg/L', 'mg/L')]
-SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
-                 ('mg', 'mg'), ('cg', 'cg'), ('Mg',
-                                              'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
-                 ('L', 'L'), ('kL', 'kL'), ('pL',
-                                            'pL'), ('nL', 'nL'), ('μL', 'μL'),
-                 ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
+# SOLUTECHOICES = [('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+#                  ('mg', 'mg'), ('cg', 'cg'), ('Mg',
+#                                               'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg'),
+#                  ('L', 'L'), ('kL', 'kL'), ('pL',
+#                                             'pL'), ('nL', 'nL'), ('μL', 'μL'),
+#                  ('mL', 'mL'), ('cL', 'cL'), ('ML', 'ML'), ('GL', 'GL'), ('TL', 'TL')]
 UNITCHOICES = MASSCHOICES + VOLCHOICES + \
-    CONCCHOICESMOLARITY + CONCCHOICESMASSPERVOL + SOLUTECHOICES
+    CONCCHOICESMOLARITY + CONCCHOICESMASSPERVOL
 
 
 class ConversionForm(forms.Form):
@@ -192,7 +192,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     else:
         print("IF17-error")
         # Molarity to Volume
-        if (unitTo[-1:] == 'L' and ('/' not in unitTo) and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L' and ('/' not in unitToFrom)):
+        if (unitTo[-1:] == 'L' and ('/' not in unitTo) and unitFrom[-1:] == 'M') or (unitTo[-1:] == 'M' and unitFrom[-1:] == 'L' and ('/' not in unitFrom)):
             error = 'You can not convert from volume to molarity or vice versa'
         # Mass to Molarity
         elif (unitTo[-1] == 'g' and unitFrom[-1] == 'M') or (unitTo[-1] == 'M' and unitFrom[-1] == 'g'):
@@ -269,3 +269,5 @@ def MToGPerL(input, unitFrom, unitTo, molarMass):
         return float(input) * float((1/molarMass))
     elif unitFrom == 'M' and unitTo == 'g/L':
         return float(input) * float(molarMass)
+
+
