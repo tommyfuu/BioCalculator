@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
-=======
 from django.shortcuts import render, redirect, get_object_or_404
 from homepage.opentrons import RandomNumGenerator
->>>>>>> Stashed changes
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 # importing calculators
 from .calculatorDilution import DilutionForm
@@ -115,14 +112,11 @@ def dilution_result_view(request):
     # return HttpResponse("Contact page!")
     return render(request, 'dilutionCalcResult.html', {"inputVol": INPUTVOL, "inputConc": INPUTCONC, "inputSolute": INPUTSOLUTE, "finalVol": FINALVOL, "finalConc": FINALCONC, "addedSolute": ADDEDSOLUTE, "addedWater": ADDEDWATER})
 
-<<<<<<< Updated upstream
-=======
 
 def dilution_error_view(request):
     # return HttpResponse("dilution calculator error page")
     return render(request, 'dilutionCalcError.html', {"errorMsg": ERRORMSG})
 
->>>>>>> Stashed changes
 
 # PCR CALCULATOR
 # GLOBAL VARIABLES
@@ -353,9 +347,6 @@ def cutting_reaction_result_view(request):
                                                               "templateDNAInitConc": TEMPLATEDNAINITCONC, "templateDNAFinalMass": TEMPLATEDNAFINALMASS,
                                                               "bufferVol": BUFFERVOL, "bufferConc": BUFFERCONC, "restrictionEnzymeVol": RESTRICTIONENZYMEVOL,
                                                               "restrictionEnzymeConc": RESTRICTIONENZYMECONC, "waterVol": WATERVOL})
-<<<<<<< Updated upstream
-=======
-
 
 def opentrons_view(request):
     # if this is a POST request we need to process the form data
@@ -369,4 +360,3 @@ def opentrons_view(request):
 
     # return HttpResponse("AR opentrons page")
     return render(request, 'opentrons.html', {})
->>>>>>> Stashed changes
