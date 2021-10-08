@@ -228,35 +228,35 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
                 return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
         else:
             inputSoluteInKG = convert(
-                inputSolute, outputSoluteUnit, 'kg', molarMass=molarMass)
+                inputSolute, outputSoluteUnit, 'kg', molarMass=molarMass)[0]
             inputVolInL = convert(inputVol, outputVolUnit,
-                                  'L', molarMass=molarMass)
+                                  'L', molarMass=molarMass)[0]
             inputConcInM = convert(
-                inputConc, outputConcUnit, 'M', molarMass=molarMass)
+                inputConc, outputConcUnit, 'M', molarMass=molarMass)[0]
             if inputSoluteInKG != inputVolInL*inputConcInM*molarMass:
                 return inputVol, inputConc, inputSolute, finalVol, finalConc, 0, 0, outputVolUnit, outputConcUnit, outputSoluteUnit, "solute"
     # 2 if inputted inputSolute instead of inputConc, convert
     elif inputSolute != None and inputConc == None:
         inputSoluteInKG = convert(
-            inputSolute, outputSoluteUnit, 'kg', molarMass=molarMass)
+            inputSolute, outputSoluteUnit, 'kg', molarMass=molarMass)[0]
         inputVolInL = convert(inputVol, outputVolUnit,
-                              'L', molarMass=molarMass)
+                              'L', molarMass=molarMass)[0]
         inputConcInKGPerL = inputSolute/inputVol
         # if molarMass == None:
         inputConc = convert(inputConcInKGPerL, 'kg/L',
-                            outputConcUnit, molarMass=molarMass)
+                            outputConcUnit, molarMass=molarMass)[0]
 
     # 3 Calculate inputSolute if necessary
     elif inputConc != None and inputSolute == None:
         inputVolInL = convert(inputVol, outputVolUnit,
-                              'L', molarMass=molarMass)
+                              'L', molarMass=molarMass)[0]
         print(3)
         print("molarMass", molarMass)
         inputConcInKGPerL = convert(
-            inputConc, outputConcUnit, 'kg/L', molarMass=molarMass)
+            inputConc, outputConcUnit, 'kg/L', molarMass=molarMass)[0]
         print('inputConcInKGPerL', inputConcInKGPerL)
         inputSolute = convert(inputVolInL * inputConcInKGPerL,
-                              'kg', outputSoluteUnit)
+                              'kg', outputSoluteUnit)[0]
         print('inputSoluteInOutputUnit', inputSolute)
     # 4 if no inputConc measure, assume input Conc = 0
     elif inputConc == None and inputSolute == None:
@@ -279,8 +279,8 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
             print(2.2)
             print("Conc unchanged and increase vol")
             # addedSoluteVol = (finalVol-inputVol)*inputConc
-            addedSoluteVol = convert(convert((finalVol-inputVol), outputVolUnit, 'L')*convert(
-                inputConc, outputConcUnit, 'kg/L', molarMass), 'kg', outputSoluteUnit, molarMass)
+            addedSoluteVol = convert(convert((finalVol-inputVol), outputVolUnit, 'L')[0]*convert(
+                inputConc, outputConcUnit, 'kg/L', molarMass), 'kg', outputSoluteUnit, molarMass)[0]
             addedWaterVol = finalVol-inputVol
             return inputVol, inputConc, inputSolute, finalVol, finalConc, addedSoluteVol, addedWaterVol, outputVolUnit, outputConcUnit, outputSoluteUnit, False
     # 3 if input Vol = 0 and there is a final volume, automatically go to upConc:

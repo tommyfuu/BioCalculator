@@ -96,7 +96,7 @@ def convert(input, unitFrom, unitTo, molarMass=0):
         return float(input) * unitDict[(unitFrom, unitTo)], error
     elif (unitTo, unitFrom) in unitDict:
         print("IF4")
-        return float(input) * (1/unitDict[(unitTo, unitFrom)]), error
+        return round(float(input) * (1/unitDict[(unitTo, unitFrom)]), 10), error
 
     # if unitFrom in [unitPair[0] for unitPair in unitDict.keys]:
     #     for unitPair in unitDict.keys:
