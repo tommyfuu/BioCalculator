@@ -50,6 +50,7 @@ FINALVOL = None
 FINALCONC = None
 ADDEDSOLUTE = None
 ADDEDWATER = None
+MOLARMASS = None
 
 
 def dilution_input_view(request):
@@ -81,6 +82,7 @@ def dilution_input_view(request):
             addedSoluteVol = None
             waterVol = None
 
+            MOLARMASS = molarMass
             # INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
             #     inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
             (
@@ -131,6 +133,7 @@ def dilution_input_view(request):
                         "outputVolUnit": OUTPUTVOLUNIT,
                         "outputConcUnit": OUTPUTCONCUNIT,
                         "outputSoluteUnit": OUTPUTSOLUTEUNIT,
+                        "molarMass": MOLARMASS
                     },
                 )
             elif ERROR == True:

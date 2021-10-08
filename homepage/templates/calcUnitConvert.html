@@ -1,5 +1,55 @@
 <head>
   <title>Unit Conversion</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script language="javascript" type="text/javascript">
+    function dynamicdropdown(listindex)
+    {
+        switch (listindex)
+        {
+        case "mass" :
+          // var massList = new List([('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+          //      ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]);
+          // for (let i = 0; i < cars.length; i++) {
+          //   text += cars[i] + "<br>";
+          //   }
+
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("g","g");
+            document.getElementById("status").options[2]=new Option("pg","pg");
+            document.getElementById("status").options[3]=new Option("ng","ng");
+            document.getElementById("status").options[4]=new Option("μg","μg");
+            document.getElementById("status").options[5]=new Option("mg","mg");
+            document.getElementById("status").options[6]=new Option("cg","cg");
+            break;
+        case "moles" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "volume" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "molarity" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "density" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        }
+        return true;
+    }
+    </script>
 </head>
 
 {% extends 'base.html' %} {% block content%}
@@ -48,7 +98,7 @@
         <span class="input-group-text">input unit *</span>
         {{ conversionform.INPUTUNIT|as_crispy_field }}
       </div>
-
+      
       <div class="input-group mb-2">
         <span class="input-group-text">output unit *</span>
         {{ conversionform.OUTPUTUNIT|as_crispy_field }}
@@ -63,7 +113,37 @@
       <button type="submit" class="btn btn-warning">Submit</button>
     </form>
 
-    <div type="text/javascript" src="/homepage/templates/dependentdropdown.js">
+    <!-- <sccript>
+      $(function(){
+    
+    var $cat = $("#cat"),
+        $subcat = $("#subcat");
+    
+    $cat.on("change",function(){
+        var _rel = $(this).val();
+        $subcat.find("option").attr("style","");
+        $subcat.val("");
+        if(!_rel) return $subcat.prop("disabled",true);
+        $subcat.find("[rel="+_rel+"]").show();
+        $subcat.prop("disabled",false);
+    });
+    
+  });
+  </sccript>
+    <select id="cat" name="cat1">
+        <option value>Select Category</option>
+        <option value="1">Cat 1</option>
+        <option value="2">Cat 2</option>
+    </select>
+    
+    <select id="subcat" name="subcat" disabled="disabled">
+        <option class="lablel" value>Select Subcategory</option>
+        <option rel="1" value="1">Subcat 1.1</option>
+        <option rel="1" value="2">Subcat 1.2</option>
+        <option rel="2" value="3">Subcat 2.1</option>
+        <option rel="2" value="4">Subcat 2.2</option>
+    </select> -->
+    <!-- <div>
       <form id="formname" name="formname" method="post" action="submitform.asp" >
         <table width="50%" border="0" cellspacing="0" cellpadding="5">
           <tr>
@@ -83,7 +163,7 @@
               <select disabled="disabled" class="subcat" id="category2" name="category2">
                 <option value>Select Category2</option>
                 <!-- Home Ware -->
-                <optgroup data-rel="home_ware">
+                <!-- <optgroup data-rel="home_ware">
                   <option value="air-conditioners_coolers">Air-Conditioners/Coolers</option>
                   <option value="audio-video">Audio/Video</option>
                   <option value="beddings">Beddings</option>
@@ -91,15 +171,15 @@
                   <option value="cell-phones">Cell Phones</option>
                 </optgroup>
                 <!-- Education -->
-                <optgroup data-rel="education">
+                <!-- <optgroup data-rel="education">
                   <option value="Colleges">Colleges</option>
                   <option value="Institutes">Institutes</option>
                   <option value="Schools">Schools</option>
                   <option value="Tuitions">Tuitions</option>
                   <option value="Universities">Universities</option>
-                </optgroup>
+                </optgroup> -->
                 <!-- Books -->
-                <optgroup data-rel="books">
+                <!-- <optgroup data-rel="books">
                   <option value="College Books">College Books</option>
                   <option value="Engineering">Engineering</option>
                   <option value="Magazines">Magazines</option>
@@ -113,19 +193,19 @@
             <td align="right" valign="middle">Category3 :</td>
             <td align="left" valign="middle">
               <select disabled="disabled" class="subcat" id="category3" name="category3">
-                <option value>Select Category3</option>
+                <option value>Select Category3</option> -->
                 <!-- Home Ware -->
-                <optgroup data-rel="home_ware">
+                <!-- <optgroup data-rel="home_ware">
                   <option value="foo1">category3 home ware 1</option>
                   <option value="foo2">category3 home ware 2</option>
-                </optgroup>
+                </optgroup> -->
                 <!-- Education -->
-                <optgroup data-rel="education">
+                <!-- <optgroup data-rel="education">
                   <option value="foo3">category3 Education 1</option>
                   <option value="foo4">category3 Education 2</option>
-                </optgroup>
+                </optgroup> -->
                 <!-- Books -->
-                <optgroup data-rel="books">
+                <!-- <optgroup data-rel="books">
                   <option value="foo5">category3 Books 1</option>
                   <option value="foo6">category3 Books 2</option>
                 </optgroup>
@@ -135,6 +215,31 @@
         </table>
       </script>
   </div>
+  <script src="/Users/chenlianfu/Documents/Github/BioCalculator/homepage/templates/dependentdropdown.js"></script> --> --> -->
+  <div class="category_div" id="category_div">Source:
+      <select id="source" name="source" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+      <option value="mass">Mass</option>
+      <option value="moles">Moles</option>
+      <option value="volume">Volume</option>
+      <option value="molarity">Molarity</option>
+      <option value="density">Density</option>
+      </select>
+  </div>
+  <div class="sub_category_div" id="sub_category_div">Status:
+      <script type="text/javascript" language="JavaScript">
+      document.write('<select name="status" id="status"><option value="">Select status</option></select>')
+      </script>
+      <noscript>
+      <select id="status" name="status">
+      <option value="mass">Mass</option>
+      <option value="moles">Moles/option>
+      <option value="volume">Volume</option>
+      <option value="molarity">Molarity</option>
+      <option value="density">Density</option>
+      </select>
+      </noscript>
+  </div>
 </body>
 
+<!-- <script src="/homepage/templates/dependentdropdown.js"></script> -->
 {% endblock %}

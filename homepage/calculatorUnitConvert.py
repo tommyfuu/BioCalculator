@@ -75,6 +75,11 @@ def convert(input, unitFrom, unitTo, molarMass=0):
     # molarity to mass/V vice versa without molar mass
     print("HEHEHEHEHE", (input, unitFrom, unitTo, molarMass))
     error = ''
+    if type(input) == tuple and input[1] == "":
+        print("AHAHAHAHAHHAH")
+        input = input[0]
+    elif type(input) == tuple and input[1] != "":
+        return None, "SOME ERROR"
     if molarMass == None and ((unitFrom[-1] == 'M' and unitTo in [unit[0] for unit in CONCCHOICESMASSPERVOL]) or (unitFrom in [unit[0] for unit in CONCCHOICESMASSPERVOL] and unitTo in [unit[0] for unit in CONCCHOICESMOLARITY])):
         error = 'You can not convert from molarity to mass/volume or vice versa without molar mass'
         print("IF1")
@@ -104,6 +109,8 @@ def convert(input, unitFrom, unitTo, molarMass=0):
             input) * float(unitMolarMassDict[(unitFrom, unitTo)])/float(molarMass), error
     elif (unitTo, unitFrom) in unitMolarMassDict:
         print("IF6")
+        print("AH", input)
+        print("FU", (1/unitMolarMassDict[(unitTo, unitFrom)]))
         return float(
             input) * float((1/unitMolarMassDict[(unitTo, unitFrom)]))*float(molarMass), error
 
