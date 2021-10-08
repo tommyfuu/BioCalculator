@@ -12,6 +12,9 @@ from .calculatorCuttingReaction import *
 from .opentrons import RandomNumGenerator
 from .opentrons import *
 
+
+# from .models import Person
+
 import time
 
 # Create your views here.
@@ -47,6 +50,7 @@ FINALVOL = None
 FINALCONC = None
 ADDEDSOLUTE = None
 ADDEDWATER = None
+MOLARMASS = None
 
 
 def dilution_input_view(request):
@@ -78,6 +82,7 @@ def dilution_input_view(request):
             addedSoluteVol = None
             waterVol = None
 
+            MOLARMASS = molarMass
             # INPUTVOL, INPUTCONC, INPUTSOLUTE, FINALVOL, FINALCONC, ADDEDSOLUTE, ADDEDWATER, ERROR = changeConcentrationTable(
             #     inputVol, inputConc, finalVol, finalConc, inputSolute, addedSoluteVol, waterVol)
             (
@@ -128,6 +133,7 @@ def dilution_input_view(request):
                         "outputVolUnit": OUTPUTVOLUNIT,
                         "outputConcUnit": OUTPUTCONCUNIT,
                         "outputSoluteUnit": OUTPUTSOLUTEUNIT,
+                        "molarMass": MOLARMASS
                     },
                 )
             elif ERROR == True:
@@ -583,3 +589,24 @@ def opentrons_result_view(request):
         "opentronsResult.html",
         {"floor": FLOOR, "ceiling": CEILING, "result": OPENTRONS_RESULT},
     )
+
+
+
+# ####### TRIAL DEPENDENT DROPDOWN AAA AAAA #########
+# from django.views.generic import ListView, CreateView, UpdateView
+# from django.urls import reverse_lazy
+
+# class PersonListView(ListView):
+#     model = Person
+#     context_object_name = 'people'
+
+# class PersonCreateView(CreateView):
+#     model = Person
+#     form_class = PersonForm
+#     success_url = reverse_lazy('person_changelist')
+
+# class PersonUpdateView(UpdateView):
+#     model = Person
+#     form_class = PersonForm
+#     success_url = reverse_lazy('person_changelist')
+

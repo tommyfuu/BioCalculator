@@ -1,5 +1,55 @@
 <head>
   <title>Unit Conversion</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script language="javascript" type="text/javascript">
+    function dynamicdropdown(listindex)
+    {
+        switch (listindex)
+        {
+        case "mass" :
+          // var massList = new List([('g', 'g'), ('kg', 'kg'), ('pg', 'pg'), ('ng', 'ng'), ('μg', 'μg'),
+          //      ('mg', 'mg'), ('cg', 'cg'), ('Mg', 'Mg'), ('Gg', 'Gg'), ('Tg', 'Tg')]);
+          // for (let i = 0; i < cars.length; i++) {
+          //   text += cars[i] + "<br>";
+          //   }
+
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("g","g");
+            document.getElementById("status").options[2]=new Option("pg","pg");
+            document.getElementById("status").options[3]=new Option("ng","ng");
+            document.getElementById("status").options[4]=new Option("μg","μg");
+            document.getElementById("status").options[5]=new Option("mg","mg");
+            document.getElementById("status").options[6]=new Option("cg","cg");
+            break;
+        case "moles" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "volume" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "molarity" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        case "density" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("Hello","open");
+            document.getElementById("status").options[2]=new Option("Hi","delivered");
+            document.getElementById("status").options[3]=new Option("Hey","shipped");
+            break;
+        }
+        return true;
+    }
+    </script>
 </head>
 
 {% extends 'base.html' %} {% block content%}
@@ -48,7 +98,7 @@
         <span class="input-group-text">input unit *</span>
         {{ conversionform.INPUTUNIT|as_crispy_field }}
       </div>
-
+      
       <div class="input-group mb-2">
         <span class="input-group-text">output unit *</span>
         {{ conversionform.OUTPUTUNIT|as_crispy_field }}
@@ -62,7 +112,32 @@
 
       <button type="submit" class="btn btn-warning">Submit</button>
     </form>
-  </div>
+
+
+    <!-- <div class="category_div" id="category_div">Source:
+      <select id="source" name="source" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+      <option value="mass">Mass</option>
+      <option value="moles">Moles</option>
+      <option value="volume">Volume</option>
+      <option value="molarity">Molarity</option>
+      <option value="density">Density</option>
+      </select>
+  </div> -->
+  <!-- <div class="sub_category_div" id="sub_category_div">Status:
+      <script type="text/javascript" language="JavaScript">
+      document.write('<select name="status" id="status"><option value="">Select status</option></select>')
+      </script>
+      <noscript>
+      <select id="status" name="status">
+      <option value="mass">Mass</option>
+      <option value="moles">Moles/option>
+      <option value="volume">Volume</option>
+      <option value="molarity">Molarity</option>
+      <option value="density">Density</option>
+      </select>
+      </noscript>
+  </div> -->
 </body>
 
+<!-- <script src="/homepage/templates/dependentdropdown.js"></script> -->
 {% endblock %}
