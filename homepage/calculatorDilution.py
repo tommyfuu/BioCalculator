@@ -83,7 +83,6 @@ def dilutionTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVol, wate
             inputConc, outputConcUnit, 'kg/L', molarMass)[0]
         addedSoluteVol = convert(
             finalSoluteInKG-inputSoluteInKG, 'kg', outputSoluteUnit, molarMass)[0]
-        print(addedSoluteVol)
     if finalVol == None:
         if not checkWhetherUseMolarMassBool:
             finalSolute = inputVol * inputConc + addedSoluteVol
@@ -105,13 +104,6 @@ def upConcentrationTable(inputVol, inputConc, finalVol, finalConc, addedSoluteVo
     3: assume good unit conversion: g vs. ml; kg vs L'''
     error = False
     if addedSoluteVol == None:
-        # if not checkWhetherUseMolarMassBool:
-        #     addedSoluteVol = finalConc*finalVol-inputVol*inputConc
-        # else:
-        print("PRINTING ADDED SOLUTE VOL")
-        print(convert((finalVol-inputVol), outputVolUnit, 'L'))
-        print(convert(finalConc, outputConcUnit, 'kg/L', molarMass))
-        print(convert(inputConc, outputConcUnit, 'kg/L', molarMass))
         finalSoluteInKG = convert(finalVol, outputVolUnit, 'L')[0]*convert(
             finalConc, outputConcUnit, 'kg/L', molarMass)[0]
         inputSoluteInKG = convert(inputVol, outputVolUnit, 'L')[0]*convert(
@@ -181,7 +173,6 @@ def changeConcentrationTable(inputVol, inputVolUnit, inputConc, inputConcUnit, i
     if finalConc != None:
         finalConc = float(finalConc)
 
-    print("MOLAR MASSSSSSSS", molarMass)
     checkWhetherUseMolarMassBool = checkWhetherUseMolarMass(
         inputConcUnit, outputConcUnit)  # if true, then we use molar mass
     inputVol, inputConc, finalVol, finalConc, inputSolute = unitConversion(
