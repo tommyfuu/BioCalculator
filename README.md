@@ -9,32 +9,39 @@ We are creating a calculator for common biology lab experiments. The beta versio
 
 Starting from 6/15/2021, please start to commit your changes to the `development` branch instead of the main branch! The main branch has been synced with the deployed website so any changes made there will be reflected on the actual website. Make sure that the things function before merging things into the main branch :)
 
-### 1. Calculator Implementation
+### 1. Calculator Implementation (Last updated Oct 8, 2021)
 
-- Concentration change calculator completed.
-- Deployment completed and tested, ready to be deployed when needed.
-- Unit conversion being tested and bug fixing.
+- Unit conversion, concentration change calculators completed.
 - Cutting reaction being implemented and tested.
 - PCR calculator being implemented: basic functionalities implemented, waiting to be refined; output not rendered.
+- Colony counter being implemented: user input take-in completed; implementing algorithm.
+- AR Opentron web interface being implemented.
 
 ### 2. Website general
 
-- Aesthetics to be improved.
+- General aesthetics upgraded since the first iteration:
+  - More simplistic design with HMC school color scheme and nicely rendered fonts.
+  - Bootstrap to improve code cleanness.
+- The website is currently synced using the zeet app.
 
 ### 3. Goal
 
-- First iteration including fully functioning concentration-change calculator and cutting reaction calculator are to be deployed on July 11, 2021.
-
+- Next iteration (major upgrade, planned December 2021) of the website will include
+  - Fully functional cutting reaction calculator.
+  - Fully functional colony counter.
+  
 ## Acknowledgement
 
 Developers:\
 Tom Fu (@tommyfuu)\
 Lucy Paddock (@lucinda-paddock)\
 Liam Chalk (@liamchalk00)\
-April Zhao (@abooli)\
 Tristan Huang (@thuang8)\
 Michelle Lee (@mi929lee)\
-Allison Tsai (@aztsai)
+Allison Tsai (@aztsai)\
+
+Alumnae/Past Members:\
+April Zhao (@abooli)
 
 Affiliation: Harvey Mudd College BioMakerspace (Polymerspace).
 
