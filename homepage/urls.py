@@ -21,4 +21,5 @@ urlpatterns = [
     path('AROpentronsResult/', views.opentrons_result_view, name="AR opentrons result"),
     path('colonyCounter/', views.colony_counter_view, name="Colony Counter"),
     path('colonyCounterResult/', views.colony_counter_result_view, name="Colony Counter"),
+    path('colonyCounterCalculations/', views.colony_counter_calculations_view, name="Colony Counter Calculations"),
     ]

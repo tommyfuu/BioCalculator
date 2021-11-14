@@ -614,3 +614,11 @@ def colony_counter_result_view(request):
         "colonyCounterResult.html",
         {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
     )
+
+def colony_counter_calculations_view(request):
+    # return HTTP response object
+    return render(
+        request,
+        "colonyCounterCalculations.html",
+        {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
+    )
