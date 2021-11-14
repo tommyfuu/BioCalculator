@@ -1,19 +1,49 @@
 <head>
-    <title>AR Opentrons</title>
+    <title>Colony Counter</title>
 </head>
-
+<style>
+  p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+</style>
 {% extends 'base.html' %}
 {% block content %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-     {{ form.as_p }}
-    <button type="submit">Upload</button>
-  </form>
-  
-  {% if img_obj %}
-    <h3>Succesfully uploaded : {{img_obj.title}}</h3>
-    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
-  {% endif %}
+<body>
+  <div class="container-fluid px-5 my-5">
+    <h4 class="mb-4">Colony Counter</h4>
+
+    <p><span class="h5">Purpose: </span>To count the number of bacteria colonies present in the image of a petri dish</p>
+
+    <h5 class="mb-3">Instructions:</h5>
+    <ul class="ms-1">
+      <li>
+        Upload a picture of your bacteria colony petri dish.
+      </li>
+      <li>
+        The program uses computer vision to identify the locations of colonies and to accurately report the number of colonies.
+      </li>
+      <li>
+        <u>Note</u>: Use a clear picture of the colonies with a neutral color background.
+      </li>
+    </ul>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-warning">Upload</button>
+      </form>
+      
+      {% if img_obj %}
+        <h3>Successfully uploaded : {{img_obj.title}}</h3>
+        <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+        <h3>Total Number of Colonies: (implement later)</h3>
+      {% endif %}
+      
+  </div>
+</body>
 
   {% endblock %}
