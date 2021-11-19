@@ -1,0 +1,98 @@
+{
+    "background": "dark",
+    "classes": [
+        "B.subtilis"
+    ],
+    "colonies_number": 11,
+    "labels": [
+        {
+            "class": "B.subtilis",
+            "height": 307,
+            "id": 1,
+            "width": 307,
+            "x": 806,
+            "y": 833
+        },
+        {
+            "class": "B.subtilis",
+            "height": 307,
+            "id": 2,
+            "width": 307,
+            "x": 603,
+            "y": 1231
+        },
+        {
+            "class": "B.subtilis",
+            "height": 254,
+            "id": 3,
+            "width": 254,
+            "x": 923,
+            "y": 1483
+        },
+        {
+            "class": "B.subtilis",
+            "height": 338,
+            "id": 4,
+            "width": 338,
+            "x": 1088,
+            "y": 2079
+        },
+        {
+            "class": "B.subtilis",
+            "height": 372,
+            "id": 5,
+            "width": 372,
+            "x": 1590,
+            "y": 2394
+        },
+        {
+            "class": "B.subtilis",
+            "height": 307,
+            "id": 6,
+            "width": 307,
+            "x": 1154,
+            "y": 2974
+        },
+        {
+            "class": "B.subtilis",
+            "height": 338,
+            "id": 7,
+            "width": 338,
+            "x": 1686,
+            "y": 2966
+        },
+        {
+            "class": "B.subtilis",
+            "height": 279,
+            "id": 8,
+            "width": 279,
+            "x": 2257,
+            "y": 1614
+        },
+        {
+            "class": "B.subtilis",
+            "height": 307,
+            "id": 9,
+            "width": 307,
+            "x": 2507,
+            "y": 818
+        },
+        {
+            "class": "B.subtilis",
+            "height": 254,
+            "id": 10,
+            "width": 254,
+            "x": 3026,
+            "y": 1354
+        },
+        {
+            "class": "B.subtilis",
+            "height": 316,
+            "id": 11,
+            "width": 307,
+            "x": 2866,
+            "y": 1494
+        }
+    ],
+    "sample_id": 4826
+}
