@@ -1,6 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from numpy.lib.shape_base import split
 
 from .models import Image
 import random
@@ -174,7 +175,43 @@ num = 1
 from detectron2.utils.visualizer import ColorMode
 
 d = random.sample(dataset_dicts, 3)[1]
+print("filename", d["file_name"])
 im = cv2.imread(d["file_name"])
+
+
+def run_model(img_src_dir):
+    # dataset_dicts = agar_to_coco_format(
+    #     "./homepage/media/users/%Y/%m/%d/",
+    #     "jpg",
+    # )[0]
+    # im = cv2.imread(d["file_name"])
+    print(img_src_dir)
+    for root, dirs, files in os.walk(img_src_dir):
+        for file in files:
+            img_src = img_src_dir + file
+    # img_src = random.choice(os.listdir(img_src_dir))
+    im = cv2.imread(img_src)
+    print("WHAT AAA", img_src)
+    outputs = predictor(im)
+    print("model outputs", outputs)
+    v = Visualizer(
+        im[:, :, ::-1],
+        metadata=agar_metadata,
+        scale=0.5,
+        # remove the colors of unsegmented pixels. This option is only available for segmentation models
+        instance_mode=ColorMode.IMAGE_BW,
+    )
+
+    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    im = cv2.resize(im, (500, 500), interpolation=cv2.INTER_AREA)
+    out1 = out.get_image()[:, :, ::-1]
+    out1 = cv2.resize(out1, (500, 500), interpolation=cv2.INTER_AREA)
+    cv2.imwrite(
+        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
+        + img_src.split("/")[-1],
+        out.get_image()[:, :, ::-1],
+    )
+
 
 # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format
 # outputs = predictor(im)

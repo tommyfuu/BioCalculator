@@ -576,15 +576,24 @@ def opentrons_result_view(request):
         {"floor": FLOOR, "ceiling": CEILING, "result": OPENTRONS_RESULT},
     )
 
+
 ######################################## AR OPENTRONS CALCULATOR #######################################
 
 # global variable
 FLOOR_1 = None
 CEILING_1 = None
 OPENTRONS_RESULT_1 = None
+import os
+import datetime
 
 
 def colony_counter_view(request):
+    # clean the output folder
+    for root, dirs, files in os.walk(
+        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/"
+    ):
+        for file in files:
+            os.remove(os.path.join(root, file))
     print("request method:", request.method)
     # if this is a POST request we need to process the form data
     # request.method="POST"
@@ -598,14 +607,25 @@ def colony_counter_view(request):
             colonyCounterForm.save()
             # Get the current instance object to display in the template
             img_obj = colonyCounterForm.instance
-            return render(request, "colonyCounterInput.html", {'form': colonyCounterForm, 'img_obj': img_obj})
+            run_model("./media/users/")
+            # clean the current folder
+            for root, dirs, files in os.walk("./media/users/"):
+                for file in files:
+                    os.remove(os.path.join(root, file))
+            # TODO: return an output html page here once completely implemented
+            return render(
+                request,
+                "colonyCounterCalculations.html",
+                {"form": colonyCounterForm, "img_obj": img_obj},
+            )
 
     # else clause should be 'else' compared to "if request.method == 'POST':"
     else:
         colonyCounterForm = ColonyCounterForm()
 
     # return HttpResponse("AR opentrons page")
-    return render(request, "colonyCounterInput.html", {'form': colonyCounterForm})
+    return render(request, "colonyCounterInput.html", {"form": colonyCounterForm})
+
 
 def colony_counter_result_view(request):
     # return HTTP response object
@@ -614,6 +634,7 @@ def colony_counter_result_view(request):
         "colonyCounterResult.html",
         {"floor": FLOOR_1, "ceiling": CEILING_1, "result": OPENTRONS_RESULT_1},
     )
+
 
 def colony_counter_calculations_view(request):
     # return HTTP response object
