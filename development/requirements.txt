@@ -3,5 +3,5 @@ django-crispy-forms
 pyyaml==5.1
 torch==1.9.0
 #-e git+https://github.com/facebookresearch/detectron2.git
--e git+https://github.com/facebookresearch/detectron2.git
+git+https://github.com/facebookresearch/detectron2.git
 opencv-python
