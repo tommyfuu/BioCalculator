@@ -177,7 +177,9 @@ from detectron2.utils.visualizer import ColorMode
 d = random.sample(dataset_dicts, 3)[1]
 print("filename", d["file_name"])
 im = cv2.imread(d["file_name"])
+print("current-path hehehe", os.getcwd())
 
+# def get_center():
 
 def run_model(img_src_dir):
     # dataset_dicts = agar_to_coco_format(
@@ -207,10 +209,42 @@ def run_model(img_src_dir):
     out1 = out.get_image()[:, :, ::-1]
     out1 = cv2.resize(out1, (500, 500), interpolation=cv2.INTER_AREA)
     cv2.imwrite(
-        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
+        "./homepage/colonyCountOutputs/testing"
         + img_src.split("/")[-1],
         out.get_image()[:, :, ::-1],
     )
+
+
+    def get_center(arr):
+
+        corrected_data = []
+        for colony in arr:
+            for data in colony:
+            
+
+                offset_x = colony[0]
+                offset_y = colony[1]
+                width = colony[2]
+                height = colony[3]
+
+                center_x = (offset_x + width)/2
+                center_y = (offset_y + height)/2
+
+                corrected_data.append((center_x[0] ,center_y.float[0]))
+        return corrected_data
+
+
+    print("relevant stats")
+    pred_boxes = outputs['instances'].pred_boxes
+    print ("total number of colonies:" + str(len(outputs['instances'].pred_classes)))
+    centers = get_center(pred_boxes)
+    print("current centers", centers)
+
+
+    
+
+
+
 
 
 # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format
