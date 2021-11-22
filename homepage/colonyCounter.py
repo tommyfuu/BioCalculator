@@ -230,7 +230,7 @@ def run_model(img_src_dir):
                 center_x = (offset_x + width)/2
                 center_y = (offset_y + height)/2
 
-                corrected_data.append((center_x[0] ,center_y.float[0]))
+                corrected_data.append((center_x ,center_y))
         return corrected_data
 
 
