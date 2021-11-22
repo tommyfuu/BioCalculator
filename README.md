@@ -23,12 +23,16 @@ Starting from 6/15/2021, please start to commit your changes to the `development
   - More simplistic design with HMC school color scheme and nicely rendered fonts.
   - Bootstrap to improve code cleanness.
 - The website is currently synced using the zeet app.
+- Current working functionality enables
+  - Concentration change calculator
+  - Unit conversion 
 
 ### 3. Goal
 
 - Next iteration (major upgrade, planned December 2021) of the website will include
-  - Fully functional cutting reaction calculator.
   - Fully functional colony counter.
+- Future goal
+  - Fully functional cutting reaction calculator.
   
 ## Acknowledgement
 
@@ -36,12 +40,14 @@ Developers:\
 Tom Fu (@tommyfuu)\
 Lucy Paddock (@lucinda-paddock)\
 Liam Chalk (@liamchalk00)\
-Tristan Huang (@thuang8)\
+Richard Chang (@richanghmc)\
+Vani Sachdev (@VaniSachdev)\
 Michelle Lee (@mi929lee)\
-Allison Tsai (@aztsai)\
+Allison Tsai (@aztsai)
 
 Alumnae/Past Members:\
-April Zhao (@abooli)
+April Zhao (@abooli)\
+Tristan Huang (@thuang8)
 
 Affiliation: Harvey Mudd College BioMakerspace (Polymerspace).
 
