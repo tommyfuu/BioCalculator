@@ -150,7 +150,8 @@ cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
     "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
 )
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # crucial for everything to function correctly!
-cfg.MODEL.WEIGHTS = "./development/output/model_first.pth"
+# cfg.MODEL.WEIGHTS = "./development/output/model_first.pth"
+cfg.MODEL.WEIGHTS = "./development/output/model_transfer_final_1206.pth"
 cfg.DATASETS.TEST = ("agar_val",)
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.2  # set the testing threshold for this model
 predictor = DefaultPredictor(cfg)
@@ -182,6 +183,7 @@ print("current-path hehehe", os.getcwd())
 
 # def get_center():
 
+
 def run_model(img_src_dir):
     # dataset_dicts = agar_to_coco_format(
     #     "./homepage/media/users/%Y/%m/%d/",
@@ -209,11 +211,15 @@ def run_model(img_src_dir):
     im = cv2.resize(im, (500, 500), interpolation=cv2.INTER_AREA)
     out1 = out.get_image()[:, :, ::-1]
     out1 = cv2.resize(out1, (500, 500), interpolation=cv2.INTER_AREA)
+    pre_output = cv2.resize(out.get_image()[:, :, ::-1], (480, 480))
     cv2.imwrite(
-        "./homepage/colonyCountOutputs/testing"
-        + img_src.split("/")[-1],
-        out.get_image()[:, :, ::-1],
+        "./static/testResult.jpg",
+        pre_output,
     )
+    # cv2.imwrite(
+    #     "./static/output/testResult.jpg" + img_src.split("/")[-1],
+    #     out.get_image()[:, :, ::-1],
+    # )
 
     # cv2.imwrite(
     #     "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
@@ -224,6 +230,7 @@ def run_model(img_src_dir):
     # get top <10 x y coordinates, assuming that each colony is a circle
     pred_boxes = outputs["instances"].pred_boxes
     conf_levels = list(outputs["instances"].scores)
+    # conf_levels = [level[0] for level in conf_levels]
     if len(pred_boxes) > 10:
         pred_boxes = pred_boxes[:10]
     else:
@@ -243,42 +250,35 @@ def run_model(img_src_dir):
     x_labels = ["x_1", "x_2", "x_3", "x_4", "x_5", "x_6", "x_7", "x_8", "x_9", "x_10"]
     y_labels = ["y_1", "y_2", "y_3", "y_4", "y_5", "y_6", "y_7", "y_8", "y_9", "y_10"]
     c_labels = ["c_1", "c_2", "c_3", "c_4", "c_5", "c_6", "c_7", "c_8", "c_9", "c_10"]
-    x_dict = {x_labels[i]: box_center_xs[i] for i in range(10)}
-    y_dict = {y_labels[i]: box_center_ys[i] for i in range(10)}
-    c_dict = {c_labels[i]: conf_levels[i] for i in range(10)}
+    x_dict = {x_labels[i]: box_center_xs[i].item() for i in range(10)}
+    y_dict = {y_labels[i]: box_center_ys[i].item() for i in range(10)}
+    c_dict = {c_labels[i]: conf_levels[i].item() for i in range(10)}
     return x_dict, y_dict, c_dict
 
 
-    def get_center(arr):
+def get_center(arr):
 
-        corrected_data = []
-        for colony in arr:
-            for data in colony:
-            
+    corrected_data = []
+    for colony in arr:
+        for data in colony:
 
-                offset_x = colony[0]
-                offset_y = colony[1]
-                width = colony[2]
-                height = colony[3]
+            offset_x = colony[0]
+            offset_y = colony[1]
+            width = colony[2]
+            height = colony[3]
 
-                center_x = (offset_x + width)/2
-                center_y = (offset_y + height)/2
+            center_x = (offset_x + width) / 2
+            center_y = (offset_y + height) / 2
 
-                corrected_data.append((center_x ,center_y))
-        return corrected_data
-
-
-    print("relevant stats")
-    pred_boxes = outputs['instances'].pred_boxes
-    print ("total number of colonies:" + str(len(outputs['instances'].pred_classes)))
-    centers = get_center(pred_boxes)
-    print("current centers", centers)
+            corrected_data.append((center_x, center_y))
+    return corrected_data
 
 
-    
-
-
-
+# print("relevant stats")
+# pred_boxes = outputs['instances'].pred_boxes
+# print ("total number of colonies:" + str(len(outputs['instances'].pred_classes)))
+# centers = get_center(pred_boxes)
+# print("current centers", centers)
 
 
 # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format

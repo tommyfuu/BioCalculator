@@ -594,7 +594,7 @@ import cv2
 def colony_counter_view(request):
     # clean the output folder
     for root, dirs, files in os.walk(
-        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/"
+        "./static/output/"
     ):
         for file in files:
             os.remove(os.path.join(root, file))
