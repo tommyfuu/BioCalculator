@@ -174,6 +174,7 @@ dataset_dicts = agar_to_coco_format(
 num = 1
 from detectron2.utils.visualizer import ColorMode
 
+print("LENGTH", len(dataset_dicts))
 d = random.sample(dataset_dicts, 3)[1]
 print("filename", d["file_name"])
 im = cv2.imread(d["file_name"])
@@ -207,10 +208,42 @@ def run_model(img_src_dir):
     out1 = out.get_image()[:, :, ::-1]
     out1 = cv2.resize(out1, (500, 500), interpolation=cv2.INTER_AREA)
     cv2.imwrite(
-        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
-        + img_src.split("/")[-1],
+        "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testingResult.jpg",
         out.get_image()[:, :, ::-1],
     )
+
+    # cv2.imwrite(
+    #     "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
+    #     + img_src.split("/")[-1],
+    #     out.get_image()[:, :, ::-1],
+    # )
+
+    # get top <10 x y coordinates, assuming that each colony is a circle
+    pred_boxes = outputs["instances"].pred_boxes
+    conf_levels = list(outputs["instances"].scores)
+    if len(pred_boxes) > 10:
+        pred_boxes = pred_boxes[:10]
+    else:
+        while len(pred_boxes) < 10:
+            pred_boxes += "non existent"
+            conf_levels += "non existent"
+    # assuming it's a circle, calculate center
+    # https://github.com/facebookresearch/detectron2/issues/1005
+    box_center_xs = [0.5 * (box[0] + box[2]) for box in pred_boxes]
+    box_center_ys = [0.5 * (box[1] + box[3]) for box in pred_boxes]
+
+    while len(box_center_xs) < 10:
+        box_center_xs += "non existent"
+    while len(box_center_ys) < 10:
+        box_center_ys += "non existent"
+    # prep to save to webpage dict
+    x_labels = ["x_1", "x_2", "x_3", "x_4", "x_5", "x_6", "x_7", "x_8", "x_9", "x_10"]
+    y_labels = ["y_1", "y_2", "y_3", "y_4", "y_5", "y_6", "y_7", "y_8", "y_9", "y_10"]
+    c_labels = ["c_1", "c_2", "c_3", "c_4", "c_5", "c_6", "c_7", "c_8", "c_9", "c_10"]
+    x_dict = {x_labels[i]: box_center_xs[i] for i in range(10)}
+    y_dict = {y_labels[i]: box_center_ys[i] for i in range(10)}
+    c_dict = {c_labels[i]: conf_levels[i] for i in range(10)}
+    return x_dict, y_dict, c_dict
 
 
 # format is documented at https://detectron2.readthedocs.io/tutorials/models.html#model-output-format

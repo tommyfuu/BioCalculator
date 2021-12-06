@@ -122,8 +122,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+# STATIC_URL = "/homepage/colonyCountOutputs/"
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+# STATIC_URL: specifies what to append when you call `{% static %}` as template tag.
 STATIC_URL = "/static/"
 
+# STATIC_ROOT: specifies where exactly you yourself will put your static files
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticroot")
+STATIC_ROOT = "/static/"
+
+# STATICFILES_DIRS: it tells Django where to look for static files while
+# serving a request.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static/"),
+]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-

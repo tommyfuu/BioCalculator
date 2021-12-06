@@ -583,8 +583,12 @@ def opentrons_result_view(request):
 FLOOR_1 = None
 CEILING_1 = None
 OPENTRONS_RESULT_1 = None
+X_COORD_DICT = None
+Y_COORD_DICT = None
+CONF_DICT = None
+DETECTION_RESULT_IMG = None
 import os
-import datetime
+import cv2
 
 
 def colony_counter_view(request):
@@ -607,16 +611,53 @@ def colony_counter_view(request):
             colonyCounterForm.save()
             # Get the current instance object to display in the template
             img_obj = colonyCounterForm.instance
-            run_model("./media/users/")
+            X_COORD_DICT, Y_COORD_DICT, CONF_DICT = run_model("./media/users/")
             # clean the current folder
             for root, dirs, files in os.walk("./media/users/"):
                 for file in files:
                     os.remove(os.path.join(root, file))
+            # DETECTION_RESULT_IMG = cv2.imread(
+            #     "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testingResult.jpg"
+            # )
             # TODO: return an output html page here once completely implemented
             return render(
                 request,
                 "colonyCounterCalculations.html",
-                {"form": colonyCounterForm, "img_obj": img_obj},
+                {
+                    "form": colonyCounterForm,
+                    "img_obj": img_obj,
+                    "detection_result_img": "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testingResult.jpg",
+                    "x_1": X_COORD_DICT["x_1"],
+                    "x_2": X_COORD_DICT["x_2"],
+                    "x_3": X_COORD_DICT["x_3"],
+                    "x_4": X_COORD_DICT["x_4"],
+                    "x_5": X_COORD_DICT["x_5"],
+                    "x_6": X_COORD_DICT["x_6"],
+                    "x_7": X_COORD_DICT["x_7"],
+                    "x_8": X_COORD_DICT["x_8"],
+                    "x_9": X_COORD_DICT["x_9"],
+                    "x_10": X_COORD_DICT["x_10"],
+                    "y_1": Y_COORD_DICT["y_1"],
+                    "y_2": Y_COORD_DICT["y_2"],
+                    "y_3": Y_COORD_DICT["y_3"],
+                    "y_4": Y_COORD_DICT["y_4"],
+                    "y_5": Y_COORD_DICT["y_5"],
+                    "y_6": Y_COORD_DICT["y_6"],
+                    "y_7": Y_COORD_DICT["y_7"],
+                    "y_8": Y_COORD_DICT["y_8"],
+                    "y_9": Y_COORD_DICT["y_9"],
+                    "y_10": Y_COORD_DICT["y_10"],
+                    "c_1": CONF_DICT["c_1"],
+                    "c_2": CONF_DICT["c_2"],
+                    "c_3": CONF_DICT["c_3"],
+                    "c_4": CONF_DICT["c_4"],
+                    "c_5": CONF_DICT["c_5"],
+                    "c_6": CONF_DICT["c_6"],
+                    "c_7": CONF_DICT["c_7"],
+                    "c_8": CONF_DICT["c_8"],
+                    "c_9": CONF_DICT["c_9"],
+                    "c_10": CONF_DICT["c_10"],
+                },
             )
 
     # else clause should be 'else' compared to "if request.method == 'POST':"
