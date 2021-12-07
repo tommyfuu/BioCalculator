@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.views import serve
+from django.views.decorators.cache import cache_control
 
 urlpatterns = (
     [
@@ -29,4 +31,8 @@ urlpatterns = (
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    + static(
+        settings.STATIC_URL,
+        view=cache_control(no_cache=True, must_revalidate=True)(serve),
+    )
 )

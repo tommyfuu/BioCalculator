@@ -211,26 +211,19 @@ def run_model(img_src_dir):
     im = cv2.resize(im, (500, 500), interpolation=cv2.INTER_AREA)
     out1 = out.get_image()[:, :, ::-1]
     out1 = cv2.resize(out1, (500, 500), interpolation=cv2.INTER_AREA)
+    # note that the prediction result is scaled, so the x y coordinates are not
+    # in the scaled images
     pre_output = cv2.resize(out.get_image()[:, :, ::-1], (480, 480))
     cv2.imwrite(
         "./static/testResult.jpg",
         pre_output,
     )
-    # cv2.imwrite(
-    #     "./static/output/testResult.jpg" + img_src.split("/")[-1],
-    #     out.get_image()[:, :, ::-1],
-    # )
-
-    # cv2.imwrite(
-    #     "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testing"
-    #     + img_src.split("/")[-1],
-    #     out.get_image()[:, :, ::-1],
-    # )
 
     # get top <10 x y coordinates, assuming that each colony is a circle
     pred_boxes = outputs["instances"].pred_boxes
     conf_levels = list(outputs["instances"].scores)
     # conf_levels = [level[0] for level in conf_levels]
+    num_of_colonies = len(pred_boxes)
     if len(pred_boxes) > 10:
         pred_boxes = pred_boxes[:10]
     else:
@@ -253,7 +246,7 @@ def run_model(img_src_dir):
     x_dict = {x_labels[i]: box_center_xs[i].item() for i in range(10)}
     y_dict = {y_labels[i]: box_center_ys[i].item() for i in range(10)}
     c_dict = {c_labels[i]: conf_levels[i].item() for i in range(10)}
-    return x_dict, y_dict, c_dict
+    return x_dict, y_dict, c_dict, num_of_colonies
 
 
 def get_center(arr):

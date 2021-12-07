@@ -587,15 +587,14 @@ X_COORD_DICT = None
 Y_COORD_DICT = None
 CONF_DICT = None
 DETECTION_RESULT_IMG = None
+NUMOFCOLONIES = None
 import os
 import cv2
 
 
 def colony_counter_view(request):
     # clean the output folder
-    for root, dirs, files in os.walk(
-        "./static/output/"
-    ):
+    for root, _, files in os.walk("./static/output/"):
         for file in files:
             os.remove(os.path.join(root, file))
     print("request method:", request.method)
@@ -611,14 +610,13 @@ def colony_counter_view(request):
             colonyCounterForm.save()
             # Get the current instance object to display in the template
             img_obj = colonyCounterForm.instance
-            X_COORD_DICT, Y_COORD_DICT, CONF_DICT = run_model("./media/users/")
+            X_COORD_DICT, Y_COORD_DICT, CONF_DICT, NUMOFCOLONIES = run_model(
+                "./media/users/"
+            )
             # clean the current folder
             for root, dirs, files in os.walk("./media/users/"):
                 for file in files:
                     os.remove(os.path.join(root, file))
-            # DETECTION_RESULT_IMG = cv2.imread(
-            #     "/Users/chenlianfu/Documents/Github/BioCalculator/homepage/colonyCountOutputs/testingResult.jpg"
-            # )
             # TODO: return an output html page here once completely implemented
             return render(
                 request,
@@ -657,6 +655,7 @@ def colony_counter_view(request):
                     "c_8": CONF_DICT["c_8"],
                     "c_9": CONF_DICT["c_9"],
                     "c_10": CONF_DICT["c_10"],
+                    "num_of_colonies": NUMOFCOLONIES,
                 },
             )
 
